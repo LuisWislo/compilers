@@ -4,9 +4,9 @@ Grammar
 
 Rule 0     S' -> statement
 Rule 1     statement -> INTDEC NAME is_assing
-Rule 2     is_assing -> = expression
-Rule 3     is_assing -> <empty>
-Rule 4     statement -> FLOATDEC NAME
+Rule 2     statement -> FLOATDEC NAME is_assing
+Rule 3     is_assing -> = expression
+Rule 4     is_assing -> <empty>
 Rule 5     statement -> PRINT ( expression )
 Rule 6     statement -> NAME = expression
 Rule 7     statement -> expression
@@ -28,19 +28,19 @@ Terminals, with rules where they appear
 +                    : 8
 -                    : 9 12
 /                    : 11
-=                    : 2 6
-FLOATDEC             : 4
+=                    : 3 6
+FLOATDEC             : 2
 FNUMBER              : 15
 INTDEC               : 1
 INUMBER              : 14
-NAME                 : 1 4 6 16
+NAME                 : 1 2 6 16
 PRINT                : 5
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 2 5 6 7 8 8 9 9 10 10 11 11 12 13
-is_assing            : 1
+expression           : 3 5 6 7 8 8 9 9 10 10 11 11 12 13
+is_assing            : 1 2
 statement            : 0
 
 Parsing method: LALR
@@ -49,7 +49,7 @@ state 0
 
     (0) S' -> . statement
     (1) statement -> . INTDEC NAME is_assing
-    (4) statement -> . FLOATDEC NAME
+    (2) statement -> . FLOATDEC NAME is_assing
     (5) statement -> . PRINT ( expression )
     (6) statement -> . NAME = expression
     (7) statement -> . expression
@@ -103,7 +103,7 @@ state 3
 
 state 4
 
-    (4) statement -> FLOATDEC . NAME
+    (2) statement -> FLOATDEC . NAME is_assing
 
     NAME            shift and go to state 13
 
@@ -199,11 +199,11 @@ state 10
 state 11
 
     (1) statement -> INTDEC NAME . is_assing
-    (2) is_assing -> . = expression
-    (3) is_assing -> .
+    (3) is_assing -> . = expression
+    (4) is_assing -> .
 
     =               shift and go to state 23
-    $end            reduce using rule 3 (is_assing -> .)
+    $end            reduce using rule 4 (is_assing -> .)
 
     is_assing                      shift and go to state 22
 
@@ -230,10 +230,14 @@ state 12
 
 state 13
 
-    (4) statement -> FLOATDEC NAME .
+    (2) statement -> FLOATDEC NAME . is_assing
+    (3) is_assing -> . = expression
+    (4) is_assing -> .
 
-    $end            reduce using rule 4 (statement -> FLOATDEC NAME .)
+    =               shift and go to state 23
+    $end            reduce using rule 4 (is_assing -> .)
 
+    is_assing                      shift and go to state 25
 
 state 14
 
@@ -254,7 +258,7 @@ state 14
     FNUMBER         shift and go to state 10
     NAME            shift and go to state 16
 
-    expression                     shift and go to state 25
+    expression                     shift and go to state 26
 
 state 15
 
@@ -264,7 +268,7 @@ state 15
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
 
-    )               shift and go to state 26
+    )               shift and go to state 27
     +               shift and go to state 17
     -               shift and go to state 18
     *               shift and go to state 19
@@ -302,7 +306,7 @@ state 17
     FNUMBER         shift and go to state 10
     NAME            shift and go to state 16
 
-    expression                     shift and go to state 27
+    expression                     shift and go to state 28
 
 state 18
 
@@ -323,7 +327,7 @@ state 18
     FNUMBER         shift and go to state 10
     NAME            shift and go to state 16
 
-    expression                     shift and go to state 28
+    expression                     shift and go to state 29
 
 state 19
 
@@ -344,7 +348,7 @@ state 19
     FNUMBER         shift and go to state 10
     NAME            shift and go to state 16
 
-    expression                     shift and go to state 29
+    expression                     shift and go to state 30
 
 state 20
 
@@ -365,7 +369,7 @@ state 20
     FNUMBER         shift and go to state 10
     NAME            shift and go to state 16
 
-    expression                     shift and go to state 30
+    expression                     shift and go to state 31
 
 state 21
 
@@ -397,7 +401,7 @@ state 22
 
 state 23
 
-    (2) is_assing -> = . expression
+    (3) is_assing -> = . expression
     (8) expression -> . expression + expression
     (9) expression -> . expression - expression
     (10) expression -> . expression * expression
@@ -414,7 +418,7 @@ state 23
     FNUMBER         shift and go to state 10
     NAME            shift and go to state 16
 
-    expression                     shift and go to state 31
+    expression                     shift and go to state 32
 
 state 24
 
@@ -433,20 +437,27 @@ state 24
 
 state 25
 
+    (2) statement -> FLOATDEC NAME is_assing .
+
+    $end            reduce using rule 2 (statement -> FLOATDEC NAME is_assing .)
+
+
+state 26
+
     (5) statement -> PRINT ( expression . )
     (8) expression -> expression . + expression
     (9) expression -> expression . - expression
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
 
-    )               shift and go to state 32
+    )               shift and go to state 33
     +               shift and go to state 17
     -               shift and go to state 18
     *               shift and go to state 19
     /               shift and go to state 20
 
 
-state 26
+state 27
 
     (13) expression -> ( expression ) .
 
@@ -458,7 +469,7 @@ state 26
     )               reduce using rule 13 (expression -> ( expression ) .)
 
 
-state 27
+state 28
 
     (8) expression -> expression + expression .
     (8) expression -> expression . + expression
@@ -479,7 +490,7 @@ state 27
   ! -               [ shift and go to state 18 ]
 
 
-state 28
+state 29
 
     (9) expression -> expression - expression .
     (8) expression -> expression . + expression
@@ -500,7 +511,7 @@ state 28
   ! -               [ shift and go to state 18 ]
 
 
-state 29
+state 30
 
     (10) expression -> expression * expression .
     (8) expression -> expression . + expression
@@ -521,7 +532,7 @@ state 29
   ! /               [ shift and go to state 20 ]
 
 
-state 30
+state 31
 
     (11) expression -> expression / expression .
     (8) expression -> expression . + expression
@@ -542,22 +553,22 @@ state 30
   ! /               [ shift and go to state 20 ]
 
 
-state 31
+state 32
 
-    (2) is_assing -> = expression .
+    (3) is_assing -> = expression .
     (8) expression -> expression . + expression
     (9) expression -> expression . - expression
     (10) expression -> expression . * expression
     (11) expression -> expression . / expression
 
-    $end            reduce using rule 2 (is_assing -> = expression .)
+    $end            reduce using rule 3 (is_assing -> = expression .)
     +               shift and go to state 17
     -               shift and go to state 18
     *               shift and go to state 19
     /               shift and go to state 20
 
 
-state 32
+state 33
 
     (5) statement -> PRINT ( expression ) .
 
