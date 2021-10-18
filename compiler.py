@@ -1,8 +1,6 @@
 import ply.yacc as yacc
 import ply.lex as lex
 
-
-
 literals = ['=', '+', '-', '*', '/', '(', ')']
 reserved = { 
     'int' : 'INTDEC',
@@ -59,13 +57,26 @@ precedence = (
 names = {}
 abstractTree = []
 
+class Node:
+    val = ''
+    type = ''
+    children = []
+
+    def __init__(self, val, type, children):
+        self.val = val
+        self.type = type
+        self.children = children
+
 def p_statement_declare_int(p):
     '''statement : INTDEC NAME is_assing
     '''
     if type(p[3]) == float:
         print('No pudes asignar flotantes a enteros')
     else:
-        names[p[2]] = { "type": "INT", "value":p[3]}
+        variable = Node(p[2], 'INT', [])
+        n = Node(p[3], '=', [variable, p[3]])
+        abstractTree.append(n)
+        # names[p[2]] = { "type": "INT", "value":p[3]}
 
 def p_statement_declare_float(p):
     'statement : FLOATDEC NAME is_assing'
@@ -74,9 +85,14 @@ def p_statement_declare_float(p):
 def p_is_assing(p):
     '''is_assing : "=" expression 
                 | '''
-    p[0] = 0
+    # p[0] = 0
+    p[0] = Node(0, 'INT', [])
     if len(p) > 2:
-        p[0] = p[2]
+        # analisis semantico (condicional)
+        p[0].type = p[2].type
+        p[0].val = p[2].val
+        p[0].children = [p[2]]
+        # p[0] = p[2]
 
 def p_statement_print(p):
     '''statement : PRINT '(' expression ')' '''
@@ -117,7 +133,8 @@ def p_expression_group(p):
 
 def p_expression_inumber(p):
     "expression : INUMBER"
-    p[0] = p[1]
+    # p[0] = p[1]
+    p[0] = Node(p[1], 'INT', [])
 
 
 def p_expression_fnumber(p):
