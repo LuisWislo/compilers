@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 import ply.lex as lex
-
+import argparse
 
 
 literals = ['=', '+', '-', '*', '/', '(', ')']
@@ -143,12 +143,29 @@ def p_error(p):
 
 
 parser = yacc.yacc()
+argparser = argparse.ArgumentParser()
+argparser.add_argument('-f', '--file')
+args = argparser.parse_args()
 
-while True:
+if(args.file):
     try:
-        s = input('calc > ')
-    except EOFError:
-        break
-    if not s:
-        continue
-    yacc.parse(s)
+
+        file = args.file
+        source = open(file, 'r')
+        lines = source.readlines()
+        source.close()
+
+        for line in lines:
+            yacc.parse(line)
+    except(FileNotFoundError):
+        print('El archivo no existe.')
+        
+else:
+    while True:
+        try:
+            s = input('calc > ')
+        except EOFError:
+            break
+        if not s:
+            continue
+        yacc.parse(s)
