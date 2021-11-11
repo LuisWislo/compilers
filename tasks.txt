@@ -1,0 +1,8 @@
+[] fix unary stuff
+
+operations:
+[x] plus
+[x] minus
+[x] mult
+[x] divide
+[x] exp

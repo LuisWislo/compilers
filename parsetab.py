@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'left+-left*/rightUMINUSFLOATDEC FNUMBER INTDEC INUMBER NAME PRINTstatement : INTDEC NAME is_assing\n    statement : FLOATDEC NAME is_assingis_assing : "=" expression \n                | statement : PRINT \'(\' expression \')\' statement : NAME "=" expressionstatement : expressionexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : INUMBERexpression : FNUMBERexpression : NAME'
+_lr_signature = 'leftPLUSMINUSleftMULTDIVIDErightUMINUSAND ASSIGN BOOLEAN COLON DIVIDE ELIF ELSE EQUAL EXP FALSE FLOAT FNUM GEQTHAN GTHAN ID IF INT INUM LCURLY LEQTHAN LPTHESES LTHAN MINUS MULT NOTEQUAL OR PLUS PRINT RCURLY RPTHESES STRING TRUEstatement : INT ID is_assing\n    statement : FLOAT ID is_assingis_assing : ASSIGN expression \n                | statement : PRINT LPTHESES expression RPTHESES statement : ID ASSIGN expressionexpression : expression PLUS expression\n                  | expression MINUS expression\n                  | expression MULT expression\n                  | expression DIVIDE expression\n                  | expression EXP expressionexpression : MINUS expression %prec UMINUSexpression : LPTHESES expression RPTHESESexpression : INUMexpression : FNUMexpression : ID'
     
-_lr_action_items = {'INTDEC':([0,],[2,]),'FLOATDEC':([0,],[4,]),'PRINT':([0,],[5,]),'NAME':([0,2,4,6,8,12,14,17,18,19,20,23,],[3,11,13,16,16,16,16,16,16,16,16,16,]),'-':([0,3,6,7,8,9,10,12,14,15,16,17,18,19,20,21,23,24,26,27,28,29,30,31,32,],[8,-16,8,18,8,-14,-15,8,8,18,-16,8,8,8,8,-12,8,18,18,-13,-8,-9,-10,-11,18,]),'(':([0,5,6,8,12,14,17,18,19,20,23,],[6,14,6,6,6,6,6,6,6,6,6,]),'INUMBER':([0,6,8,12,14,17,18,19,20,23,],[9,9,9,9,9,9,9,9,9,9,]),'FNUMBER':([0,6,8,12,14,17,18,19,20,23,],[10,10,10,10,10,10,10,10,10,10,]),'$end':([1,3,7,9,10,11,13,16,21,22,24,25,27,28,29,30,31,32,33,],[0,-16,-7,-14,-15,-4,-4,-16,-12,-1,-6,-2,-13,-8,-9,-10,-11,-3,-5,]),'=':([3,11,13,],[12,23,23,]),'+':([3,7,9,10,15,16,21,24,26,27,28,29,30,31,32,],[-16,17,-14,-15,17,-16,-12,17,17,-13,-8,-9,-10,-11,17,]),'*':([3,7,9,10,15,16,21,24,26,27,28,29,30,31,32,],[-16,19,-14,-15,19,-16,-12,19,19,-13,19,19,-10,-11,19,]),'/':([3,7,9,10,15,16,21,24,26,27,28,29,30,31,32,],[-16,20,-14,-15,20,-16,-12,20,20,-13,20,20,-10,-11,20,]),')':([9,10,15,16,21,26,27,28,29,30,31,],[-14,-15,27,-16,-12,33,-13,-8,-9,-10,-11,]),}
+_lr_action_items = {'INT':([0,],[2,]),'FLOAT':([0,],[4,]),'PRINT':([0,],[5,]),'ID':([0,2,4,7,9,11,14,15,21,22,23,24,25,],[3,6,8,12,12,12,12,12,12,12,12,12,12,]),'$end':([1,6,8,10,12,13,16,17,18,20,26,28,29,30,31,32,33,34,],[0,-4,-4,-1,-16,-6,-14,-15,-2,-3,-12,-5,-7,-8,-9,-10,-11,-13,]),'ASSIGN':([3,6,8,],[7,11,11,]),'LPTHESES':([5,7,9,11,14,15,21,22,23,24,25,],[9,15,15,15,15,15,15,15,15,15,15,]),'MINUS':([7,9,11,12,13,14,15,16,17,19,20,21,22,23,24,25,26,27,29,30,31,32,33,34,],[14,14,14,-16,22,14,14,-14,-15,22,22,14,14,14,14,14,-12,22,-7,-8,-9,-10,22,-13,]),'INUM':([7,9,11,14,15,21,22,23,24,25,],[16,16,16,16,16,16,16,16,16,16,]),'FNUM':([7,9,11,14,15,21,22,23,24,25,],[17,17,17,17,17,17,17,17,17,17,]),'PLUS':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,21,-14,-15,21,21,-12,21,-7,-8,-9,-10,21,-13,]),'MULT':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,23,-14,-15,23,23,-12,23,23,23,-9,-10,23,-13,]),'DIVIDE':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,24,-14,-15,24,24,-12,24,24,24,-9,-10,24,-13,]),'EXP':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,25,-14,-15,25,25,-12,25,-7,-8,-9,-10,25,-13,]),'RPTHESES':([12,16,17,19,26,27,29,30,31,32,33,34,],[-16,-14,-15,28,-12,34,-7,-8,-9,-10,-11,-13,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,6,8,12,14,17,18,19,20,23,],[7,15,21,24,26,28,29,30,31,32,]),'is_assing':([11,13,],[22,25,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'is_assing':([6,8,],[10,18,]),'expression':([7,9,11,14,15,21,22,23,24,25,],[13,19,20,26,27,29,30,31,32,33,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,20 +27,20 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> INTDEC NAME is_assing','statement',3,'p_statement_declare_int','compiler.py',63),
-  ('statement -> FLOATDEC NAME is_assing','statement',3,'p_statement_declare_float','compiler.py',68),
-  ('is_assing -> = expression','is_assing',2,'p_is_assing','compiler.py',72),
-  ('is_assing -> <empty>','is_assing',0,'p_is_assing','compiler.py',73),
-  ('statement -> PRINT ( expression )','statement',4,'p_statement_print','compiler.py',79),
-  ('statement -> NAME = expression','statement',3,'p_statement_assign','compiler.py',83),
-  ('statement -> expression','statement',1,'p_statement_expr','compiler.py',90),
-  ('expression -> expression + expression','expression',3,'p_expression_binop','compiler.py',95),
-  ('expression -> expression - expression','expression',3,'p_expression_binop','compiler.py',96),
-  ('expression -> expression * expression','expression',3,'p_expression_binop','compiler.py',97),
-  ('expression -> expression / expression','expression',3,'p_expression_binop','compiler.py',98),
-  ('expression -> - expression','expression',2,'p_expression_uminus','compiler.py',106),
-  ('expression -> ( expression )','expression',3,'p_expression_group','compiler.py',111),
-  ('expression -> INUMBER','expression',1,'p_expression_inumber','compiler.py',116),
-  ('expression -> FNUMBER','expression',1,'p_expression_fnumber','compiler.py',121),
-  ('expression -> NAME','expression',1,'p_expression_name','compiler.py',126),
+  ('statement -> INT ID is_assing','statement',3,'p_statement_declare_int','wparser.py',16),
+  ('statement -> FLOAT ID is_assing','statement',3,'p_statement_declare_float','wparser.py',24),
+  ('is_assing -> ASSIGN expression','is_assing',2,'p_is_assing','wparser.py',28),
+  ('is_assing -> <empty>','is_assing',0,'p_is_assing','wparser.py',29),
+  ('statement -> PRINT LPTHESES expression RPTHESES','statement',4,'p_statement_print','wparser.py',35),
+  ('statement -> ID ASSIGN expression','statement',3,'p_statement_assign','wparser.py',39),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','wparser.py',51),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','wparser.py',52),
+  ('expression -> expression MULT expression','expression',3,'p_expression_binop','wparser.py',53),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop','wparser.py',54),
+  ('expression -> expression EXP expression','expression',3,'p_expression_binop','wparser.py',55),
+  ('expression -> MINUS expression','expression',2,'p_expression_uminus','wparser.py',69),
+  ('expression -> LPTHESES expression RPTHESES','expression',3,'p_expression_group','wparser.py',74),
+  ('expression -> INUM','expression',1,'p_expression_inumber','wparser.py',79),
+  ('expression -> FNUM','expression',1,'p_expression_fnumber','wparser.py',84),
+  ('expression -> ID','expression',1,'p_expression_name','wparser.py',89),
 ]
