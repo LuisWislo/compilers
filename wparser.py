@@ -24,6 +24,16 @@ def p_statement_declare_float(p):
     'statement : FLOAT ID is_assing'
     names[p[2]] = { "type": "FLOAT", "value":p[3]}
 
+def p_statement_declare_string(p):
+    '''statement : STRING ID is_assing
+    '''
+    names[p[2]] = {"type": "STRING", "value": p[3]}
+
+def p_statement_declare_boolean(p):
+    '''statement : BOOLEAN ID is_assing
+    '''
+    names[p[2]] = {"type": "BOOLEAN", "value": p[3]}
+
 def p_is_assing(p):
     '''is_assing : ASSIGN expression 
                 | '''
@@ -40,12 +50,6 @@ def p_statement_assign(p):
     if p[1] not in names:
         print ( "You must declare a variable before using it")
     names[p[1]]["value"] = p[3]
-
-
-# def p_statement_expr(p):
-#     'statement : expression'
-#     # print(p[1])
-
 
 def p_expression_binop(p):
     '''expression : expression PLUS expression
@@ -85,6 +89,14 @@ def p_expression_fnumber(p):
     "expression : FNUM"
     p[0] = p[1]
 
+def p_expression_boolean(p):
+    '''expression : BOOLVAL
+    '''
+    p[0] = p[1]
+
+def p_expression_strval(p):
+    '''expression : STRVAL'''
+    p[0] = p[1]
 
 def p_expression_name(p):
     "expression : ID"

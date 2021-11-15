@@ -3,8 +3,8 @@ import ply.lex as lex
 reserved = {
     'and' : 'AND',
     'or' : 'OR',
-    'true' : 'TRUE',
-    'false' : 'FALSE',
+    #'true' : 'TRUE',
+    #'false' : 'FALSE',
     'print' : 'PRINT',
     'int' : 'INT',
     'float' : 'FLOAT',
@@ -35,7 +35,9 @@ tokens = list(reserved.values()) + [
     'LPTHESES',
     'RPTHESES',
     'LCURLY',
-    'RCURLY'
+    'RCURLY',
+    'STRVAL',
+    'BOOLVAL'
 ]
 
 # Regex
@@ -61,6 +63,15 @@ t_LCURLY = r'\{'
 t_RCURLY = r'\}'
 
 
+def t_BOOLVAL(t):
+    r'\bfalse\b | \btrue\b'
+    if(t.value == 'true'):
+        t.value = True
+    else:
+        t.value = False
+
+    return t
+
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value, 'ID')
@@ -75,6 +86,18 @@ def t_INUM(t):
     r'\d+'
     t.value = int(t.value)
     return t
+
+def t_STRVAL(t):
+    r'\"[a-zA-Z_][a-zA-Z_0-9]*\"'
+    t.value = str(t.value.split('"')[1])
+    return t
+
+
+
+# def t_BOOLVAL(t):
+#     r'\[boolean]'
+#     t.value = bool(t.value)
+#     return t
 
 t_ignore = ' \t'
 
@@ -108,7 +131,10 @@ if __name__ == '__main__':
     }
     """
 
-    lexer.input(program)
+    str_program = '''boolean a = true ;
+    '''
+
+    lexer.input(str_program)
 
     while True:
         tok = lexer.token()

@@ -6,3 +6,11 @@ operations:
 [x] mult
 [x] divide
 [x] exp
+
+variable declaration and print
+[x] int
+[x] float
+[x] string 
+[x] boolean
+
+type checking
