@@ -12,7 +12,9 @@ reserved = {
     'boolean' : 'BOOLEAN',
     'if' : 'IF',
     'else' : 'ELSE',
-    'elif' : 'ELIF'
+    'elif' : 'ELIF',
+    'while' : 'WHILE',
+    'for' : 'FOR'
 }
 
 tokens = list(reserved.values()) + [

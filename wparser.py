@@ -1,3 +1,4 @@
+from typing import Counter
 from wlexer import tokens
 import argparse
 import ply.yacc as yacc
@@ -11,6 +12,13 @@ precedence = (
 # dictionary of names
 names = {}
 abstractTree = []
+
+def p_program(p):
+    '''program : statement
+                | block
+                | while
+                | for
+                | '''
 
 def p_statement_declare_int(p):
     '''statement : INT ID is_assing
@@ -33,6 +41,63 @@ def p_statement_declare_boolean(p):
     '''statement : BOOLEAN ID is_assing
     '''
     names[p[2]] = {"type": "BOOLEAN", "value": p[3]}
+
+def p_block(p):
+    '''block : ifblock '''
+
+def p_ifblock(p):
+    '''ifblock : IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont'''
+
+
+def p_ifcont(p):
+    '''ifcont : elifblock ifcont 
+                | elseblock 
+                | '''
+
+def p_elseblock(p):
+    '''elseblock : ELSE LCURLY program RCURLY'''
+
+def p_elifblock(p):
+    '''elifblock : ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont'''
+
+def p_while(p):
+    '''while : WHILE LPTHESES condition RPTHESES LCURLY program RCURLY'''
+
+def p_for(p):
+    '''for : FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY'''
+
+def p_condition(p):
+    '''condition : BOOLVAL 
+                | comparison '''
+
+def p_comparison(p):
+    '''comparison : expression EQUAL expression
+                    | expression NOTEQUAL expression
+                    | expression GTHAN expression
+                    | expression LTHAN expression
+                    | expression GEQTHAN expression 
+                    | expression LEQTHAN expression'''
+
+    first = p[1]
+    #type_first = type(first)
+    second = p[3]
+    #type_second = type(second)
+
+    if(p[2] == '=='):
+        # if(Counter([type_first, type_second]) == Counter(['int', 'int']) or
+        #     Counter([type_first, type_second]) == Counter(['int', 'float'])):
+        p[0] = (first == second)
+
+    elif(p[2] == '!='):
+        p[0] = (first != second)
+    elif(p[2] == '>'):
+        p[0] = (first > second)
+    elif(p[2] == '<'):
+        p[0] = (first < second)
+    elif(p[2] == '>='):
+        p[0] = (first >= second)
+    elif(p[2] == '<='):
+        p[0] = (first <= second)
 
 def p_is_assing(p):
     '''is_assing : ASSIGN expression 

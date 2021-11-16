@@ -13,4 +13,14 @@ variable declaration and print
 [x] string 
 [x] boolean
 
+loops/blocks parsing
+[x] if
+[x] elif
+[x] else
+[x] while
+[x] for
+
+operations in binop and comparisons
+ 
+
 type checking
