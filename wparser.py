@@ -14,11 +14,14 @@ names = {}
 abstractTree = []
 
 def p_program(p):
-    '''program : statement
+    '''program : stmntwrap
                 | block
                 | while
                 | for
                 | '''
+
+def p_stmntwrap(p):
+    '''stmntwrap : statement COLON'''
 
 def p_statement_declare_int(p):
     '''statement : INT ID is_assing
@@ -64,30 +67,30 @@ def p_while(p):
     '''while : WHILE LPTHESES condition RPTHESES LCURLY program RCURLY'''
 
 def p_for(p):
-    '''for : FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY'''
+    '''for : FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY'''
 
 def p_condition(p):
-    '''condition : BOOLVAL 
-                | comparison '''
+    '''condition : BOOLVAL appendcond
+                | comparison appendcond'''
+
+def p_appendcond(p):
+    '''appendcond : AND condition
+                    | OR condition
+                    | '''
 
 def p_comparison(p):
     '''comparison : expression EQUAL expression
                     | expression NOTEQUAL expression
                     | expression GTHAN expression
                     | expression LTHAN expression
-                    | expression GEQTHAN expression 
+                    | expression GEQTHAN expression
                     | expression LEQTHAN expression'''
 
     first = p[1]
-    #type_first = type(first)
     second = p[3]
-    #type_second = type(second)
 
     if(p[2] == '=='):
-        # if(Counter([type_first, type_second]) == Counter(['int', 'int']) or
-        #     Counter([type_first, type_second]) == Counter(['int', 'float'])):
         p[0] = (first == second)
-
     elif(p[2] == '!='):
         p[0] = (first != second)
     elif(p[2] == '>'):
@@ -123,16 +126,41 @@ def p_expression_binop(p):
                   | expression DIVIDE expression
                   | expression EXP expression'''
 
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-            p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        p[0] = p[1] / p[3]
-    elif p[2] == '^':
-        p[0] = p[1]**p[3]
+    type_first = type(p[1]).__name__
+    type_second = type(p[3]).__name__
+    both = Counter([type_first, type_second])
+
+    if(both == Counter(['int', 'int']) 
+        or both == Counter(['int', 'float']) 
+        or both == Counter(['float', 'float'])):
+
+        if p[2] == '+':
+            p[0] = p[1] + p[3]
+        elif p[2] == '-':
+            p[0] = p[1] - p[3]
+        elif p[2] == '*':
+                p[0] = p[1] * p[3]
+        elif p[2] == '/':
+            p[0] = p[1] / p[3]
+        elif p[2] == '^':
+            p[0] = p[1]**p[3]
+    
+    elif(both == Counter(['str', 'str'])):
+        if p[2] == '+':
+            p[0] = p[1] + p[3]
+        else:
+            print(f'Cannot apply operation \'{p[2]}\' on strings.')
+    
+    elif(both == Counter(['str', 'int'])
+        or both == Counter(['str', 'float'])):
+        if p[2] == '+':
+            p[0] = str(p[1]) + str(p[3])
+        else:
+            print(f'Cannot apply operation \'{p[2]}\' between \'{type_first}\' and \'{type_second}\'')
+    else:
+        print(f'Cannot apply operation \'{p[2]}\' between \'{type_first}\' and \'{type_second}\'')
+    
+
     
 
 def p_expression_uminus(p):

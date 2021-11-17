@@ -1,108 +1,109 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    AND
-    OR
-
 Grammar
 
 Rule 0     S' -> program
-Rule 1     program -> statement
+Rule 1     program -> stmntwrap
 Rule 2     program -> block
 Rule 3     program -> while
 Rule 4     program -> for
 Rule 5     program -> <empty>
-Rule 6     statement -> INT ID is_assing
-Rule 7     statement -> FLOAT ID is_assing
-Rule 8     statement -> STRING ID is_assing
-Rule 9     statement -> BOOLEAN ID is_assing
-Rule 10    block -> ifblock
-Rule 11    ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-Rule 12    ifcont -> elifblock ifcont
-Rule 13    ifcont -> elseblock
-Rule 14    ifcont -> <empty>
-Rule 15    elseblock -> ELSE LCURLY program RCURLY
-Rule 16    elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-Rule 17    while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
-Rule 18    for -> FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-Rule 19    condition -> BOOLVAL
-Rule 20    condition -> comparison
-Rule 21    comparison -> expression EQUAL expression
-Rule 22    comparison -> expression NOTEQUAL expression
-Rule 23    comparison -> expression GTHAN expression
-Rule 24    comparison -> expression LTHAN expression
-Rule 25    comparison -> expression GEQTHAN expression
-Rule 26    comparison -> expression LEQTHAN expression
-Rule 27    is_assing -> ASSIGN expression
-Rule 28    is_assing -> <empty>
-Rule 29    statement -> PRINT LPTHESES expression RPTHESES
-Rule 30    statement -> ID ASSIGN expression
-Rule 31    expression -> expression PLUS expression
-Rule 32    expression -> expression MINUS expression
-Rule 33    expression -> expression MULT expression
-Rule 34    expression -> expression DIVIDE expression
-Rule 35    expression -> expression EXP expression
-Rule 36    expression -> MINUS expression
-Rule 37    expression -> LPTHESES expression RPTHESES
-Rule 38    expression -> INUM
-Rule 39    expression -> FNUM
-Rule 40    expression -> BOOLVAL
-Rule 41    expression -> STRVAL
-Rule 42    expression -> ID
+Rule 6     stmntwrap -> statement COLON
+Rule 7     statement -> INT ID is_assing
+Rule 8     statement -> FLOAT ID is_assing
+Rule 9     statement -> STRING ID is_assing
+Rule 10    statement -> BOOLEAN ID is_assing
+Rule 11    block -> ifblock
+Rule 12    ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+Rule 13    ifcont -> elifblock ifcont
+Rule 14    ifcont -> elseblock
+Rule 15    ifcont -> <empty>
+Rule 16    elseblock -> ELSE LCURLY program RCURLY
+Rule 17    elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+Rule 18    while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
+Rule 19    for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+Rule 20    condition -> BOOLVAL appendcond
+Rule 21    condition -> comparison appendcond
+Rule 22    appendcond -> AND condition
+Rule 23    appendcond -> OR condition
+Rule 24    appendcond -> <empty>
+Rule 25    comparison -> expression EQUAL expression
+Rule 26    comparison -> expression NOTEQUAL expression
+Rule 27    comparison -> expression GTHAN expression
+Rule 28    comparison -> expression LTHAN expression
+Rule 29    comparison -> expression GEQTHAN expression
+Rule 30    comparison -> expression LEQTHAN expression
+Rule 31    is_assing -> ASSIGN expression
+Rule 32    is_assing -> <empty>
+Rule 33    statement -> PRINT LPTHESES expression RPTHESES
+Rule 34    statement -> ID ASSIGN expression
+Rule 35    expression -> expression PLUS expression
+Rule 36    expression -> expression MINUS expression
+Rule 37    expression -> expression MULT expression
+Rule 38    expression -> expression DIVIDE expression
+Rule 39    expression -> expression EXP expression
+Rule 40    expression -> MINUS expression
+Rule 41    expression -> LPTHESES expression RPTHESES
+Rule 42    expression -> INUM
+Rule 43    expression -> FNUM
+Rule 44    expression -> BOOLVAL
+Rule 45    expression -> STRVAL
+Rule 46    expression -> ID
 
 Terminals, with rules where they appear
 
-AND                  : 
-ASSIGN               : 27 30
-BOOLEAN              : 9
-BOOLVAL              : 19 40
-COLON                : 18 18
-DIVIDE               : 34
-ELIF                 : 16
-ELSE                 : 15
-EQUAL                : 21
-EXP                  : 35
-FLOAT                : 7
-FNUM                 : 39
-FOR                  : 18
-GEQTHAN              : 25
-GTHAN                : 23
-ID                   : 6 7 8 9 30 42
-IF                   : 11
-INT                  : 6
-INUM                 : 38
-LCURLY               : 11 15 16 17 18
-LEQTHAN              : 26
-LPTHESES             : 11 16 17 18 29 37
-LTHAN                : 24
-MINUS                : 32 36
-MULT                 : 33
-NOTEQUAL             : 22
-OR                   : 
-PLUS                 : 31
-PRINT                : 29
-RCURLY               : 11 15 16 17 18
-RPTHESES             : 11 16 17 18 29 37
-STRING               : 8
-STRVAL               : 41
-WHILE                : 17
+AND                  : 22
+ASSIGN               : 31 34
+BOOLEAN              : 10
+BOOLVAL              : 20 44
+COLON                : 6 19
+DIVIDE               : 38
+ELIF                 : 17
+ELSE                 : 16
+EQUAL                : 25
+EXP                  : 39
+FLOAT                : 8
+FNUM                 : 43
+FOR                  : 19
+GEQTHAN              : 29
+GTHAN                : 27
+ID                   : 7 8 9 10 34 46
+IF                   : 12
+INT                  : 7
+INUM                 : 42
+LCURLY               : 12 16 17 18 19
+LEQTHAN              : 30
+LPTHESES             : 12 17 18 19 33 41
+LTHAN                : 28
+MINUS                : 36 40
+MULT                 : 37
+NOTEQUAL             : 26
+OR                   : 23
+PLUS                 : 35
+PRINT                : 33
+RCURLY               : 12 16 17 18 19
+RPTHESES             : 12 17 18 19 33 41
+STRING               : 9
+STRVAL               : 45
+WHILE                : 18
 error                : 
 
 Nonterminals, with rules where they appear
 
+appendcond           : 20 21
 block                : 2
-comparison           : 20
-condition            : 11 16 17 18
-elifblock            : 12
-elseblock            : 13
-expression           : 18 21 21 22 22 23 23 24 24 25 25 26 26 27 29 30 31 31 32 32 33 33 34 34 35 35 36 37
+comparison           : 21
+condition            : 12 17 18 19 22 23
+elifblock            : 13
+elseblock            : 14
+expression           : 19 25 25 26 26 27 27 28 28 29 29 30 30 31 33 34 35 35 36 36 37 37 38 38 39 39 40 41
 for                  : 4
-ifblock              : 10
-ifcont               : 11 12 16
-is_assing            : 6 7 8 9
-program              : 11 15 16 17 18 0
-statement            : 1 18
+ifblock              : 11
+ifcont               : 12 13 17
+is_assing            : 7 8 9 10
+program              : 12 16 17 18 19 0
+statement            : 6
+stmntwrap            : 1 19
 while                : 3
 
 Parsing method: LALR
@@ -110,39 +111,41 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . program
-    (1) program -> . statement
+    (1) program -> . stmntwrap
     (2) program -> . block
     (3) program -> . while
     (4) program -> . for
     (5) program -> .
-    (6) statement -> . INT ID is_assing
-    (7) statement -> . FLOAT ID is_assing
-    (8) statement -> . STRING ID is_assing
-    (9) statement -> . BOOLEAN ID is_assing
-    (29) statement -> . PRINT LPTHESES expression RPTHESES
-    (30) statement -> . ID ASSIGN expression
-    (10) block -> . ifblock
-    (17) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
-    (18) for -> . FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-    (11) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (6) stmntwrap -> . statement COLON
+    (11) block -> . ifblock
+    (18) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
+    (19) for -> . FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+    (7) statement -> . INT ID is_assing
+    (8) statement -> . FLOAT ID is_assing
+    (9) statement -> . STRING ID is_assing
+    (10) statement -> . BOOLEAN ID is_assing
+    (33) statement -> . PRINT LPTHESES expression RPTHESES
+    (34) statement -> . ID ASSIGN expression
+    (12) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
 
     $end            reduce using rule 5 (program -> .)
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    BOOLEAN         shift and go to state 10
-    PRINT           shift and go to state 11
-    ID              shift and go to state 7
-    WHILE           shift and go to state 13
-    FOR             shift and go to state 14
-    IF              shift and go to state 15
+    WHILE           shift and go to state 8
+    FOR             shift and go to state 9
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 12
+    STRING          shift and go to state 13
+    BOOLEAN         shift and go to state 14
+    PRINT           shift and go to state 15
+    ID              shift and go to state 11
+    IF              shift and go to state 16
 
     program                        shift and go to state 1
-    statement                      shift and go to state 2
+    stmntwrap                      shift and go to state 2
     block                          shift and go to state 3
     while                          shift and go to state 4
     for                            shift and go to state 5
-    ifblock                        shift and go to state 12
+    statement                      shift and go to state 6
+    ifblock                        shift and go to state 7
 
 state 1
 
@@ -152,10 +155,10 @@ state 1
 
 state 2
 
-    (1) program -> statement .
+    (1) program -> stmntwrap .
 
-    $end            reduce using rule 1 (program -> statement .)
-    RCURLY          reduce using rule 1 (program -> statement .)
+    $end            reduce using rule 1 (program -> stmntwrap .)
+    RCURLY          reduce using rule 1 (program -> stmntwrap .)
 
 
 state 3
@@ -184,1785 +187,1918 @@ state 5
 
 state 6
 
-    (6) statement -> INT . ID is_assing
+    (6) stmntwrap -> statement . COLON
 
-    ID              shift and go to state 16
+    COLON           shift and go to state 17
 
 
 state 7
 
-    (30) statement -> ID . ASSIGN expression
+    (11) block -> ifblock .
 
-    ASSIGN          shift and go to state 17
+    $end            reduce using rule 11 (block -> ifblock .)
+    RCURLY          reduce using rule 11 (block -> ifblock .)
 
 
 state 8
 
-    (7) statement -> FLOAT . ID is_assing
+    (18) while -> WHILE . LPTHESES condition RPTHESES LCURLY program RCURLY
 
-    ID              shift and go to state 18
+    LPTHESES        shift and go to state 18
 
 
 state 9
 
-    (8) statement -> STRING . ID is_assing
+    (19) for -> FOR . LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
 
-    ID              shift and go to state 19
+    LPTHESES        shift and go to state 19
 
 
 state 10
 
-    (9) statement -> BOOLEAN . ID is_assing
+    (7) statement -> INT . ID is_assing
 
     ID              shift and go to state 20
 
 
 state 11
 
-    (29) statement -> PRINT . LPTHESES expression RPTHESES
+    (34) statement -> ID . ASSIGN expression
 
-    LPTHESES        shift and go to state 21
+    ASSIGN          shift and go to state 21
 
 
 state 12
 
-    (10) block -> ifblock .
+    (8) statement -> FLOAT . ID is_assing
 
-    $end            reduce using rule 10 (block -> ifblock .)
-    RCURLY          reduce using rule 10 (block -> ifblock .)
+    ID              shift and go to state 22
 
 
 state 13
 
-    (17) while -> WHILE . LPTHESES condition RPTHESES LCURLY program RCURLY
+    (9) statement -> STRING . ID is_assing
 
-    LPTHESES        shift and go to state 22
+    ID              shift and go to state 23
 
 
 state 14
 
-    (18) for -> FOR . LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
+    (10) statement -> BOOLEAN . ID is_assing
 
-    LPTHESES        shift and go to state 23
+    ID              shift and go to state 24
 
 
 state 15
 
-    (11) ifblock -> IF . LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (33) statement -> PRINT . LPTHESES expression RPTHESES
 
-    LPTHESES        shift and go to state 24
+    LPTHESES        shift and go to state 25
 
 
 state 16
 
-    (6) statement -> INT ID . is_assing
-    (27) is_assing -> . ASSIGN expression
-    (28) is_assing -> .
+    (12) ifblock -> IF . LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
 
-    ASSIGN          shift and go to state 26
-    $end            reduce using rule 28 (is_assing -> .)
-    COLON           reduce using rule 28 (is_assing -> .)
-    RCURLY          reduce using rule 28 (is_assing -> .)
+    LPTHESES        shift and go to state 26
 
-    is_assing                      shift and go to state 25
 
 state 17
 
-    (30) statement -> ID ASSIGN . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (6) stmntwrap -> statement COLON .
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    $end            reduce using rule 6 (stmntwrap -> statement COLON .)
+    BOOLVAL         reduce using rule 6 (stmntwrap -> statement COLON .)
+    MINUS           reduce using rule 6 (stmntwrap -> statement COLON .)
+    LPTHESES        reduce using rule 6 (stmntwrap -> statement COLON .)
+    INUM            reduce using rule 6 (stmntwrap -> statement COLON .)
+    FNUM            reduce using rule 6 (stmntwrap -> statement COLON .)
+    STRVAL          reduce using rule 6 (stmntwrap -> statement COLON .)
+    ID              reduce using rule 6 (stmntwrap -> statement COLON .)
+    RCURLY          reduce using rule 6 (stmntwrap -> statement COLON .)
 
-    expression                     shift and go to state 28
 
 state 18
 
-    (7) statement -> FLOAT ID . is_assing
-    (27) is_assing -> . ASSIGN expression
-    (28) is_assing -> .
+    (18) while -> WHILE LPTHESES . condition RPTHESES LCURLY program RCURLY
+    (20) condition -> . BOOLVAL appendcond
+    (21) condition -> . comparison appendcond
+    (25) comparison -> . expression EQUAL expression
+    (26) comparison -> . expression NOTEQUAL expression
+    (27) comparison -> . expression GTHAN expression
+    (28) comparison -> . expression LTHAN expression
+    (29) comparison -> . expression GEQTHAN expression
+    (30) comparison -> . expression LEQTHAN expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    ASSIGN          shift and go to state 26
-    $end            reduce using rule 28 (is_assing -> .)
-    COLON           reduce using rule 28 (is_assing -> .)
-    RCURLY          reduce using rule 28 (is_assing -> .)
+    BOOLVAL         shift and go to state 29
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
-    is_assing                      shift and go to state 35
+    condition                      shift and go to state 28
+    comparison                     shift and go to state 30
+    expression                     shift and go to state 31
 
 state 19
 
-    (8) statement -> STRING ID . is_assing
-    (27) is_assing -> . ASSIGN expression
-    (28) is_assing -> .
+    (19) for -> FOR LPTHESES . stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+    (6) stmntwrap -> . statement COLON
+    (7) statement -> . INT ID is_assing
+    (8) statement -> . FLOAT ID is_assing
+    (9) statement -> . STRING ID is_assing
+    (10) statement -> . BOOLEAN ID is_assing
+    (33) statement -> . PRINT LPTHESES expression RPTHESES
+    (34) statement -> . ID ASSIGN expression
 
-    ASSIGN          shift and go to state 26
-    $end            reduce using rule 28 (is_assing -> .)
-    COLON           reduce using rule 28 (is_assing -> .)
-    RCURLY          reduce using rule 28 (is_assing -> .)
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 12
+    STRING          shift and go to state 13
+    BOOLEAN         shift and go to state 14
+    PRINT           shift and go to state 15
+    ID              shift and go to state 11
 
-    is_assing                      shift and go to state 36
+    stmntwrap                      shift and go to state 37
+    statement                      shift and go to state 6
 
 state 20
 
-    (9) statement -> BOOLEAN ID . is_assing
-    (27) is_assing -> . ASSIGN expression
-    (28) is_assing -> .
+    (7) statement -> INT ID . is_assing
+    (31) is_assing -> . ASSIGN expression
+    (32) is_assing -> .
 
-    ASSIGN          shift and go to state 26
-    $end            reduce using rule 28 (is_assing -> .)
-    COLON           reduce using rule 28 (is_assing -> .)
-    RCURLY          reduce using rule 28 (is_assing -> .)
+    ASSIGN          shift and go to state 39
+    COLON           reduce using rule 32 (is_assing -> .)
 
-    is_assing                      shift and go to state 37
+    is_assing                      shift and go to state 38
 
 state 21
 
-    (29) statement -> PRINT LPTHESES . expression RPTHESES
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (34) statement -> ID ASSIGN . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
-    expression                     shift and go to state 38
+    expression                     shift and go to state 40
 
 state 22
 
-    (17) while -> WHILE LPTHESES . condition RPTHESES LCURLY program RCURLY
-    (19) condition -> . BOOLVAL
-    (20) condition -> . comparison
-    (21) comparison -> . expression EQUAL expression
-    (22) comparison -> . expression NOTEQUAL expression
-    (23) comparison -> . expression GTHAN expression
-    (24) comparison -> . expression LTHAN expression
-    (25) comparison -> . expression GEQTHAN expression
-    (26) comparison -> . expression LEQTHAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (8) statement -> FLOAT ID . is_assing
+    (31) is_assing -> . ASSIGN expression
+    (32) is_assing -> .
 
-    BOOLVAL         shift and go to state 40
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    ASSIGN          shift and go to state 39
+    COLON           reduce using rule 32 (is_assing -> .)
 
-    condition                      shift and go to state 39
-    comparison                     shift and go to state 41
-    expression                     shift and go to state 42
+    is_assing                      shift and go to state 42
 
 state 23
 
-    (18) for -> FOR LPTHESES . statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-    (6) statement -> . INT ID is_assing
-    (7) statement -> . FLOAT ID is_assing
-    (8) statement -> . STRING ID is_assing
-    (9) statement -> . BOOLEAN ID is_assing
-    (29) statement -> . PRINT LPTHESES expression RPTHESES
-    (30) statement -> . ID ASSIGN expression
+    (9) statement -> STRING ID . is_assing
+    (31) is_assing -> . ASSIGN expression
+    (32) is_assing -> .
 
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    BOOLEAN         shift and go to state 10
-    PRINT           shift and go to state 11
-    ID              shift and go to state 7
+    ASSIGN          shift and go to state 39
+    COLON           reduce using rule 32 (is_assing -> .)
 
-    statement                      shift and go to state 43
+    is_assing                      shift and go to state 43
 
 state 24
 
-    (11) ifblock -> IF LPTHESES . condition RPTHESES LCURLY program RCURLY ifcont
-    (19) condition -> . BOOLVAL
-    (20) condition -> . comparison
-    (21) comparison -> . expression EQUAL expression
-    (22) comparison -> . expression NOTEQUAL expression
-    (23) comparison -> . expression GTHAN expression
-    (24) comparison -> . expression LTHAN expression
-    (25) comparison -> . expression GEQTHAN expression
-    (26) comparison -> . expression LEQTHAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (10) statement -> BOOLEAN ID . is_assing
+    (31) is_assing -> . ASSIGN expression
+    (32) is_assing -> .
 
-    BOOLVAL         shift and go to state 40
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    ASSIGN          shift and go to state 39
+    COLON           reduce using rule 32 (is_assing -> .)
 
-    condition                      shift and go to state 44
-    comparison                     shift and go to state 41
-    expression                     shift and go to state 42
+    is_assing                      shift and go to state 44
 
 state 25
 
-    (6) statement -> INT ID is_assing .
+    (33) statement -> PRINT LPTHESES . expression RPTHESES
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    $end            reduce using rule 6 (statement -> INT ID is_assing .)
-    COLON           reduce using rule 6 (statement -> INT ID is_assing .)
-    RCURLY          reduce using rule 6 (statement -> INT ID is_assing .)
-
-
-state 26
-
-    (27) is_assing -> ASSIGN . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
-
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
     expression                     shift and go to state 45
 
+state 26
+
+    (12) ifblock -> IF LPTHESES . condition RPTHESES LCURLY program RCURLY ifcont
+    (20) condition -> . BOOLVAL appendcond
+    (21) condition -> . comparison appendcond
+    (25) comparison -> . expression EQUAL expression
+    (26) comparison -> . expression NOTEQUAL expression
+    (27) comparison -> . expression GTHAN expression
+    (28) comparison -> . expression LTHAN expression
+    (29) comparison -> . expression GEQTHAN expression
+    (30) comparison -> . expression LEQTHAN expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
+
+    BOOLVAL         shift and go to state 29
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
+
+    condition                      shift and go to state 46
+    comparison                     shift and go to state 30
+    expression                     shift and go to state 31
+
 state 27
 
-    (42) expression -> ID .
+    (41) expression -> LPTHESES . expression RPTHESES
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    PLUS            reduce using rule 42 (expression -> ID .)
-    MINUS           reduce using rule 42 (expression -> ID .)
-    MULT            reduce using rule 42 (expression -> ID .)
-    DIVIDE          reduce using rule 42 (expression -> ID .)
-    EXP             reduce using rule 42 (expression -> ID .)
-    $end            reduce using rule 42 (expression -> ID .)
-    COLON           reduce using rule 42 (expression -> ID .)
-    RCURLY          reduce using rule 42 (expression -> ID .)
-    RPTHESES        reduce using rule 42 (expression -> ID .)
-    EQUAL           reduce using rule 42 (expression -> ID .)
-    NOTEQUAL        reduce using rule 42 (expression -> ID .)
-    GTHAN           reduce using rule 42 (expression -> ID .)
-    LTHAN           reduce using rule 42 (expression -> ID .)
-    GEQTHAN         reduce using rule 42 (expression -> ID .)
-    LEQTHAN         reduce using rule 42 (expression -> ID .)
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
+    expression                     shift and go to state 47
 
 state 28
 
-    (30) statement -> ID ASSIGN expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (18) while -> WHILE LPTHESES condition . RPTHESES LCURLY program RCURLY
 
-    $end            reduce using rule 30 (statement -> ID ASSIGN expression .)
-    COLON           reduce using rule 30 (statement -> ID ASSIGN expression .)
-    RCURLY          reduce using rule 30 (statement -> ID ASSIGN expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
+    RPTHESES        shift and go to state 48
 
 
 state 29
 
-    (36) expression -> MINUS . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (20) condition -> BOOLVAL . appendcond
+    (44) expression -> BOOLVAL .
+    (22) appendcond -> . AND condition
+    (23) appendcond -> . OR condition
+    (24) appendcond -> .
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    EQUAL           reduce using rule 44 (expression -> BOOLVAL .)
+    NOTEQUAL        reduce using rule 44 (expression -> BOOLVAL .)
+    GTHAN           reduce using rule 44 (expression -> BOOLVAL .)
+    LTHAN           reduce using rule 44 (expression -> BOOLVAL .)
+    GEQTHAN         reduce using rule 44 (expression -> BOOLVAL .)
+    LEQTHAN         reduce using rule 44 (expression -> BOOLVAL .)
+    PLUS            reduce using rule 44 (expression -> BOOLVAL .)
+    MINUS           reduce using rule 44 (expression -> BOOLVAL .)
+    MULT            reduce using rule 44 (expression -> BOOLVAL .)
+    DIVIDE          reduce using rule 44 (expression -> BOOLVAL .)
+    EXP             reduce using rule 44 (expression -> BOOLVAL .)
+    AND             shift and go to state 50
+    OR              shift and go to state 51
+    RPTHESES        reduce using rule 24 (appendcond -> .)
+    COLON           reduce using rule 24 (appendcond -> .)
 
-    expression                     shift and go to state 51
+    appendcond                     shift and go to state 49
 
 state 30
 
-    (37) expression -> LPTHESES . expression RPTHESES
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (21) condition -> comparison . appendcond
+    (22) appendcond -> . AND condition
+    (23) appendcond -> . OR condition
+    (24) appendcond -> .
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    AND             shift and go to state 50
+    OR              shift and go to state 51
+    RPTHESES        reduce using rule 24 (appendcond -> .)
+    COLON           reduce using rule 24 (appendcond -> .)
 
-    expression                     shift and go to state 52
+    appendcond                     shift and go to state 52
 
 state 31
 
-    (38) expression -> INUM .
+    (25) comparison -> expression . EQUAL expression
+    (26) comparison -> expression . NOTEQUAL expression
+    (27) comparison -> expression . GTHAN expression
+    (28) comparison -> expression . LTHAN expression
+    (29) comparison -> expression . GEQTHAN expression
+    (30) comparison -> expression . LEQTHAN expression
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
-    PLUS            reduce using rule 38 (expression -> INUM .)
-    MINUS           reduce using rule 38 (expression -> INUM .)
-    MULT            reduce using rule 38 (expression -> INUM .)
-    DIVIDE          reduce using rule 38 (expression -> INUM .)
-    EXP             reduce using rule 38 (expression -> INUM .)
-    $end            reduce using rule 38 (expression -> INUM .)
-    COLON           reduce using rule 38 (expression -> INUM .)
-    RCURLY          reduce using rule 38 (expression -> INUM .)
-    RPTHESES        reduce using rule 38 (expression -> INUM .)
-    EQUAL           reduce using rule 38 (expression -> INUM .)
-    NOTEQUAL        reduce using rule 38 (expression -> INUM .)
-    GTHAN           reduce using rule 38 (expression -> INUM .)
-    LTHAN           reduce using rule 38 (expression -> INUM .)
-    GEQTHAN         reduce using rule 38 (expression -> INUM .)
-    LEQTHAN         reduce using rule 38 (expression -> INUM .)
+    EQUAL           shift and go to state 53
+    NOTEQUAL        shift and go to state 54
+    GTHAN           shift and go to state 55
+    LTHAN           shift and go to state 56
+    GEQTHAN         shift and go to state 57
+    LEQTHAN         shift and go to state 58
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
 
 
 state 32
 
-    (39) expression -> FNUM .
+    (40) expression -> MINUS . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    PLUS            reduce using rule 39 (expression -> FNUM .)
-    MINUS           reduce using rule 39 (expression -> FNUM .)
-    MULT            reduce using rule 39 (expression -> FNUM .)
-    DIVIDE          reduce using rule 39 (expression -> FNUM .)
-    EXP             reduce using rule 39 (expression -> FNUM .)
-    $end            reduce using rule 39 (expression -> FNUM .)
-    COLON           reduce using rule 39 (expression -> FNUM .)
-    RCURLY          reduce using rule 39 (expression -> FNUM .)
-    RPTHESES        reduce using rule 39 (expression -> FNUM .)
-    EQUAL           reduce using rule 39 (expression -> FNUM .)
-    NOTEQUAL        reduce using rule 39 (expression -> FNUM .)
-    GTHAN           reduce using rule 39 (expression -> FNUM .)
-    LTHAN           reduce using rule 39 (expression -> FNUM .)
-    GEQTHAN         reduce using rule 39 (expression -> FNUM .)
-    LEQTHAN         reduce using rule 39 (expression -> FNUM .)
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
+    expression                     shift and go to state 64
 
 state 33
 
-    (40) expression -> BOOLVAL .
+    (42) expression -> INUM .
 
-    PLUS            reduce using rule 40 (expression -> BOOLVAL .)
-    MINUS           reduce using rule 40 (expression -> BOOLVAL .)
-    MULT            reduce using rule 40 (expression -> BOOLVAL .)
-    DIVIDE          reduce using rule 40 (expression -> BOOLVAL .)
-    EXP             reduce using rule 40 (expression -> BOOLVAL .)
-    $end            reduce using rule 40 (expression -> BOOLVAL .)
-    COLON           reduce using rule 40 (expression -> BOOLVAL .)
-    RCURLY          reduce using rule 40 (expression -> BOOLVAL .)
-    RPTHESES        reduce using rule 40 (expression -> BOOLVAL .)
-    EQUAL           reduce using rule 40 (expression -> BOOLVAL .)
-    NOTEQUAL        reduce using rule 40 (expression -> BOOLVAL .)
-    GTHAN           reduce using rule 40 (expression -> BOOLVAL .)
-    LTHAN           reduce using rule 40 (expression -> BOOLVAL .)
-    GEQTHAN         reduce using rule 40 (expression -> BOOLVAL .)
-    LEQTHAN         reduce using rule 40 (expression -> BOOLVAL .)
+    EQUAL           reduce using rule 42 (expression -> INUM .)
+    NOTEQUAL        reduce using rule 42 (expression -> INUM .)
+    GTHAN           reduce using rule 42 (expression -> INUM .)
+    LTHAN           reduce using rule 42 (expression -> INUM .)
+    GEQTHAN         reduce using rule 42 (expression -> INUM .)
+    LEQTHAN         reduce using rule 42 (expression -> INUM .)
+    PLUS            reduce using rule 42 (expression -> INUM .)
+    MINUS           reduce using rule 42 (expression -> INUM .)
+    MULT            reduce using rule 42 (expression -> INUM .)
+    DIVIDE          reduce using rule 42 (expression -> INUM .)
+    EXP             reduce using rule 42 (expression -> INUM .)
+    COLON           reduce using rule 42 (expression -> INUM .)
+    RPTHESES        reduce using rule 42 (expression -> INUM .)
+    AND             reduce using rule 42 (expression -> INUM .)
+    OR              reduce using rule 42 (expression -> INUM .)
 
 
 state 34
 
-    (41) expression -> STRVAL .
+    (43) expression -> FNUM .
 
-    PLUS            reduce using rule 41 (expression -> STRVAL .)
-    MINUS           reduce using rule 41 (expression -> STRVAL .)
-    MULT            reduce using rule 41 (expression -> STRVAL .)
-    DIVIDE          reduce using rule 41 (expression -> STRVAL .)
-    EXP             reduce using rule 41 (expression -> STRVAL .)
-    $end            reduce using rule 41 (expression -> STRVAL .)
-    COLON           reduce using rule 41 (expression -> STRVAL .)
-    RCURLY          reduce using rule 41 (expression -> STRVAL .)
-    RPTHESES        reduce using rule 41 (expression -> STRVAL .)
-    EQUAL           reduce using rule 41 (expression -> STRVAL .)
-    NOTEQUAL        reduce using rule 41 (expression -> STRVAL .)
-    GTHAN           reduce using rule 41 (expression -> STRVAL .)
-    LTHAN           reduce using rule 41 (expression -> STRVAL .)
-    GEQTHAN         reduce using rule 41 (expression -> STRVAL .)
-    LEQTHAN         reduce using rule 41 (expression -> STRVAL .)
+    EQUAL           reduce using rule 43 (expression -> FNUM .)
+    NOTEQUAL        reduce using rule 43 (expression -> FNUM .)
+    GTHAN           reduce using rule 43 (expression -> FNUM .)
+    LTHAN           reduce using rule 43 (expression -> FNUM .)
+    GEQTHAN         reduce using rule 43 (expression -> FNUM .)
+    LEQTHAN         reduce using rule 43 (expression -> FNUM .)
+    PLUS            reduce using rule 43 (expression -> FNUM .)
+    MINUS           reduce using rule 43 (expression -> FNUM .)
+    MULT            reduce using rule 43 (expression -> FNUM .)
+    DIVIDE          reduce using rule 43 (expression -> FNUM .)
+    EXP             reduce using rule 43 (expression -> FNUM .)
+    COLON           reduce using rule 43 (expression -> FNUM .)
+    RPTHESES        reduce using rule 43 (expression -> FNUM .)
+    AND             reduce using rule 43 (expression -> FNUM .)
+    OR              reduce using rule 43 (expression -> FNUM .)
 
 
 state 35
 
-    (7) statement -> FLOAT ID is_assing .
+    (45) expression -> STRVAL .
 
-    $end            reduce using rule 7 (statement -> FLOAT ID is_assing .)
-    COLON           reduce using rule 7 (statement -> FLOAT ID is_assing .)
-    RCURLY          reduce using rule 7 (statement -> FLOAT ID is_assing .)
+    EQUAL           reduce using rule 45 (expression -> STRVAL .)
+    NOTEQUAL        reduce using rule 45 (expression -> STRVAL .)
+    GTHAN           reduce using rule 45 (expression -> STRVAL .)
+    LTHAN           reduce using rule 45 (expression -> STRVAL .)
+    GEQTHAN         reduce using rule 45 (expression -> STRVAL .)
+    LEQTHAN         reduce using rule 45 (expression -> STRVAL .)
+    PLUS            reduce using rule 45 (expression -> STRVAL .)
+    MINUS           reduce using rule 45 (expression -> STRVAL .)
+    MULT            reduce using rule 45 (expression -> STRVAL .)
+    DIVIDE          reduce using rule 45 (expression -> STRVAL .)
+    EXP             reduce using rule 45 (expression -> STRVAL .)
+    COLON           reduce using rule 45 (expression -> STRVAL .)
+    RPTHESES        reduce using rule 45 (expression -> STRVAL .)
+    AND             reduce using rule 45 (expression -> STRVAL .)
+    OR              reduce using rule 45 (expression -> STRVAL .)
 
 
 state 36
 
-    (8) statement -> STRING ID is_assing .
+    (46) expression -> ID .
 
-    $end            reduce using rule 8 (statement -> STRING ID is_assing .)
-    COLON           reduce using rule 8 (statement -> STRING ID is_assing .)
-    RCURLY          reduce using rule 8 (statement -> STRING ID is_assing .)
+    EQUAL           reduce using rule 46 (expression -> ID .)
+    NOTEQUAL        reduce using rule 46 (expression -> ID .)
+    GTHAN           reduce using rule 46 (expression -> ID .)
+    LTHAN           reduce using rule 46 (expression -> ID .)
+    GEQTHAN         reduce using rule 46 (expression -> ID .)
+    LEQTHAN         reduce using rule 46 (expression -> ID .)
+    PLUS            reduce using rule 46 (expression -> ID .)
+    MINUS           reduce using rule 46 (expression -> ID .)
+    MULT            reduce using rule 46 (expression -> ID .)
+    DIVIDE          reduce using rule 46 (expression -> ID .)
+    EXP             reduce using rule 46 (expression -> ID .)
+    COLON           reduce using rule 46 (expression -> ID .)
+    RPTHESES        reduce using rule 46 (expression -> ID .)
+    AND             reduce using rule 46 (expression -> ID .)
+    OR              reduce using rule 46 (expression -> ID .)
 
 
 state 37
 
-    (9) statement -> BOOLEAN ID is_assing .
+    (19) for -> FOR LPTHESES stmntwrap . condition COLON expression RPTHESES LCURLY program RCURLY
+    (20) condition -> . BOOLVAL appendcond
+    (21) condition -> . comparison appendcond
+    (25) comparison -> . expression EQUAL expression
+    (26) comparison -> . expression NOTEQUAL expression
+    (27) comparison -> . expression GTHAN expression
+    (28) comparison -> . expression LTHAN expression
+    (29) comparison -> . expression GEQTHAN expression
+    (30) comparison -> . expression LEQTHAN expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    $end            reduce using rule 9 (statement -> BOOLEAN ID is_assing .)
-    COLON           reduce using rule 9 (statement -> BOOLEAN ID is_assing .)
-    RCURLY          reduce using rule 9 (statement -> BOOLEAN ID is_assing .)
+    BOOLVAL         shift and go to state 29
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
+    condition                      shift and go to state 65
+    expression                     shift and go to state 31
+    comparison                     shift and go to state 30
 
 state 38
 
-    (29) statement -> PRINT LPTHESES expression . RPTHESES
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (7) statement -> INT ID is_assing .
 
-    RPTHESES        shift and go to state 53
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
+    COLON           reduce using rule 7 (statement -> INT ID is_assing .)
 
 
 state 39
 
-    (17) while -> WHILE LPTHESES condition . RPTHESES LCURLY program RCURLY
+    (31) is_assing -> ASSIGN . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    RPTHESES        shift and go to state 54
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
+    expression                     shift and go to state 66
 
 state 40
 
-    (19) condition -> BOOLVAL .
-    (40) expression -> BOOLVAL .
+    (34) statement -> ID ASSIGN expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
-    RPTHESES        reduce using rule 19 (condition -> BOOLVAL .)
-    COLON           reduce using rule 19 (condition -> BOOLVAL .)
-    EQUAL           reduce using rule 40 (expression -> BOOLVAL .)
-    NOTEQUAL        reduce using rule 40 (expression -> BOOLVAL .)
-    GTHAN           reduce using rule 40 (expression -> BOOLVAL .)
-    LTHAN           reduce using rule 40 (expression -> BOOLVAL .)
-    GEQTHAN         reduce using rule 40 (expression -> BOOLVAL .)
-    LEQTHAN         reduce using rule 40 (expression -> BOOLVAL .)
-    PLUS            reduce using rule 40 (expression -> BOOLVAL .)
-    MINUS           reduce using rule 40 (expression -> BOOLVAL .)
-    MULT            reduce using rule 40 (expression -> BOOLVAL .)
-    DIVIDE          reduce using rule 40 (expression -> BOOLVAL .)
-    EXP             reduce using rule 40 (expression -> BOOLVAL .)
+    COLON           reduce using rule 34 (statement -> ID ASSIGN expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
 
 
 state 41
 
-    (20) condition -> comparison .
+    (44) expression -> BOOLVAL .
 
-    RPTHESES        reduce using rule 20 (condition -> comparison .)
-    COLON           reduce using rule 20 (condition -> comparison .)
+    PLUS            reduce using rule 44 (expression -> BOOLVAL .)
+    MINUS           reduce using rule 44 (expression -> BOOLVAL .)
+    MULT            reduce using rule 44 (expression -> BOOLVAL .)
+    DIVIDE          reduce using rule 44 (expression -> BOOLVAL .)
+    EXP             reduce using rule 44 (expression -> BOOLVAL .)
+    COLON           reduce using rule 44 (expression -> BOOLVAL .)
+    RPTHESES        reduce using rule 44 (expression -> BOOLVAL .)
+    EQUAL           reduce using rule 44 (expression -> BOOLVAL .)
+    NOTEQUAL        reduce using rule 44 (expression -> BOOLVAL .)
+    GTHAN           reduce using rule 44 (expression -> BOOLVAL .)
+    LTHAN           reduce using rule 44 (expression -> BOOLVAL .)
+    GEQTHAN         reduce using rule 44 (expression -> BOOLVAL .)
+    LEQTHAN         reduce using rule 44 (expression -> BOOLVAL .)
+    AND             reduce using rule 44 (expression -> BOOLVAL .)
+    OR              reduce using rule 44 (expression -> BOOLVAL .)
 
 
 state 42
 
-    (21) comparison -> expression . EQUAL expression
-    (22) comparison -> expression . NOTEQUAL expression
-    (23) comparison -> expression . GTHAN expression
-    (24) comparison -> expression . LTHAN expression
-    (25) comparison -> expression . GEQTHAN expression
-    (26) comparison -> expression . LEQTHAN expression
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (8) statement -> FLOAT ID is_assing .
 
-    EQUAL           shift and go to state 55
-    NOTEQUAL        shift and go to state 56
-    GTHAN           shift and go to state 57
-    LTHAN           shift and go to state 58
-    GEQTHAN         shift and go to state 59
-    LEQTHAN         shift and go to state 60
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
+    COLON           reduce using rule 8 (statement -> FLOAT ID is_assing .)
 
 
 state 43
 
-    (18) for -> FOR LPTHESES statement . COLON condition COLON expression RPTHESES LCURLY program RCURLY
+    (9) statement -> STRING ID is_assing .
 
-    COLON           shift and go to state 61
+    COLON           reduce using rule 9 (statement -> STRING ID is_assing .)
 
 
 state 44
 
-    (11) ifblock -> IF LPTHESES condition . RPTHESES LCURLY program RCURLY ifcont
+    (10) statement -> BOOLEAN ID is_assing .
 
-    RPTHESES        shift and go to state 62
+    COLON           reduce using rule 10 (statement -> BOOLEAN ID is_assing .)
 
 
 state 45
 
-    (27) is_assing -> ASSIGN expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (33) statement -> PRINT LPTHESES expression . RPTHESES
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
-    $end            reduce using rule 27 (is_assing -> ASSIGN expression .)
-    COLON           reduce using rule 27 (is_assing -> ASSIGN expression .)
-    RCURLY          reduce using rule 27 (is_assing -> ASSIGN expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
+    RPTHESES        shift and go to state 67
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
 
 
 state 46
 
-    (31) expression -> expression PLUS . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (12) ifblock -> IF LPTHESES condition . RPTHESES LCURLY program RCURLY ifcont
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    RPTHESES        shift and go to state 68
 
-    expression                     shift and go to state 63
 
 state 47
 
-    (32) expression -> expression MINUS . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (41) expression -> LPTHESES expression . RPTHESES
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    RPTHESES        shift and go to state 69
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
 
-    expression                     shift and go to state 64
 
 state 48
 
-    (33) expression -> expression MULT . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (18) while -> WHILE LPTHESES condition RPTHESES . LCURLY program RCURLY
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    LCURLY          shift and go to state 70
 
-    expression                     shift and go to state 65
 
 state 49
 
-    (34) expression -> expression DIVIDE . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (20) condition -> BOOLVAL appendcond .
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    RPTHESES        reduce using rule 20 (condition -> BOOLVAL appendcond .)
+    COLON           reduce using rule 20 (condition -> BOOLVAL appendcond .)
 
-    expression                     shift and go to state 66
 
 state 50
 
-    (35) expression -> expression EXP . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (22) appendcond -> AND . condition
+    (20) condition -> . BOOLVAL appendcond
+    (21) condition -> . comparison appendcond
+    (25) comparison -> . expression EQUAL expression
+    (26) comparison -> . expression NOTEQUAL expression
+    (27) comparison -> . expression GTHAN expression
+    (28) comparison -> . expression LTHAN expression
+    (29) comparison -> . expression GEQTHAN expression
+    (30) comparison -> . expression LEQTHAN expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    BOOLVAL         shift and go to state 29
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
-    expression                     shift and go to state 67
+    condition                      shift and go to state 71
+    comparison                     shift and go to state 30
+    expression                     shift and go to state 31
 
 state 51
 
-    (36) expression -> MINUS expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (23) appendcond -> OR . condition
+    (20) condition -> . BOOLVAL appendcond
+    (21) condition -> . comparison appendcond
+    (25) comparison -> . expression EQUAL expression
+    (26) comparison -> . expression NOTEQUAL expression
+    (27) comparison -> . expression GTHAN expression
+    (28) comparison -> . expression LTHAN expression
+    (29) comparison -> . expression GEQTHAN expression
+    (30) comparison -> . expression LEQTHAN expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    PLUS            reduce using rule 36 (expression -> MINUS expression .)
-    MINUS           reduce using rule 36 (expression -> MINUS expression .)
-    MULT            reduce using rule 36 (expression -> MINUS expression .)
-    DIVIDE          reduce using rule 36 (expression -> MINUS expression .)
-    EXP             reduce using rule 36 (expression -> MINUS expression .)
-    $end            reduce using rule 36 (expression -> MINUS expression .)
-    COLON           reduce using rule 36 (expression -> MINUS expression .)
-    RCURLY          reduce using rule 36 (expression -> MINUS expression .)
-    RPTHESES        reduce using rule 36 (expression -> MINUS expression .)
-    EQUAL           reduce using rule 36 (expression -> MINUS expression .)
-    NOTEQUAL        reduce using rule 36 (expression -> MINUS expression .)
-    GTHAN           reduce using rule 36 (expression -> MINUS expression .)
-    LTHAN           reduce using rule 36 (expression -> MINUS expression .)
-    GEQTHAN         reduce using rule 36 (expression -> MINUS expression .)
-    LEQTHAN         reduce using rule 36 (expression -> MINUS expression .)
+    BOOLVAL         shift and go to state 29
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
-  ! PLUS            [ shift and go to state 46 ]
-  ! MINUS           [ shift and go to state 47 ]
-  ! MULT            [ shift and go to state 48 ]
-  ! DIVIDE          [ shift and go to state 49 ]
-  ! EXP             [ shift and go to state 50 ]
-
+    condition                      shift and go to state 72
+    comparison                     shift and go to state 30
+    expression                     shift and go to state 31
 
 state 52
 
-    (37) expression -> LPTHESES expression . RPTHESES
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (21) condition -> comparison appendcond .
 
-    RPTHESES        shift and go to state 68
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
+    RPTHESES        reduce using rule 21 (condition -> comparison appendcond .)
+    COLON           reduce using rule 21 (condition -> comparison appendcond .)
 
 
 state 53
 
-    (29) statement -> PRINT LPTHESES expression RPTHESES .
+    (25) comparison -> expression EQUAL . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    $end            reduce using rule 29 (statement -> PRINT LPTHESES expression RPTHESES .)
-    COLON           reduce using rule 29 (statement -> PRINT LPTHESES expression RPTHESES .)
-    RCURLY          reduce using rule 29 (statement -> PRINT LPTHESES expression RPTHESES .)
-
-
-state 54
-
-    (17) while -> WHILE LPTHESES condition RPTHESES . LCURLY program RCURLY
-
-    LCURLY          shift and go to state 69
-
-
-state 55
-
-    (21) comparison -> expression EQUAL . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
-
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
-
-    expression                     shift and go to state 70
-
-state 56
-
-    (22) comparison -> expression NOTEQUAL . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
-
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
-
-    expression                     shift and go to state 71
-
-state 57
-
-    (23) comparison -> expression GTHAN . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
-
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
-
-    expression                     shift and go to state 72
-
-state 58
-
-    (24) comparison -> expression LTHAN . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
-
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
     expression                     shift and go to state 73
 
-state 59
+state 54
 
-    (25) comparison -> expression GEQTHAN . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (26) comparison -> expression NOTEQUAL . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
     expression                     shift and go to state 74
 
-state 60
+state 55
 
-    (26) comparison -> expression LEQTHAN . expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (27) comparison -> expression GTHAN . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
     expression                     shift and go to state 75
 
+state 56
+
+    (28) comparison -> expression LTHAN . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
+
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
+
+    expression                     shift and go to state 76
+
+state 57
+
+    (29) comparison -> expression GEQTHAN . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
+
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
+
+    expression                     shift and go to state 77
+
+state 58
+
+    (30) comparison -> expression LEQTHAN . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
+
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
+
+    expression                     shift and go to state 78
+
+state 59
+
+    (35) expression -> expression PLUS . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
+
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
+
+    expression                     shift and go to state 79
+
+state 60
+
+    (36) expression -> expression MINUS . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
+
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
+
+    expression                     shift and go to state 80
+
 state 61
 
-    (18) for -> FOR LPTHESES statement COLON . condition COLON expression RPTHESES LCURLY program RCURLY
-    (19) condition -> . BOOLVAL
-    (20) condition -> . comparison
-    (21) comparison -> . expression EQUAL expression
-    (22) comparison -> . expression NOTEQUAL expression
-    (23) comparison -> . expression GTHAN expression
-    (24) comparison -> . expression LTHAN expression
-    (25) comparison -> . expression GEQTHAN expression
-    (26) comparison -> . expression LEQTHAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
+    (37) expression -> expression MULT . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    BOOLVAL         shift and go to state 40
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
-    condition                      shift and go to state 76
-    expression                     shift and go to state 42
-    comparison                     shift and go to state 41
+    expression                     shift and go to state 81
 
 state 62
 
-    (11) ifblock -> IF LPTHESES condition RPTHESES . LCURLY program RCURLY ifcont
+    (38) expression -> expression DIVIDE . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    LCURLY          shift and go to state 77
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
+    expression                     shift and go to state 82
 
 state 63
 
-    (31) expression -> expression PLUS expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (39) expression -> expression EXP . expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    PLUS            reduce using rule 31 (expression -> expression PLUS expression .)
-    MINUS           reduce using rule 31 (expression -> expression PLUS expression .)
-    EXP             reduce using rule 31 (expression -> expression PLUS expression .)
-    $end            reduce using rule 31 (expression -> expression PLUS expression .)
-    COLON           reduce using rule 31 (expression -> expression PLUS expression .)
-    RCURLY          reduce using rule 31 (expression -> expression PLUS expression .)
-    RPTHESES        reduce using rule 31 (expression -> expression PLUS expression .)
-    EQUAL           reduce using rule 31 (expression -> expression PLUS expression .)
-    NOTEQUAL        reduce using rule 31 (expression -> expression PLUS expression .)
-    GTHAN           reduce using rule 31 (expression -> expression PLUS expression .)
-    LTHAN           reduce using rule 31 (expression -> expression PLUS expression .)
-    GEQTHAN         reduce using rule 31 (expression -> expression PLUS expression .)
-    LEQTHAN         reduce using rule 31 (expression -> expression PLUS expression .)
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
-  ! MULT            [ reduce using rule 31 (expression -> expression PLUS expression .) ]
-  ! DIVIDE          [ reduce using rule 31 (expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 46 ]
-  ! MINUS           [ shift and go to state 47 ]
-  ! EXP             [ shift and go to state 50 ]
-
+    expression                     shift and go to state 83
 
 state 64
 
-    (32) expression -> expression MINUS expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (40) expression -> MINUS expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
-    PLUS            reduce using rule 32 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 32 (expression -> expression MINUS expression .)
-    EXP             reduce using rule 32 (expression -> expression MINUS expression .)
-    $end            reduce using rule 32 (expression -> expression MINUS expression .)
-    COLON           reduce using rule 32 (expression -> expression MINUS expression .)
-    RCURLY          reduce using rule 32 (expression -> expression MINUS expression .)
-    RPTHESES        reduce using rule 32 (expression -> expression MINUS expression .)
-    EQUAL           reduce using rule 32 (expression -> expression MINUS expression .)
-    NOTEQUAL        reduce using rule 32 (expression -> expression MINUS expression .)
-    GTHAN           reduce using rule 32 (expression -> expression MINUS expression .)
-    LTHAN           reduce using rule 32 (expression -> expression MINUS expression .)
-    GEQTHAN         reduce using rule 32 (expression -> expression MINUS expression .)
-    LEQTHAN         reduce using rule 32 (expression -> expression MINUS expression .)
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
+    EQUAL           reduce using rule 40 (expression -> MINUS expression .)
+    NOTEQUAL        reduce using rule 40 (expression -> MINUS expression .)
+    GTHAN           reduce using rule 40 (expression -> MINUS expression .)
+    LTHAN           reduce using rule 40 (expression -> MINUS expression .)
+    GEQTHAN         reduce using rule 40 (expression -> MINUS expression .)
+    LEQTHAN         reduce using rule 40 (expression -> MINUS expression .)
+    PLUS            reduce using rule 40 (expression -> MINUS expression .)
+    MINUS           reduce using rule 40 (expression -> MINUS expression .)
+    MULT            reduce using rule 40 (expression -> MINUS expression .)
+    DIVIDE          reduce using rule 40 (expression -> MINUS expression .)
+    EXP             reduce using rule 40 (expression -> MINUS expression .)
+    COLON           reduce using rule 40 (expression -> MINUS expression .)
+    RPTHESES        reduce using rule 40 (expression -> MINUS expression .)
+    AND             reduce using rule 40 (expression -> MINUS expression .)
+    OR              reduce using rule 40 (expression -> MINUS expression .)
 
-  ! MULT            [ reduce using rule 32 (expression -> expression MINUS expression .) ]
-  ! DIVIDE          [ reduce using rule 32 (expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 46 ]
-  ! MINUS           [ shift and go to state 47 ]
-  ! EXP             [ shift and go to state 50 ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! MULT            [ shift and go to state 61 ]
+  ! DIVIDE          [ shift and go to state 62 ]
+  ! EXP             [ shift and go to state 63 ]
 
 
 state 65
 
-    (33) expression -> expression MULT expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (19) for -> FOR LPTHESES stmntwrap condition . COLON expression RPTHESES LCURLY program RCURLY
 
-    PLUS            reduce using rule 33 (expression -> expression MULT expression .)
-    MINUS           reduce using rule 33 (expression -> expression MULT expression .)
-    MULT            reduce using rule 33 (expression -> expression MULT expression .)
-    DIVIDE          reduce using rule 33 (expression -> expression MULT expression .)
-    EXP             reduce using rule 33 (expression -> expression MULT expression .)
-    $end            reduce using rule 33 (expression -> expression MULT expression .)
-    COLON           reduce using rule 33 (expression -> expression MULT expression .)
-    RCURLY          reduce using rule 33 (expression -> expression MULT expression .)
-    RPTHESES        reduce using rule 33 (expression -> expression MULT expression .)
-    EQUAL           reduce using rule 33 (expression -> expression MULT expression .)
-    NOTEQUAL        reduce using rule 33 (expression -> expression MULT expression .)
-    GTHAN           reduce using rule 33 (expression -> expression MULT expression .)
-    LTHAN           reduce using rule 33 (expression -> expression MULT expression .)
-    GEQTHAN         reduce using rule 33 (expression -> expression MULT expression .)
-    LEQTHAN         reduce using rule 33 (expression -> expression MULT expression .)
-
-  ! PLUS            [ shift and go to state 46 ]
-  ! MINUS           [ shift and go to state 47 ]
-  ! MULT            [ shift and go to state 48 ]
-  ! DIVIDE          [ shift and go to state 49 ]
-  ! EXP             [ shift and go to state 50 ]
+    COLON           shift and go to state 84
 
 
 state 66
 
-    (34) expression -> expression DIVIDE expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (31) is_assing -> ASSIGN expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
-    PLUS            reduce using rule 34 (expression -> expression DIVIDE expression .)
-    MINUS           reduce using rule 34 (expression -> expression DIVIDE expression .)
-    MULT            reduce using rule 34 (expression -> expression DIVIDE expression .)
-    DIVIDE          reduce using rule 34 (expression -> expression DIVIDE expression .)
-    EXP             reduce using rule 34 (expression -> expression DIVIDE expression .)
-    $end            reduce using rule 34 (expression -> expression DIVIDE expression .)
-    COLON           reduce using rule 34 (expression -> expression DIVIDE expression .)
-    RCURLY          reduce using rule 34 (expression -> expression DIVIDE expression .)
-    RPTHESES        reduce using rule 34 (expression -> expression DIVIDE expression .)
-    EQUAL           reduce using rule 34 (expression -> expression DIVIDE expression .)
-    NOTEQUAL        reduce using rule 34 (expression -> expression DIVIDE expression .)
-    GTHAN           reduce using rule 34 (expression -> expression DIVIDE expression .)
-    LTHAN           reduce using rule 34 (expression -> expression DIVIDE expression .)
-    GEQTHAN         reduce using rule 34 (expression -> expression DIVIDE expression .)
-    LEQTHAN         reduce using rule 34 (expression -> expression DIVIDE expression .)
-
-  ! PLUS            [ shift and go to state 46 ]
-  ! MINUS           [ shift and go to state 47 ]
-  ! MULT            [ shift and go to state 48 ]
-  ! DIVIDE          [ shift and go to state 49 ]
-  ! EXP             [ shift and go to state 50 ]
+    COLON           reduce using rule 31 (is_assing -> ASSIGN expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
 
 
 state 67
 
-    (35) expression -> expression EXP expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
+    (33) statement -> PRINT LPTHESES expression RPTHESES .
+
+    COLON           reduce using rule 33 (statement -> PRINT LPTHESES expression RPTHESES .)
+
+
+state 68
+
+    (12) ifblock -> IF LPTHESES condition RPTHESES . LCURLY program RCURLY ifcont
+
+    LCURLY          shift and go to state 85
+
+
+state 69
+
+    (41) expression -> LPTHESES expression RPTHESES .
+
+    EQUAL           reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    NOTEQUAL        reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    GTHAN           reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    LTHAN           reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    GEQTHAN         reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    LEQTHAN         reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    PLUS            reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    MINUS           reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    MULT            reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    DIVIDE          reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    EXP             reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    COLON           reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    RPTHESES        reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    AND             reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+    OR              reduce using rule 41 (expression -> LPTHESES expression RPTHESES .)
+
+
+state 70
+
+    (18) while -> WHILE LPTHESES condition RPTHESES LCURLY . program RCURLY
+    (1) program -> . stmntwrap
+    (2) program -> . block
+    (3) program -> . while
+    (4) program -> . for
+    (5) program -> .
+    (6) stmntwrap -> . statement COLON
+    (11) block -> . ifblock
+    (18) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
+    (19) for -> . FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+    (7) statement -> . INT ID is_assing
+    (8) statement -> . FLOAT ID is_assing
+    (9) statement -> . STRING ID is_assing
+    (10) statement -> . BOOLEAN ID is_assing
+    (33) statement -> . PRINT LPTHESES expression RPTHESES
+    (34) statement -> . ID ASSIGN expression
+    (12) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+
+    RCURLY          reduce using rule 5 (program -> .)
+    WHILE           shift and go to state 8
+    FOR             shift and go to state 9
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 12
+    STRING          shift and go to state 13
+    BOOLEAN         shift and go to state 14
+    PRINT           shift and go to state 15
+    ID              shift and go to state 11
+    IF              shift and go to state 16
+
+    program                        shift and go to state 86
+    stmntwrap                      shift and go to state 2
+    block                          shift and go to state 3
+    while                          shift and go to state 4
+    for                            shift and go to state 5
+    statement                      shift and go to state 6
+    ifblock                        shift and go to state 7
+
+state 71
+
+    (22) appendcond -> AND condition .
+
+    RPTHESES        reduce using rule 22 (appendcond -> AND condition .)
+    COLON           reduce using rule 22 (appendcond -> AND condition .)
+
+
+state 72
+
+    (23) appendcond -> OR condition .
+
+    RPTHESES        reduce using rule 23 (appendcond -> OR condition .)
+    COLON           reduce using rule 23 (appendcond -> OR condition .)
+
+
+state 73
+
+    (25) comparison -> expression EQUAL expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    AND             reduce using rule 25 (comparison -> expression EQUAL expression .)
+    OR              reduce using rule 25 (comparison -> expression EQUAL expression .)
+    RPTHESES        reduce using rule 25 (comparison -> expression EQUAL expression .)
+    COLON           reduce using rule 25 (comparison -> expression EQUAL expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
+
+
+state 74
+
+    (26) comparison -> expression NOTEQUAL expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    AND             reduce using rule 26 (comparison -> expression NOTEQUAL expression .)
+    OR              reduce using rule 26 (comparison -> expression NOTEQUAL expression .)
+    RPTHESES        reduce using rule 26 (comparison -> expression NOTEQUAL expression .)
+    COLON           reduce using rule 26 (comparison -> expression NOTEQUAL expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
+
+
+state 75
+
+    (27) comparison -> expression GTHAN expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    AND             reduce using rule 27 (comparison -> expression GTHAN expression .)
+    OR              reduce using rule 27 (comparison -> expression GTHAN expression .)
+    RPTHESES        reduce using rule 27 (comparison -> expression GTHAN expression .)
+    COLON           reduce using rule 27 (comparison -> expression GTHAN expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
+
+
+state 76
+
+    (28) comparison -> expression LTHAN expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    AND             reduce using rule 28 (comparison -> expression LTHAN expression .)
+    OR              reduce using rule 28 (comparison -> expression LTHAN expression .)
+    RPTHESES        reduce using rule 28 (comparison -> expression LTHAN expression .)
+    COLON           reduce using rule 28 (comparison -> expression LTHAN expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
+
+
+state 77
+
+    (29) comparison -> expression GEQTHAN expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    AND             reduce using rule 29 (comparison -> expression GEQTHAN expression .)
+    OR              reduce using rule 29 (comparison -> expression GEQTHAN expression .)
+    RPTHESES        reduce using rule 29 (comparison -> expression GEQTHAN expression .)
+    COLON           reduce using rule 29 (comparison -> expression GEQTHAN expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
+
+
+state 78
+
+    (30) comparison -> expression LEQTHAN expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    AND             reduce using rule 30 (comparison -> expression LEQTHAN expression .)
+    OR              reduce using rule 30 (comparison -> expression LEQTHAN expression .)
+    RPTHESES        reduce using rule 30 (comparison -> expression LEQTHAN expression .)
+    COLON           reduce using rule 30 (comparison -> expression LEQTHAN expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
+
+
+state 79
+
+    (35) expression -> expression PLUS expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    EQUAL           reduce using rule 35 (expression -> expression PLUS expression .)
+    NOTEQUAL        reduce using rule 35 (expression -> expression PLUS expression .)
+    GTHAN           reduce using rule 35 (expression -> expression PLUS expression .)
+    LTHAN           reduce using rule 35 (expression -> expression PLUS expression .)
+    GEQTHAN         reduce using rule 35 (expression -> expression PLUS expression .)
+    LEQTHAN         reduce using rule 35 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 35 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 35 (expression -> expression PLUS expression .)
+    EXP             reduce using rule 35 (expression -> expression PLUS expression .)
+    COLON           reduce using rule 35 (expression -> expression PLUS expression .)
+    RPTHESES        reduce using rule 35 (expression -> expression PLUS expression .)
+    AND             reduce using rule 35 (expression -> expression PLUS expression .)
+    OR              reduce using rule 35 (expression -> expression PLUS expression .)
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+
+  ! MULT            [ reduce using rule 35 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 35 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! EXP             [ shift and go to state 63 ]
+
+
+state 80
+
+    (36) expression -> expression MINUS expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    EQUAL           reduce using rule 36 (expression -> expression MINUS expression .)
+    NOTEQUAL        reduce using rule 36 (expression -> expression MINUS expression .)
+    GTHAN           reduce using rule 36 (expression -> expression MINUS expression .)
+    LTHAN           reduce using rule 36 (expression -> expression MINUS expression .)
+    GEQTHAN         reduce using rule 36 (expression -> expression MINUS expression .)
+    LEQTHAN         reduce using rule 36 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 36 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 36 (expression -> expression MINUS expression .)
+    EXP             reduce using rule 36 (expression -> expression MINUS expression .)
+    COLON           reduce using rule 36 (expression -> expression MINUS expression .)
+    RPTHESES        reduce using rule 36 (expression -> expression MINUS expression .)
+    AND             reduce using rule 36 (expression -> expression MINUS expression .)
+    OR              reduce using rule 36 (expression -> expression MINUS expression .)
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+
+  ! MULT            [ reduce using rule 36 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 36 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! EXP             [ shift and go to state 63 ]
+
+
+state 81
+
+    (37) expression -> expression MULT expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    EQUAL           reduce using rule 37 (expression -> expression MULT expression .)
+    NOTEQUAL        reduce using rule 37 (expression -> expression MULT expression .)
+    GTHAN           reduce using rule 37 (expression -> expression MULT expression .)
+    LTHAN           reduce using rule 37 (expression -> expression MULT expression .)
+    GEQTHAN         reduce using rule 37 (expression -> expression MULT expression .)
+    LEQTHAN         reduce using rule 37 (expression -> expression MULT expression .)
+    PLUS            reduce using rule 37 (expression -> expression MULT expression .)
+    MINUS           reduce using rule 37 (expression -> expression MULT expression .)
+    MULT            reduce using rule 37 (expression -> expression MULT expression .)
+    DIVIDE          reduce using rule 37 (expression -> expression MULT expression .)
+    EXP             reduce using rule 37 (expression -> expression MULT expression .)
+    COLON           reduce using rule 37 (expression -> expression MULT expression .)
+    RPTHESES        reduce using rule 37 (expression -> expression MULT expression .)
+    AND             reduce using rule 37 (expression -> expression MULT expression .)
+    OR              reduce using rule 37 (expression -> expression MULT expression .)
+
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! MULT            [ shift and go to state 61 ]
+  ! DIVIDE          [ shift and go to state 62 ]
+  ! EXP             [ shift and go to state 63 ]
+
+
+state 82
+
+    (38) expression -> expression DIVIDE expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
+
+    EQUAL           reduce using rule 38 (expression -> expression DIVIDE expression .)
+    NOTEQUAL        reduce using rule 38 (expression -> expression DIVIDE expression .)
+    GTHAN           reduce using rule 38 (expression -> expression DIVIDE expression .)
+    LTHAN           reduce using rule 38 (expression -> expression DIVIDE expression .)
+    GEQTHAN         reduce using rule 38 (expression -> expression DIVIDE expression .)
+    LEQTHAN         reduce using rule 38 (expression -> expression DIVIDE expression .)
+    PLUS            reduce using rule 38 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 38 (expression -> expression DIVIDE expression .)
+    MULT            reduce using rule 38 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 38 (expression -> expression DIVIDE expression .)
+    EXP             reduce using rule 38 (expression -> expression DIVIDE expression .)
+    COLON           reduce using rule 38 (expression -> expression DIVIDE expression .)
+    RPTHESES        reduce using rule 38 (expression -> expression DIVIDE expression .)
+    AND             reduce using rule 38 (expression -> expression DIVIDE expression .)
+    OR              reduce using rule 38 (expression -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 59 ]
+  ! MINUS           [ shift and go to state 60 ]
+  ! MULT            [ shift and go to state 61 ]
+  ! DIVIDE          [ shift and go to state 62 ]
+  ! EXP             [ shift and go to state 63 ]
+
+
+state 83
+
+    (39) expression -> expression EXP expression .
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
   ! shift/reduce conflict for MULT resolved as shift
   ! shift/reduce conflict for DIVIDE resolved as shift
   ! shift/reduce conflict for EXP resolved as shift
-    $end            reduce using rule 35 (expression -> expression EXP expression .)
-    COLON           reduce using rule 35 (expression -> expression EXP expression .)
-    RCURLY          reduce using rule 35 (expression -> expression EXP expression .)
-    RPTHESES        reduce using rule 35 (expression -> expression EXP expression .)
-    EQUAL           reduce using rule 35 (expression -> expression EXP expression .)
-    NOTEQUAL        reduce using rule 35 (expression -> expression EXP expression .)
-    GTHAN           reduce using rule 35 (expression -> expression EXP expression .)
-    LTHAN           reduce using rule 35 (expression -> expression EXP expression .)
-    GEQTHAN         reduce using rule 35 (expression -> expression EXP expression .)
-    LEQTHAN         reduce using rule 35 (expression -> expression EXP expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
+    EQUAL           reduce using rule 39 (expression -> expression EXP expression .)
+    NOTEQUAL        reduce using rule 39 (expression -> expression EXP expression .)
+    GTHAN           reduce using rule 39 (expression -> expression EXP expression .)
+    LTHAN           reduce using rule 39 (expression -> expression EXP expression .)
+    GEQTHAN         reduce using rule 39 (expression -> expression EXP expression .)
+    LEQTHAN         reduce using rule 39 (expression -> expression EXP expression .)
+    COLON           reduce using rule 39 (expression -> expression EXP expression .)
+    RPTHESES        reduce using rule 39 (expression -> expression EXP expression .)
+    AND             reduce using rule 39 (expression -> expression EXP expression .)
+    OR              reduce using rule 39 (expression -> expression EXP expression .)
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
+
+  ! PLUS            [ reduce using rule 39 (expression -> expression EXP expression .) ]
+  ! MINUS           [ reduce using rule 39 (expression -> expression EXP expression .) ]
+  ! MULT            [ reduce using rule 39 (expression -> expression EXP expression .) ]
+  ! DIVIDE          [ reduce using rule 39 (expression -> expression EXP expression .) ]
+  ! EXP             [ reduce using rule 39 (expression -> expression EXP expression .) ]
 
-  ! PLUS            [ reduce using rule 35 (expression -> expression EXP expression .) ]
-  ! MINUS           [ reduce using rule 35 (expression -> expression EXP expression .) ]
-  ! MULT            [ reduce using rule 35 (expression -> expression EXP expression .) ]
-  ! DIVIDE          [ reduce using rule 35 (expression -> expression EXP expression .) ]
-  ! EXP             [ reduce using rule 35 (expression -> expression EXP expression .) ]
-
-
-state 68
-
-    (37) expression -> LPTHESES expression RPTHESES .
-
-    PLUS            reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    MINUS           reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    MULT            reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    DIVIDE          reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    EXP             reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    $end            reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    COLON           reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    RCURLY          reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    RPTHESES        reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    EQUAL           reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    NOTEQUAL        reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    GTHAN           reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    LTHAN           reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    GEQTHAN         reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-    LEQTHAN         reduce using rule 37 (expression -> LPTHESES expression RPTHESES .)
-
-
-state 69
-
-    (17) while -> WHILE LPTHESES condition RPTHESES LCURLY . program RCURLY
-    (1) program -> . statement
-    (2) program -> . block
-    (3) program -> . while
-    (4) program -> . for
-    (5) program -> .
-    (6) statement -> . INT ID is_assing
-    (7) statement -> . FLOAT ID is_assing
-    (8) statement -> . STRING ID is_assing
-    (9) statement -> . BOOLEAN ID is_assing
-    (29) statement -> . PRINT LPTHESES expression RPTHESES
-    (30) statement -> . ID ASSIGN expression
-    (10) block -> . ifblock
-    (17) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
-    (18) for -> . FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-    (11) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-
-    RCURLY          reduce using rule 5 (program -> .)
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    BOOLEAN         shift and go to state 10
-    PRINT           shift and go to state 11
-    ID              shift and go to state 7
-    WHILE           shift and go to state 13
-    FOR             shift and go to state 14
-    IF              shift and go to state 15
-
-    program                        shift and go to state 78
-    statement                      shift and go to state 2
-    block                          shift and go to state 3
-    while                          shift and go to state 4
-    for                            shift and go to state 5
-    ifblock                        shift and go to state 12
-
-state 70
-
-    (21) comparison -> expression EQUAL expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
-
-    RPTHESES        reduce using rule 21 (comparison -> expression EQUAL expression .)
-    COLON           reduce using rule 21 (comparison -> expression EQUAL expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
-
-
-state 71
-
-    (22) comparison -> expression NOTEQUAL expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
-
-    RPTHESES        reduce using rule 22 (comparison -> expression NOTEQUAL expression .)
-    COLON           reduce using rule 22 (comparison -> expression NOTEQUAL expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
-
-
-state 72
-
-    (23) comparison -> expression GTHAN expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
-
-    RPTHESES        reduce using rule 23 (comparison -> expression GTHAN expression .)
-    COLON           reduce using rule 23 (comparison -> expression GTHAN expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
-
-
-state 73
-
-    (24) comparison -> expression LTHAN expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
-
-    RPTHESES        reduce using rule 24 (comparison -> expression LTHAN expression .)
-    COLON           reduce using rule 24 (comparison -> expression LTHAN expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
-
-
-state 74
-
-    (25) comparison -> expression GEQTHAN expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
-
-    RPTHESES        reduce using rule 25 (comparison -> expression GEQTHAN expression .)
-    COLON           reduce using rule 25 (comparison -> expression GEQTHAN expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
-
-
-state 75
-
-    (26) comparison -> expression LEQTHAN expression .
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
-
-    RPTHESES        reduce using rule 26 (comparison -> expression LEQTHAN expression .)
-    COLON           reduce using rule 26 (comparison -> expression LEQTHAN expression .)
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
-
-
-state 76
-
-    (18) for -> FOR LPTHESES statement COLON condition . COLON expression RPTHESES LCURLY program RCURLY
-
-    COLON           shift and go to state 79
-
-
-state 77
-
-    (11) ifblock -> IF LPTHESES condition RPTHESES LCURLY . program RCURLY ifcont
-    (1) program -> . statement
-    (2) program -> . block
-    (3) program -> . while
-    (4) program -> . for
-    (5) program -> .
-    (6) statement -> . INT ID is_assing
-    (7) statement -> . FLOAT ID is_assing
-    (8) statement -> . STRING ID is_assing
-    (9) statement -> . BOOLEAN ID is_assing
-    (29) statement -> . PRINT LPTHESES expression RPTHESES
-    (30) statement -> . ID ASSIGN expression
-    (10) block -> . ifblock
-    (17) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
-    (18) for -> . FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-    (11) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-
-    RCURLY          reduce using rule 5 (program -> .)
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    BOOLEAN         shift and go to state 10
-    PRINT           shift and go to state 11
-    ID              shift and go to state 7
-    WHILE           shift and go to state 13
-    FOR             shift and go to state 14
-    IF              shift and go to state 15
-
-    program                        shift and go to state 80
-    statement                      shift and go to state 2
-    block                          shift and go to state 3
-    while                          shift and go to state 4
-    for                            shift and go to state 5
-    ifblock                        shift and go to state 12
-
-state 78
-
-    (17) while -> WHILE LPTHESES condition RPTHESES LCURLY program . RCURLY
-
-    RCURLY          shift and go to state 81
-
-
-state 79
-
-    (18) for -> FOR LPTHESES statement COLON condition COLON . expression RPTHESES LCURLY program RCURLY
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
-
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    BOOLVAL         shift and go to state 33
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
-
-    expression                     shift and go to state 82
-
-state 80
-
-    (11) ifblock -> IF LPTHESES condition RPTHESES LCURLY program . RCURLY ifcont
-
-    RCURLY          shift and go to state 83
-
-
-state 81
-
-    (17) while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY .
-
-    $end            reduce using rule 17 (while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY .)
-    RCURLY          reduce using rule 17 (while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY .)
-
-
-state 82
-
-    (18) for -> FOR LPTHESES statement COLON condition COLON expression . RPTHESES LCURLY program RCURLY
-    (31) expression -> expression . PLUS expression
-    (32) expression -> expression . MINUS expression
-    (33) expression -> expression . MULT expression
-    (34) expression -> expression . DIVIDE expression
-    (35) expression -> expression . EXP expression
-
-    RPTHESES        shift and go to state 84
-    PLUS            shift and go to state 46
-    MINUS           shift and go to state 47
-    MULT            shift and go to state 48
-    DIVIDE          shift and go to state 49
-    EXP             shift and go to state 50
-
-
-state 83
-
-    (11) ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY . ifcont
-    (12) ifcont -> . elifblock ifcont
-    (13) ifcont -> . elseblock
-    (14) ifcont -> .
-    (16) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-    (15) elseblock -> . ELSE LCURLY program RCURLY
-
-    $end            reduce using rule 14 (ifcont -> .)
-    RCURLY          reduce using rule 14 (ifcont -> .)
-    ELIF            shift and go to state 88
-    ELSE            shift and go to state 89
-
-    ifcont                         shift and go to state 85
-    elifblock                      shift and go to state 86
-    elseblock                      shift and go to state 87
 
 state 84
 
-    (18) for -> FOR LPTHESES statement COLON condition COLON expression RPTHESES . LCURLY program RCURLY
+    (19) for -> FOR LPTHESES stmntwrap condition COLON . expression RPTHESES LCURLY program RCURLY
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
 
-    LCURLY          shift and go to state 90
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    BOOLVAL         shift and go to state 41
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
 
+    expression                     shift and go to state 87
 
 state 85
 
-    (11) ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .
+    (12) ifblock -> IF LPTHESES condition RPTHESES LCURLY . program RCURLY ifcont
+    (1) program -> . stmntwrap
+    (2) program -> . block
+    (3) program -> . while
+    (4) program -> . for
+    (5) program -> .
+    (6) stmntwrap -> . statement COLON
+    (11) block -> . ifblock
+    (18) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
+    (19) for -> . FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+    (7) statement -> . INT ID is_assing
+    (8) statement -> . FLOAT ID is_assing
+    (9) statement -> . STRING ID is_assing
+    (10) statement -> . BOOLEAN ID is_assing
+    (33) statement -> . PRINT LPTHESES expression RPTHESES
+    (34) statement -> . ID ASSIGN expression
+    (12) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
 
-    $end            reduce using rule 11 (ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
-    RCURLY          reduce using rule 11 (ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
+    RCURLY          reduce using rule 5 (program -> .)
+    WHILE           shift and go to state 8
+    FOR             shift and go to state 9
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 12
+    STRING          shift and go to state 13
+    BOOLEAN         shift and go to state 14
+    PRINT           shift and go to state 15
+    ID              shift and go to state 11
+    IF              shift and go to state 16
 
+    program                        shift and go to state 88
+    stmntwrap                      shift and go to state 2
+    block                          shift and go to state 3
+    while                          shift and go to state 4
+    for                            shift and go to state 5
+    statement                      shift and go to state 6
+    ifblock                        shift and go to state 7
 
 state 86
 
-    (12) ifcont -> elifblock . ifcont
-    (12) ifcont -> . elifblock ifcont
-    (13) ifcont -> . elseblock
-    (14) ifcont -> .
-    (16) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-    (15) elseblock -> . ELSE LCURLY program RCURLY
+    (18) while -> WHILE LPTHESES condition RPTHESES LCURLY program . RCURLY
 
-  ! shift/reduce conflict for ELIF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-    $end            reduce using rule 14 (ifcont -> .)
-    RCURLY          reduce using rule 14 (ifcont -> .)
-    ELIF            shift and go to state 88
-    ELSE            shift and go to state 89
+    RCURLY          shift and go to state 89
 
-  ! ELIF            [ reduce using rule 14 (ifcont -> .) ]
-  ! ELSE            [ reduce using rule 14 (ifcont -> .) ]
-
-    elifblock                      shift and go to state 86
-    ifcont                         shift and go to state 91
-    elseblock                      shift and go to state 87
 
 state 87
 
-    (13) ifcont -> elseblock .
+    (19) for -> FOR LPTHESES stmntwrap condition COLON expression . RPTHESES LCURLY program RCURLY
+    (35) expression -> expression . PLUS expression
+    (36) expression -> expression . MINUS expression
+    (37) expression -> expression . MULT expression
+    (38) expression -> expression . DIVIDE expression
+    (39) expression -> expression . EXP expression
 
-    $end            reduce using rule 13 (ifcont -> elseblock .)
-    RCURLY          reduce using rule 13 (ifcont -> elseblock .)
-    ELIF            reduce using rule 13 (ifcont -> elseblock .)
-    ELSE            reduce using rule 13 (ifcont -> elseblock .)
+    RPTHESES        shift and go to state 90
+    PLUS            shift and go to state 59
+    MINUS           shift and go to state 60
+    MULT            shift and go to state 61
+    DIVIDE          shift and go to state 62
+    EXP             shift and go to state 63
 
 
 state 88
 
-    (16) elifblock -> ELIF . LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (12) ifblock -> IF LPTHESES condition RPTHESES LCURLY program . RCURLY ifcont
 
-    LPTHESES        shift and go to state 92
+    RCURLY          shift and go to state 91
 
 
 state 89
 
-    (15) elseblock -> ELSE . LCURLY program RCURLY
+    (18) while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY .
 
-    LCURLY          shift and go to state 93
+    $end            reduce using rule 18 (while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY .)
+    RCURLY          reduce using rule 18 (while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY .)
 
 
 state 90
 
-    (18) for -> FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY . program RCURLY
-    (1) program -> . statement
-    (2) program -> . block
-    (3) program -> . while
-    (4) program -> . for
-    (5) program -> .
-    (6) statement -> . INT ID is_assing
-    (7) statement -> . FLOAT ID is_assing
-    (8) statement -> . STRING ID is_assing
-    (9) statement -> . BOOLEAN ID is_assing
-    (29) statement -> . PRINT LPTHESES expression RPTHESES
-    (30) statement -> . ID ASSIGN expression
-    (10) block -> . ifblock
-    (17) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
-    (18) for -> . FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-    (11) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (19) for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES . LCURLY program RCURLY
 
-    RCURLY          reduce using rule 5 (program -> .)
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    BOOLEAN         shift and go to state 10
-    PRINT           shift and go to state 11
-    ID              shift and go to state 7
-    WHILE           shift and go to state 13
-    FOR             shift and go to state 14
-    IF              shift and go to state 15
+    LCURLY          shift and go to state 92
 
-    statement                      shift and go to state 2
-    program                        shift and go to state 94
-    block                          shift and go to state 3
-    while                          shift and go to state 4
-    for                            shift and go to state 5
-    ifblock                        shift and go to state 12
 
 state 91
 
-    (12) ifcont -> elifblock ifcont .
+    (12) ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY . ifcont
+    (13) ifcont -> . elifblock ifcont
+    (14) ifcont -> . elseblock
+    (15) ifcont -> .
+    (17) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (16) elseblock -> . ELSE LCURLY program RCURLY
 
-    $end            reduce using rule 12 (ifcont -> elifblock ifcont .)
-    RCURLY          reduce using rule 12 (ifcont -> elifblock ifcont .)
-    ELIF            reduce using rule 12 (ifcont -> elifblock ifcont .)
-    ELSE            reduce using rule 12 (ifcont -> elifblock ifcont .)
+    $end            reduce using rule 15 (ifcont -> .)
+    RCURLY          reduce using rule 15 (ifcont -> .)
+    ELIF            shift and go to state 96
+    ELSE            shift and go to state 97
 
+    ifcont                         shift and go to state 93
+    elifblock                      shift and go to state 94
+    elseblock                      shift and go to state 95
 
 state 92
 
-    (16) elifblock -> ELIF LPTHESES . condition RPTHESES LCURLY program RCURLY ifcont
-    (19) condition -> . BOOLVAL
-    (20) condition -> . comparison
-    (21) comparison -> . expression EQUAL expression
-    (22) comparison -> . expression NOTEQUAL expression
-    (23) comparison -> . expression GTHAN expression
-    (24) comparison -> . expression LTHAN expression
-    (25) comparison -> . expression GEQTHAN expression
-    (26) comparison -> . expression LEQTHAN expression
-    (31) expression -> . expression PLUS expression
-    (32) expression -> . expression MINUS expression
-    (33) expression -> . expression MULT expression
-    (34) expression -> . expression DIVIDE expression
-    (35) expression -> . expression EXP expression
-    (36) expression -> . MINUS expression
-    (37) expression -> . LPTHESES expression RPTHESES
-    (38) expression -> . INUM
-    (39) expression -> . FNUM
-    (40) expression -> . BOOLVAL
-    (41) expression -> . STRVAL
-    (42) expression -> . ID
-
-    BOOLVAL         shift and go to state 40
-    MINUS           shift and go to state 29
-    LPTHESES        shift and go to state 30
-    INUM            shift and go to state 31
-    FNUM            shift and go to state 32
-    STRVAL          shift and go to state 34
-    ID              shift and go to state 27
-
-    condition                      shift and go to state 95
-    comparison                     shift and go to state 41
-    expression                     shift and go to state 42
-
-state 93
-
-    (15) elseblock -> ELSE LCURLY . program RCURLY
-    (1) program -> . statement
+    (19) for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY . program RCURLY
+    (1) program -> . stmntwrap
     (2) program -> . block
     (3) program -> . while
     (4) program -> . for
     (5) program -> .
-    (6) statement -> . INT ID is_assing
-    (7) statement -> . FLOAT ID is_assing
-    (8) statement -> . STRING ID is_assing
-    (9) statement -> . BOOLEAN ID is_assing
-    (29) statement -> . PRINT LPTHESES expression RPTHESES
-    (30) statement -> . ID ASSIGN expression
-    (10) block -> . ifblock
-    (17) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
-    (18) for -> . FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-    (11) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (6) stmntwrap -> . statement COLON
+    (11) block -> . ifblock
+    (18) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
+    (19) for -> . FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+    (7) statement -> . INT ID is_assing
+    (8) statement -> . FLOAT ID is_assing
+    (9) statement -> . STRING ID is_assing
+    (10) statement -> . BOOLEAN ID is_assing
+    (33) statement -> . PRINT LPTHESES expression RPTHESES
+    (34) statement -> . ID ASSIGN expression
+    (12) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
 
     RCURLY          reduce using rule 5 (program -> .)
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    BOOLEAN         shift and go to state 10
-    PRINT           shift and go to state 11
-    ID              shift and go to state 7
-    WHILE           shift and go to state 13
-    FOR             shift and go to state 14
-    IF              shift and go to state 15
+    WHILE           shift and go to state 8
+    FOR             shift and go to state 9
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 12
+    STRING          shift and go to state 13
+    BOOLEAN         shift and go to state 14
+    PRINT           shift and go to state 15
+    ID              shift and go to state 11
+    IF              shift and go to state 16
 
-    program                        shift and go to state 96
-    statement                      shift and go to state 2
+    stmntwrap                      shift and go to state 2
+    program                        shift and go to state 98
     block                          shift and go to state 3
     while                          shift and go to state 4
     for                            shift and go to state 5
-    ifblock                        shift and go to state 12
+    statement                      shift and go to state 6
+    ifblock                        shift and go to state 7
+
+state 93
+
+    (12) ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .
+
+    $end            reduce using rule 12 (ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
+    RCURLY          reduce using rule 12 (ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
+
 
 state 94
 
-    (18) for -> FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program . RCURLY
+    (13) ifcont -> elifblock . ifcont
+    (13) ifcont -> . elifblock ifcont
+    (14) ifcont -> . elseblock
+    (15) ifcont -> .
+    (17) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (16) elseblock -> . ELSE LCURLY program RCURLY
 
-    RCURLY          shift and go to state 97
+  ! shift/reduce conflict for ELIF resolved as shift
+  ! shift/reduce conflict for ELSE resolved as shift
+    $end            reduce using rule 15 (ifcont -> .)
+    RCURLY          reduce using rule 15 (ifcont -> .)
+    ELIF            shift and go to state 96
+    ELSE            shift and go to state 97
 
+  ! ELIF            [ reduce using rule 15 (ifcont -> .) ]
+  ! ELSE            [ reduce using rule 15 (ifcont -> .) ]
+
+    elifblock                      shift and go to state 94
+    ifcont                         shift and go to state 99
+    elseblock                      shift and go to state 95
 
 state 95
 
-    (16) elifblock -> ELIF LPTHESES condition . RPTHESES LCURLY program RCURLY ifcont
+    (14) ifcont -> elseblock .
 
-    RPTHESES        shift and go to state 98
+    $end            reduce using rule 14 (ifcont -> elseblock .)
+    RCURLY          reduce using rule 14 (ifcont -> elseblock .)
+    ELIF            reduce using rule 14 (ifcont -> elseblock .)
+    ELSE            reduce using rule 14 (ifcont -> elseblock .)
 
 
 state 96
 
-    (15) elseblock -> ELSE LCURLY program . RCURLY
+    (17) elifblock -> ELIF . LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
 
-    RCURLY          shift and go to state 99
+    LPTHESES        shift and go to state 100
 
 
 state 97
 
-    (18) for -> FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY .
+    (16) elseblock -> ELSE . LCURLY program RCURLY
 
-    $end            reduce using rule 18 (for -> FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY .)
-    RCURLY          reduce using rule 18 (for -> FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY .)
+    LCURLY          shift and go to state 101
 
 
 state 98
 
-    (16) elifblock -> ELIF LPTHESES condition RPTHESES . LCURLY program RCURLY ifcont
-
-    LCURLY          shift and go to state 100
-
-
-state 99
-
-    (15) elseblock -> ELSE LCURLY program RCURLY .
-
-    $end            reduce using rule 15 (elseblock -> ELSE LCURLY program RCURLY .)
-    RCURLY          reduce using rule 15 (elseblock -> ELSE LCURLY program RCURLY .)
-    ELIF            reduce using rule 15 (elseblock -> ELSE LCURLY program RCURLY .)
-    ELSE            reduce using rule 15 (elseblock -> ELSE LCURLY program RCURLY .)
-
-
-state 100
-
-    (16) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY . program RCURLY ifcont
-    (1) program -> . statement
-    (2) program -> . block
-    (3) program -> . while
-    (4) program -> . for
-    (5) program -> .
-    (6) statement -> . INT ID is_assing
-    (7) statement -> . FLOAT ID is_assing
-    (8) statement -> . STRING ID is_assing
-    (9) statement -> . BOOLEAN ID is_assing
-    (29) statement -> . PRINT LPTHESES expression RPTHESES
-    (30) statement -> . ID ASSIGN expression
-    (10) block -> . ifblock
-    (17) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
-    (18) for -> . FOR LPTHESES statement COLON condition COLON expression RPTHESES LCURLY program RCURLY
-    (11) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-
-    RCURLY          reduce using rule 5 (program -> .)
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    BOOLEAN         shift and go to state 10
-    PRINT           shift and go to state 11
-    ID              shift and go to state 7
-    WHILE           shift and go to state 13
-    FOR             shift and go to state 14
-    IF              shift and go to state 15
-
-    program                        shift and go to state 101
-    statement                      shift and go to state 2
-    block                          shift and go to state 3
-    while                          shift and go to state 4
-    for                            shift and go to state 5
-    ifblock                        shift and go to state 12
-
-state 101
-
-    (16) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program . RCURLY ifcont
+    (19) for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program . RCURLY
 
     RCURLY          shift and go to state 102
 
 
+state 99
+
+    (13) ifcont -> elifblock ifcont .
+
+    $end            reduce using rule 13 (ifcont -> elifblock ifcont .)
+    RCURLY          reduce using rule 13 (ifcont -> elifblock ifcont .)
+    ELIF            reduce using rule 13 (ifcont -> elifblock ifcont .)
+    ELSE            reduce using rule 13 (ifcont -> elifblock ifcont .)
+
+
+state 100
+
+    (17) elifblock -> ELIF LPTHESES . condition RPTHESES LCURLY program RCURLY ifcont
+    (20) condition -> . BOOLVAL appendcond
+    (21) condition -> . comparison appendcond
+    (25) comparison -> . expression EQUAL expression
+    (26) comparison -> . expression NOTEQUAL expression
+    (27) comparison -> . expression GTHAN expression
+    (28) comparison -> . expression LTHAN expression
+    (29) comparison -> . expression GEQTHAN expression
+    (30) comparison -> . expression LEQTHAN expression
+    (35) expression -> . expression PLUS expression
+    (36) expression -> . expression MINUS expression
+    (37) expression -> . expression MULT expression
+    (38) expression -> . expression DIVIDE expression
+    (39) expression -> . expression EXP expression
+    (40) expression -> . MINUS expression
+    (41) expression -> . LPTHESES expression RPTHESES
+    (42) expression -> . INUM
+    (43) expression -> . FNUM
+    (44) expression -> . BOOLVAL
+    (45) expression -> . STRVAL
+    (46) expression -> . ID
+
+    BOOLVAL         shift and go to state 29
+    MINUS           shift and go to state 32
+    LPTHESES        shift and go to state 27
+    INUM            shift and go to state 33
+    FNUM            shift and go to state 34
+    STRVAL          shift and go to state 35
+    ID              shift and go to state 36
+
+    condition                      shift and go to state 103
+    comparison                     shift and go to state 30
+    expression                     shift and go to state 31
+
+state 101
+
+    (16) elseblock -> ELSE LCURLY . program RCURLY
+    (1) program -> . stmntwrap
+    (2) program -> . block
+    (3) program -> . while
+    (4) program -> . for
+    (5) program -> .
+    (6) stmntwrap -> . statement COLON
+    (11) block -> . ifblock
+    (18) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
+    (19) for -> . FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+    (7) statement -> . INT ID is_assing
+    (8) statement -> . FLOAT ID is_assing
+    (9) statement -> . STRING ID is_assing
+    (10) statement -> . BOOLEAN ID is_assing
+    (33) statement -> . PRINT LPTHESES expression RPTHESES
+    (34) statement -> . ID ASSIGN expression
+    (12) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+
+    RCURLY          reduce using rule 5 (program -> .)
+    WHILE           shift and go to state 8
+    FOR             shift and go to state 9
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 12
+    STRING          shift and go to state 13
+    BOOLEAN         shift and go to state 14
+    PRINT           shift and go to state 15
+    ID              shift and go to state 11
+    IF              shift and go to state 16
+
+    program                        shift and go to state 104
+    stmntwrap                      shift and go to state 2
+    block                          shift and go to state 3
+    while                          shift and go to state 4
+    for                            shift and go to state 5
+    statement                      shift and go to state 6
+    ifblock                        shift and go to state 7
+
 state 102
 
-    (16) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY . ifcont
-    (12) ifcont -> . elifblock ifcont
-    (13) ifcont -> . elseblock
-    (14) ifcont -> .
-    (16) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-    (15) elseblock -> . ELSE LCURLY program RCURLY
+    (19) for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY .
 
-  ! shift/reduce conflict for ELIF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-    $end            reduce using rule 14 (ifcont -> .)
-    RCURLY          reduce using rule 14 (ifcont -> .)
-    ELIF            shift and go to state 88
-    ELSE            shift and go to state 89
+    $end            reduce using rule 19 (for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY .)
+    RCURLY          reduce using rule 19 (for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY .)
 
-  ! ELIF            [ reduce using rule 14 (ifcont -> .) ]
-  ! ELSE            [ reduce using rule 14 (ifcont -> .) ]
-
-    ifcont                         shift and go to state 103
-    elifblock                      shift and go to state 86
-    elseblock                      shift and go to state 87
 
 state 103
 
-    (16) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .
+    (17) elifblock -> ELIF LPTHESES condition . RPTHESES LCURLY program RCURLY ifcont
 
-    ELIF            reduce using rule 16 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
-    ELSE            reduce using rule 16 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
-    $end            reduce using rule 16 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
-    RCURLY          reduce using rule 16 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
+    RPTHESES        shift and go to state 105
+
+
+state 104
+
+    (16) elseblock -> ELSE LCURLY program . RCURLY
+
+    RCURLY          shift and go to state 106
+
+
+state 105
+
+    (17) elifblock -> ELIF LPTHESES condition RPTHESES . LCURLY program RCURLY ifcont
+
+    LCURLY          shift and go to state 107
+
+
+state 106
+
+    (16) elseblock -> ELSE LCURLY program RCURLY .
+
+    $end            reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
+    RCURLY          reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
+    ELIF            reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
+    ELSE            reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
+
+
+state 107
+
+    (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY . program RCURLY ifcont
+    (1) program -> . stmntwrap
+    (2) program -> . block
+    (3) program -> . while
+    (4) program -> . for
+    (5) program -> .
+    (6) stmntwrap -> . statement COLON
+    (11) block -> . ifblock
+    (18) while -> . WHILE LPTHESES condition RPTHESES LCURLY program RCURLY
+    (19) for -> . FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY
+    (7) statement -> . INT ID is_assing
+    (8) statement -> . FLOAT ID is_assing
+    (9) statement -> . STRING ID is_assing
+    (10) statement -> . BOOLEAN ID is_assing
+    (33) statement -> . PRINT LPTHESES expression RPTHESES
+    (34) statement -> . ID ASSIGN expression
+    (12) ifblock -> . IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+
+    RCURLY          reduce using rule 5 (program -> .)
+    WHILE           shift and go to state 8
+    FOR             shift and go to state 9
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 12
+    STRING          shift and go to state 13
+    BOOLEAN         shift and go to state 14
+    PRINT           shift and go to state 15
+    ID              shift and go to state 11
+    IF              shift and go to state 16
+
+    program                        shift and go to state 108
+    stmntwrap                      shift and go to state 2
+    block                          shift and go to state 3
+    while                          shift and go to state 4
+    for                            shift and go to state 5
+    statement                      shift and go to state 6
+    ifblock                        shift and go to state 7
+
+state 108
+
+    (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program . RCURLY ifcont
+
+    RCURLY          shift and go to state 109
+
+
+state 109
+
+    (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY . ifcont
+    (13) ifcont -> . elifblock ifcont
+    (14) ifcont -> . elseblock
+    (15) ifcont -> .
+    (17) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
+    (16) elseblock -> . ELSE LCURLY program RCURLY
+
+  ! shift/reduce conflict for ELIF resolved as shift
+  ! shift/reduce conflict for ELSE resolved as shift
+    $end            reduce using rule 15 (ifcont -> .)
+    RCURLY          reduce using rule 15 (ifcont -> .)
+    ELIF            shift and go to state 96
+    ELSE            shift and go to state 97
+
+  ! ELIF            [ reduce using rule 15 (ifcont -> .) ]
+  ! ELSE            [ reduce using rule 15 (ifcont -> .) ]
+
+    ifcont                         shift and go to state 110
+    elifblock                      shift and go to state 94
+    elseblock                      shift and go to state 95
+
+state 110
+
+    (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .
+
+    ELIF            reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
+    ELSE            reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
+    $end            reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
+    RCURLY          reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 67 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 67 resolved as shift
-WARNING: shift/reduce conflict for MULT in state 67 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 67 resolved as shift
-WARNING: shift/reduce conflict for EXP in state 67 resolved as shift
-WARNING: shift/reduce conflict for ELIF in state 86 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 86 resolved as shift
-WARNING: shift/reduce conflict for ELIF in state 102 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 102 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 83 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 83 resolved as shift
+WARNING: shift/reduce conflict for MULT in state 83 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 83 resolved as shift
+WARNING: shift/reduce conflict for EXP in state 83 resolved as shift
+WARNING: shift/reduce conflict for ELIF in state 94 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 94 resolved as shift
+WARNING: shift/reduce conflict for ELIF in state 109 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 109 resolved as shift

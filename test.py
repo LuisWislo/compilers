@@ -1,4 +1,1 @@
-if('True' == True):
-    print('xd')
-else:
-    print('not equal!')
+print('true' + ' is cute')

@@ -90,7 +90,7 @@ def t_INUM(t):
     return t
 
 def t_STRVAL(t):
-    r'\"[a-zA-Z_][a-zA-Z_0-9]*\"'
+    r'\"[a-zA-Z0-9 ]*\"'
     t.value = str(t.value.split('"')[1])
     return t
 
