@@ -1,4 +1,4 @@
-[] fix unary stuff
+[x] fix unary stuff
 [x] add semi-colon to end of statements (stmntwrap)
 
 operations:
@@ -26,6 +26,8 @@ conditions
 [x] or support
 
 [x] operations in binop and comparisons
- 
 
-type checking
+
+[x] support for multiple statements in same line
+
+tree formation!!

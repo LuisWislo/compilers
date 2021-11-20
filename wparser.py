@@ -14,10 +14,10 @@ names = {}
 abstractTree = []
 
 def p_program(p):
-    '''program : stmntwrap
-                | block
-                | while
-                | for
+    '''program : stmntwrap program
+                | block program
+                | while program
+                | for program
                 | '''
 
 def p_stmntwrap(p):
