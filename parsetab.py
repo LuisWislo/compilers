@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTDIVIDErightUMINUSAND ASSIGN BOOLEAN COLON DIVIDE ELIF ELSE EQUAL EXP FALSE FLOAT FNUM GEQTHAN GTHAN ID IF INT INUM LCURLY LEQTHAN LPTHESES LTHAN MINUS MULT NOTEQUAL OR PLUS PRINT RCURLY RPTHESES STRING TRUEstatement : INT ID is_assing\n    statement : FLOAT ID is_assingis_assing : ASSIGN expression \n                | statement : PRINT LPTHESES expression RPTHESES statement : ID ASSIGN expressionexpression : expression PLUS expression\n                  | expression MINUS expression\n                  | expression MULT expression\n                  | expression DIVIDE expression\n                  | expression EXP expressionexpression : MINUS expression %prec UMINUSexpression : LPTHESES expression RPTHESESexpression : INUMexpression : FNUMexpression : ID'
+_lr_signature = 'leftPLUSMINUSleftMULTDIVIDErightUMINUSAND ASSIGN BOOLEAN BOOLVAL COLON DIVIDE ELIF ELSE EQUAL EXP FLOAT FNUM FOR GEQTHAN GTHAN ID IF INT INUM LCURLY LEQTHAN LPTHESES LTHAN MINUS MULT NOTEQUAL OR PLUS PRINT RCURLY RPTHESES STRING STRVAL WHILEprogram : stmntwrap program\n                | block program\n                | while program\n                | for program\n                | stmntwrap : statement COLONstatement : INT ID is_assing\n    statement : FLOAT ID is_assingstatement : STRING ID is_assing\n    statement : BOOLEAN ID is_assing\n    block : ifblock ifblock : IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcontifcont : elifblock ifcont \n                | elseblock \n                | elseblock : ELSE LCURLY program RCURLYelifblock : ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcontwhile : WHILE LPTHESES condition RPTHESES LCURLY program RCURLYfor : FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLYcondition : BOOLVAL appendcond\n                | comparison appendcondappendcond : AND condition\n                    | OR condition\n                    | comparison : expression EQUAL expression\n                    | expression NOTEQUAL expression\n                    | expression GTHAN expression\n                    | expression LTHAN expression\n                    | expression GEQTHAN expression\n                    | expression LEQTHAN expressionis_assing : ASSIGN expression \n                | statement : PRINT LPTHESES expression RPTHESES statement : ID ASSIGN expressionexpression : expression PLUS expression\n                  | expression MINUS expression\n                  | expression MULT expression\n                  | expression DIVIDE expression\n                  | expression EXP expressionexpression : MINUS expression %prec UMINUSexpression : LPTHESES expression RPTHESESexpression : INUMexpression : FNUMexpression : BOOLVAL\n    expression : STRVALexpression : ID'
     
-_lr_action_items = {'INT':([0,],[2,]),'FLOAT':([0,],[4,]),'PRINT':([0,],[5,]),'ID':([0,2,4,7,9,11,14,15,21,22,23,24,25,],[3,6,8,12,12,12,12,12,12,12,12,12,12,]),'$end':([1,6,8,10,12,13,16,17,18,20,26,28,29,30,31,32,33,34,],[0,-4,-4,-1,-16,-6,-14,-15,-2,-3,-12,-5,-7,-8,-9,-10,-11,-13,]),'ASSIGN':([3,6,8,],[7,11,11,]),'LPTHESES':([5,7,9,11,14,15,21,22,23,24,25,],[9,15,15,15,15,15,15,15,15,15,15,]),'MINUS':([7,9,11,12,13,14,15,16,17,19,20,21,22,23,24,25,26,27,29,30,31,32,33,34,],[14,14,14,-16,22,14,14,-14,-15,22,22,14,14,14,14,14,-12,22,-7,-8,-9,-10,22,-13,]),'INUM':([7,9,11,14,15,21,22,23,24,25,],[16,16,16,16,16,16,16,16,16,16,]),'FNUM':([7,9,11,14,15,21,22,23,24,25,],[17,17,17,17,17,17,17,17,17,17,]),'PLUS':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,21,-14,-15,21,21,-12,21,-7,-8,-9,-10,21,-13,]),'MULT':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,23,-14,-15,23,23,-12,23,23,23,-9,-10,23,-13,]),'DIVIDE':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,24,-14,-15,24,24,-12,24,24,24,-9,-10,24,-13,]),'EXP':([12,13,16,17,19,20,26,27,29,30,31,32,33,34,],[-16,25,-14,-15,25,25,-12,25,-7,-8,-9,-10,25,-13,]),'RPTHESES':([12,16,17,19,26,27,29,30,31,32,33,34,],[-16,-14,-15,28,-12,34,-7,-8,-9,-10,-11,-13,]),}
+_lr_action_items = {'$end':([0,1,2,3,4,5,7,17,18,19,20,21,93,95,97,98,99,103,106,110,113,114,],[-5,0,-5,-5,-5,-5,-11,-1,-2,-3,-4,-6,-18,-15,-12,-15,-14,-13,-19,-16,-15,-17,]),'WHILE':([0,2,3,4,5,7,21,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[8,8,8,8,8,-11,-6,8,8,-18,-15,8,-12,-15,-14,-13,8,-19,-16,8,-15,-17,]),'FOR':([0,2,3,4,5,7,21,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[9,9,9,9,9,-11,-6,9,9,-18,-15,9,-12,-15,-14,-13,9,-19,-16,9,-15,-17,]),'INT':([0,2,3,4,5,7,21,23,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[10,10,10,10,10,-11,-6,10,10,10,-18,-15,10,-12,-15,-14,-13,10,-19,-16,10,-15,-17,]),'FLOAT':([0,2,3,4,5,7,21,23,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[12,12,12,12,12,-11,-6,12,12,12,-18,-15,12,-12,-15,-14,-13,12,-19,-16,12,-15,-17,]),'STRING':([0,2,3,4,5,7,21,23,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[13,13,13,13,13,-11,-6,13,13,13,-18,-15,13,-12,-15,-14,-13,13,-19,-16,13,-15,-17,]),'BOOLEAN':([0,2,3,4,5,7,21,23,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[14,14,14,14,14,-11,-6,14,14,14,-18,-15,14,-12,-15,-14,-13,14,-19,-16,14,-15,-17,]),'PRINT':([0,2,3,4,5,7,21,23,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[15,15,15,15,15,-11,-6,15,15,15,-18,-15,15,-12,-15,-14,-13,15,-19,-16,15,-15,-17,]),'ID':([0,2,3,4,5,7,10,12,13,14,21,22,23,25,29,30,31,36,41,43,54,55,57,58,59,60,61,62,63,64,65,66,67,74,88,89,93,95,96,97,98,99,103,104,105,106,110,111,113,114,],[11,11,11,11,11,-11,24,26,27,28,-6,40,11,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,11,40,11,-18,-15,11,-12,-15,-14,-13,40,11,-19,-16,11,-15,-17,]),'IF':([0,2,3,4,5,7,21,74,89,93,95,96,97,98,99,103,105,106,110,111,113,114,],[16,16,16,16,16,-11,-6,16,16,-18,-15,16,-12,-15,-14,-13,16,-19,-16,16,-15,-17,]),'RCURLY':([2,3,4,5,7,17,18,19,20,21,74,89,90,92,93,95,96,97,98,99,102,103,105,106,108,110,111,112,113,114,],[-5,-5,-5,-5,-11,-1,-2,-3,-4,-6,-5,-5,93,95,-18,-15,-5,-12,-15,-14,106,-13,-5,-19,110,-16,-5,113,-15,-17,]),'COLON':([6,24,26,27,28,33,34,37,38,39,40,42,44,45,46,47,48,53,56,68,69,70,71,73,75,76,77,78,79,80,81,82,83,84,85,86,87,],[21,-32,-32,-32,-32,-24,-24,-42,-43,-45,-46,-7,-34,-44,-8,-9,-10,-20,-21,-40,88,-31,-33,-41,-22,-23,-25,-26,-27,-28,-29,-30,-35,-36,-37,-38,-39,]),'LPTHESES':([8,9,15,16,21,22,25,29,30,31,36,41,43,54,55,57,58,59,60,61,62,63,64,65,66,67,88,100,104,],[22,23,29,30,-6,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,104,31,]),'ASSIGN':([11,24,26,27,28,],[25,43,43,43,43,]),'BOOLVAL':([21,22,25,29,30,31,36,41,43,54,55,57,58,59,60,61,62,63,64,65,66,67,88,104,],[-6,33,45,45,33,45,45,33,45,33,33,45,45,45,45,45,45,45,45,45,45,45,45,33,]),'MINUS':([21,22,25,29,30,31,33,35,36,37,38,39,40,41,43,44,45,49,51,54,55,57,58,59,60,61,62,63,64,65,66,67,68,70,73,77,78,79,80,81,82,83,84,85,86,87,88,91,104,],[-6,36,36,36,36,36,-44,64,36,-42,-43,-45,-46,36,36,64,-44,64,64,36,36,36,36,36,36,36,36,36,36,36,36,36,-40,64,-41,64,64,64,64,64,64,-35,-36,-37,-38,64,36,64,36,]),'INUM':([21,22,25,29,30,31,36,41,43,54,55,57,58,59,60,61,62,63,64,65,66,67,88,104,],[-6,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,]),'FNUM':([21,22,25,29,30,31,36,41,43,54,55,57,58,59,60,61,62,63,64,65,66,67,88,104,],[-6,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,]),'STRVAL':([21,22,25,29,30,31,36,41,43,54,55,57,58,59,60,61,62,63,64,65,66,67,88,104,],[-6,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,]),'RPTHESES':([32,33,34,37,38,39,40,45,49,50,51,53,56,68,73,75,76,77,78,79,80,81,82,83,84,85,86,87,91,107,],[52,-24,-24,-42,-43,-45,-46,-44,71,72,73,-20,-21,-40,-41,-22,-23,-25,-26,-27,-28,-29,-30,-35,-36,-37,-38,-39,94,109,]),'EQUAL':([33,35,37,38,39,40,45,68,73,83,84,85,86,87,],[-44,57,-42,-43,-45,-46,-44,-40,-41,-35,-36,-37,-38,-39,]),'NOTEQUAL':([33,35,37,38,39,40,45,68,73,83,84,85,86,87,],[-44,58,-42,-43,-45,-46,-44,-40,-41,-35,-36,-37,-38,-39,]),'GTHAN':([33,35,37,38,39,40,45,68,73,83,84,85,86,87,],[-44,59,-42,-43,-45,-46,-44,-40,-41,-35,-36,-37,-38,-39,]),'LTHAN':([33,35,37,38,39,40,45,68,73,83,84,85,86,87,],[-44,60,-42,-43,-45,-46,-44,-40,-41,-35,-36,-37,-38,-39,]),'GEQTHAN':([33,35,37,38,39,40,45,68,73,83,84,85,86,87,],[-44,61,-42,-43,-45,-46,-44,-40,-41,-35,-36,-37,-38,-39,]),'LEQTHAN':([33,35,37,38,39,40,45,68,73,83,84,85,86,87,],[-44,62,-42,-43,-45,-46,-44,-40,-41,-35,-36,-37,-38,-39,]),'PLUS':([33,35,37,38,39,40,44,45,49,51,68,70,73,77,78,79,80,81,82,83,84,85,86,87,91,],[-44,63,-42,-43,-45,-46,63,-44,63,63,-40,63,-41,63,63,63,63,63,63,-35,-36,-37,-38,63,63,]),'MULT':([33,35,37,38,39,40,44,45,49,51,68,70,73,77,78,79,80,81,82,83,84,85,86,87,91,],[-44,65,-42,-43,-45,-46,65,-44,65,65,-40,65,-41,65,65,65,65,65,65,65,65,-37,-38,65,65,]),'DIVIDE':([33,35,37,38,39,40,44,45,49,51,68,70,73,77,78,79,80,81,82,83,84,85,86,87,91,],[-44,66,-42,-43,-45,-46,66,-44,66,66,-40,66,-41,66,66,66,66,66,66,66,66,-37,-38,66,66,]),'EXP':([33,35,37,38,39,40,44,45,49,51,68,70,73,77,78,79,80,81,82,83,84,85,86,87,91,],[-44,67,-42,-43,-45,-46,67,-44,67,67,-40,67,-41,67,67,67,67,67,67,-35,-36,-37,-38,67,67,]),'AND':([33,34,37,38,39,40,45,68,73,77,78,79,80,81,82,83,84,85,86,87,],[54,54,-42,-43,-45,-46,-44,-40,-41,-25,-26,-27,-28,-29,-30,-35,-36,-37,-38,-39,]),'OR':([33,34,37,38,39,40,45,68,73,77,78,79,80,81,82,83,84,85,86,87,],[55,55,-42,-43,-45,-46,-44,-40,-41,-25,-26,-27,-28,-29,-30,-35,-36,-37,-38,-39,]),'LCURLY':([52,72,94,101,109,],[74,89,96,105,111,]),'ELIF':([95,98,99,103,110,113,114,],[100,100,-14,-13,-16,100,-17,]),'ELSE':([95,98,99,103,110,113,114,],[101,101,-14,-13,-16,101,-17,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'is_assing':([6,8,],[10,18,]),'expression':([7,9,11,14,15,21,22,23,24,25,],[13,19,20,26,27,29,30,31,32,33,]),}
+_lr_goto_items = {'program':([0,2,3,4,5,74,89,96,105,111,],[1,17,18,19,20,90,92,102,108,112,]),'stmntwrap':([0,2,3,4,5,23,74,89,96,105,111,],[2,2,2,2,2,41,2,2,2,2,2,]),'block':([0,2,3,4,5,74,89,96,105,111,],[3,3,3,3,3,3,3,3,3,3,]),'while':([0,2,3,4,5,74,89,96,105,111,],[4,4,4,4,4,4,4,4,4,4,]),'for':([0,2,3,4,5,74,89,96,105,111,],[5,5,5,5,5,5,5,5,5,5,]),'statement':([0,2,3,4,5,23,74,89,96,105,111,],[6,6,6,6,6,6,6,6,6,6,6,]),'ifblock':([0,2,3,4,5,74,89,96,105,111,],[7,7,7,7,7,7,7,7,7,7,]),'condition':([22,30,41,54,55,104,],[32,50,69,75,76,107,]),'comparison':([22,30,41,54,55,104,],[34,34,34,34,34,34,]),'expression':([22,25,29,30,31,36,41,43,54,55,57,58,59,60,61,62,63,64,65,66,67,88,104,],[35,44,49,35,51,68,35,70,35,35,77,78,79,80,81,82,83,84,85,86,87,91,35,]),'is_assing':([24,26,27,28,],[42,46,47,48,]),'appendcond':([33,34,],[53,56,]),'ifcont':([95,98,113,],[97,103,114,]),'elifblock':([95,98,113,],[98,98,98,]),'elseblock':([95,98,113,],[99,99,99,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,21 +26,51 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> statement","S'",1,None,None,None),
-  ('statement -> INT ID is_assing','statement',3,'p_statement_declare_int','wparser.py',16),
-  ('statement -> FLOAT ID is_assing','statement',3,'p_statement_declare_float','wparser.py',24),
-  ('is_assing -> ASSIGN expression','is_assing',2,'p_is_assing','wparser.py',28),
-  ('is_assing -> <empty>','is_assing',0,'p_is_assing','wparser.py',29),
-  ('statement -> PRINT LPTHESES expression RPTHESES','statement',4,'p_statement_print','wparser.py',35),
-  ('statement -> ID ASSIGN expression','statement',3,'p_statement_assign','wparser.py',39),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','wparser.py',51),
-  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','wparser.py',52),
-  ('expression -> expression MULT expression','expression',3,'p_expression_binop','wparser.py',53),
-  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop','wparser.py',54),
-  ('expression -> expression EXP expression','expression',3,'p_expression_binop','wparser.py',55),
-  ('expression -> MINUS expression','expression',2,'p_expression_uminus','wparser.py',69),
-  ('expression -> LPTHESES expression RPTHESES','expression',3,'p_expression_group','wparser.py',74),
-  ('expression -> INUM','expression',1,'p_expression_inumber','wparser.py',79),
-  ('expression -> FNUM','expression',1,'p_expression_fnumber','wparser.py',84),
-  ('expression -> ID','expression',1,'p_expression_name','wparser.py',89),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> stmntwrap program','program',2,'p_program','wparser.py',17),
+  ('program -> block program','program',2,'p_program','wparser.py',18),
+  ('program -> while program','program',2,'p_program','wparser.py',19),
+  ('program -> for program','program',2,'p_program','wparser.py',20),
+  ('program -> <empty>','program',0,'p_program','wparser.py',21),
+  ('stmntwrap -> statement COLON','stmntwrap',2,'p_stmntwrap','wparser.py',24),
+  ('statement -> INT ID is_assing','statement',3,'p_statement_declare_int','wparser.py',27),
+  ('statement -> FLOAT ID is_assing','statement',3,'p_statement_declare_float','wparser.py',35),
+  ('statement -> STRING ID is_assing','statement',3,'p_statement_declare_string','wparser.py',39),
+  ('statement -> BOOLEAN ID is_assing','statement',3,'p_statement_declare_boolean','wparser.py',44),
+  ('block -> ifblock','block',1,'p_block','wparser.py',49),
+  ('ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont','ifblock',8,'p_ifblock','wparser.py',52),
+  ('ifcont -> elifblock ifcont','ifcont',2,'p_ifcont','wparser.py',56),
+  ('ifcont -> elseblock','ifcont',1,'p_ifcont','wparser.py',57),
+  ('ifcont -> <empty>','ifcont',0,'p_ifcont','wparser.py',58),
+  ('elseblock -> ELSE LCURLY program RCURLY','elseblock',4,'p_elseblock','wparser.py',61),
+  ('elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont','elifblock',8,'p_elifblock','wparser.py',64),
+  ('while -> WHILE LPTHESES condition RPTHESES LCURLY program RCURLY','while',7,'p_while','wparser.py',67),
+  ('for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY','for',10,'p_for','wparser.py',70),
+  ('condition -> BOOLVAL appendcond','condition',2,'p_condition','wparser.py',73),
+  ('condition -> comparison appendcond','condition',2,'p_condition','wparser.py',74),
+  ('appendcond -> AND condition','appendcond',2,'p_appendcond','wparser.py',77),
+  ('appendcond -> OR condition','appendcond',2,'p_appendcond','wparser.py',78),
+  ('appendcond -> <empty>','appendcond',0,'p_appendcond','wparser.py',79),
+  ('comparison -> expression EQUAL expression','comparison',3,'p_comparison','wparser.py',82),
+  ('comparison -> expression NOTEQUAL expression','comparison',3,'p_comparison','wparser.py',83),
+  ('comparison -> expression GTHAN expression','comparison',3,'p_comparison','wparser.py',84),
+  ('comparison -> expression LTHAN expression','comparison',3,'p_comparison','wparser.py',85),
+  ('comparison -> expression GEQTHAN expression','comparison',3,'p_comparison','wparser.py',86),
+  ('comparison -> expression LEQTHAN expression','comparison',3,'p_comparison','wparser.py',87),
+  ('is_assing -> ASSIGN expression','is_assing',2,'p_is_assing','wparser.py',106),
+  ('is_assing -> <empty>','is_assing',0,'p_is_assing','wparser.py',107),
+  ('statement -> PRINT LPTHESES expression RPTHESES','statement',4,'p_statement_print','wparser.py',113),
+  ('statement -> ID ASSIGN expression','statement',3,'p_statement_assign','wparser.py',117),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','wparser.py',123),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','wparser.py',124),
+  ('expression -> expression MULT expression','expression',3,'p_expression_binop','wparser.py',125),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop','wparser.py',126),
+  ('expression -> expression EXP expression','expression',3,'p_expression_binop','wparser.py',127),
+  ('expression -> MINUS expression','expression',2,'p_expression_uminus','wparser.py',167),
+  ('expression -> LPTHESES expression RPTHESES','expression',3,'p_expression_group','wparser.py',172),
+  ('expression -> INUM','expression',1,'p_expression_inumber','wparser.py',177),
+  ('expression -> FNUM','expression',1,'p_expression_fnumber','wparser.py',182),
+  ('expression -> BOOLVAL','expression',1,'p_expression_boolean','wparser.py',186),
+  ('expression -> STRVAL','expression',1,'p_expression_strval','wparser.py',191),
+  ('expression -> ID','expression',1,'p_expression_name','wparser.py',195),
 ]

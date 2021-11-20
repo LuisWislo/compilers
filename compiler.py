@@ -82,6 +82,9 @@ def p_statement_print(p):
     '''statement : PRINT '(' expression ')' '''
     print(p[3])
 
+def p_ifblock(p):
+    '''ifblock : IF LPTHESES RPTHESES LCURLY RCURLY'''
+
 def p_statement_assign(p):
     'statement : NAME "=" expression'
     if p[1] not in names:
