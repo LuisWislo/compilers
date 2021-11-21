@@ -1,3 +1,10 @@
-int a
-a = 4
-print(a)
+if(3 > 2) {
+    int x = 3;
+} elif(false) {
+    x = 34;
+}
+if(false) {
+    c = "sonic";
+}
+
+print(t);
