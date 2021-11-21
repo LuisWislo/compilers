@@ -2,6 +2,7 @@ from typing import Counter
 from wlexer import tokens
 import argparse
 import ply.yacc as yacc
+from wtree import AbstractSyntaxTree, Node
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -11,7 +12,14 @@ precedence = (
 
 # dictionary of names
 names = {}
-abstractTree = []
+ast = AbstractSyntaxTree()
+
+def p_start(p):
+    '''start : program'''
+    if(p[1]):
+        ast.root = p[1]
+        ast.root.token_id = 'START'
+        ast.root.value = 'START'
 
 def p_program(p):
     '''program : stmntwrap program
@@ -19,31 +27,37 @@ def p_program(p):
                 | while program
                 | for program
                 | '''
+    if(len(p) > 1):
+        prog = Node('CONNECT', 'program')
+        #merge here
+        prog.add_child(p[1])
+        if(p[2]):
+            prog.add_child(p[2])
+        p[0] = prog
 
 def p_stmntwrap(p):
     '''stmntwrap : statement COLON'''
+    p[0] = p[1]
 
 def p_statement_declare_int(p):
     '''statement : INT ID is_assing
     '''
-    if type(p[3]) == float:
-        print('No pudes asignar flotantes a enteros')
-    else:
-        names[p[2]] = { "type": "INT", "value":p[3]}
+    p[0] = help_declaration('INT', p)
+    
 
 def p_statement_declare_float(p):
     'statement : FLOAT ID is_assing'
-    names[p[2]] = { "type": "FLOAT", "value":p[3]}
+    p[0] = help_declaration('FLOAT', p)
 
 def p_statement_declare_string(p):
     '''statement : STRING ID is_assing
     '''
-    names[p[2]] = {"type": "STRING", "value": p[3]}
+    p[0] = help_declaration('STRING', p)
 
 def p_statement_declare_boolean(p):
     '''statement : BOOLEAN ID is_assing
     '''
-    names[p[2]] = {"type": "BOOLEAN", "value": p[3]}
+    p[0] = help_declaration('BOOLEAN', p)
 
 def p_block(p):
     '''block : ifblock '''
@@ -105,19 +119,29 @@ def p_comparison(p):
 def p_is_assing(p):
     '''is_assing : ASSIGN expression 
                 | '''
-    p[0] = 0
+    p[0] = None
     if len(p) > 2:
-        p[0] = p[2]
+        assign = Node('ASSIGN', '=')
+        assign.add_child(p[2])
+        p[0] = assign
+    
 
 def p_statement_print(p):
     '''statement : PRINT LPTHESES expression RPTHESES '''
-    print(p[3])
+    prnt = Node('PRINT', p[1])
+    prnt.add_child(p[3])
+    p[0] = prnt
 
 def p_statement_assign(p):
-    'statement : ID ASSIGN expression'
-    if p[1] not in names:
-        print ( "You must declare a variable before using it")
-    names[p[1]]["value"] = p[3]
+    '''statement : ID ASSIGN expression'''
+    assign = Node('ASSIGN', p[2])
+    id = Node('ID', p[1])
+    expression = p[3]
+
+    assign.add_child(id)
+    assign.add_child(expression)
+
+    p[0] = assign
 
 def p_expression_binop(p):
     '''expression : expression PLUS expression
@@ -125,47 +149,30 @@ def p_expression_binop(p):
                   | expression MULT expression
                   | expression DIVIDE expression
                   | expression EXP expression'''
-
-    type_first = type(p[1]).__name__
-    type_second = type(p[3]).__name__
-    both = Counter([type_first, type_second])
-
-    if(both == Counter(['int', 'int']) 
-        or both == Counter(['int', 'float']) 
-        or both == Counter(['float', 'float'])):
-
-        if p[2] == '+':
-            p[0] = p[1] + p[3]
-        elif p[2] == '-':
-            p[0] = p[1] - p[3]
-        elif p[2] == '*':
-                p[0] = p[1] * p[3]
-        elif p[2] == '/':
-            p[0] = p[1] / p[3]
-        elif p[2] == '^':
-            p[0] = p[1]**p[3]
     
-    elif(both == Counter(['str', 'str'])):
-        if p[2] == '+':
-            p[0] = p[1] + p[3]
-        else:
-            print(f'Cannot apply operation \'{p[2]}\' on strings.')
-    
-    elif(both == Counter(['str', 'int'])
-        or both == Counter(['str', 'float'])):
-        if p[2] == '+':
-            p[0] = str(p[1]) + str(p[3])
-        else:
-            print(f'Cannot apply operation \'{p[2]}\' between \'{type_first}\' and \'{type_second}\'')
-    else:
-        print(f'Cannot apply operation \'{p[2]}\' between \'{type_first}\' and \'{type_second}\'')
-    
+    operand = None
 
-    
+    if p[2] == '+':
+        operand = Node('PLUS', p[2])
+    elif p[2] == '-':
+        operand = Node('MINUS', p[2])
+    elif p[2] == '*':
+        operand = Node('MULT', p[2])
+    elif p[2] == '/':
+        operand = Node('DIVIDE', p[2])
+    elif p[2] == '^':
+        operand = Node('EXP', p[2])
+
+    operand.add_child(p[1])
+    operand.add_child(p[3])
+    p[0] = operand
 
 def p_expression_uminus(p):
     "expression : MINUS expression %prec UMINUS"
-    p[0] = -p[2]
+    mult = Node('MULT', '*')
+    mult.add_child(Node('INUM', -1))
+    mult.add_child(p[2])
+    p[0] = mult
 
 
 def p_expression_group(p):
@@ -174,30 +181,25 @@ def p_expression_group(p):
 
 
 def p_expression_inumber(p):
-    "expression : INUM"
-    p[0] = p[1]
+    '''expression : INUM'''
+    p[0] = Node('INUM', p[1])
 
 
 def p_expression_fnumber(p):
-    "expression : FNUM"
-    p[0] = p[1]
+    '''expression : FNUM'''
+    p[0] = Node('FNUM', p[1])
 
 def p_expression_boolean(p):
-    '''expression : BOOLVAL
-    '''
-    p[0] = p[1]
+    '''expression : BOOLVAL'''
+    p[0] = Node('BOOLVAL', p[1])
 
 def p_expression_strval(p):
     '''expression : STRVAL'''
-    p[0] = p[1]
+    p[0] = Node('STRVAL', p[1])
 
 def p_expression_name(p):
-    "expression : ID"
-    try:
-        p[0] = names[p[1]]["value"]
-    except LookupError:
-        print("Undefined name '%s'" % p[1])
-        p[0] = 0
+    '''expression : ID'''
+    p[0] = Node('ID', p[1])
 
 
 def p_error(p):
@@ -207,6 +209,27 @@ def p_error(p):
     else:
         print("Syntax error at EOF")
 
+def help_declaration(dcl_type, p) -> Node:
+    statement = Node('CONNECT', 'statement')
+    #print(p)
+    datadcl = Node(dcl_type, p[1])
+    var = Node('ID', p[2])
+    datadcl.add_child(var)
+    
+    statement.add_child(datadcl)
+
+    #print(len(p), 'help')
+
+    is_assign = p[3]
+
+    if(is_assign):
+        is_assign.set_first(var)
+        statement.add_child(is_assign)
+
+    return statement
+
+def merge():
+    pass
 
 parser = yacc.yacc()
 argparser = argparse.ArgumentParser()
@@ -218,20 +241,21 @@ if(args.file):
 
         file = args.file
         source = open(file, 'r')
-        lines = source.readlines()
+        prog = source.read()
         source.close()
-
-        for line in lines:
-            yacc.parse(line)
+        yacc.parse(prog)
     except(FileNotFoundError):
-        print('El archivo no existe.')
+        print('File does not exist.')
         
 else:
     while True:
         try:
             s = input('calc > ')
-        except EOFError:
+        except (EOFError, KeyboardInterrupt):
+            break
+        if s == '!exit':
             break
         if not s:
             continue
         yacc.parse(s)
+print(ast)
