@@ -23,13 +23,12 @@ def p_start(p):
 
 def p_program(p):
     '''program : stmntwrap program
-                | block program
+                | ifblock program
                 | while program
                 | for program
                 | '''
     if(len(p) > 1):
         prog = Node('CONNECT', 'program')
-        #merge here
         prog.add_child(p[1])
         if(p[2]):
             prog.add_child(p[2])
@@ -40,31 +39,23 @@ def p_stmntwrap(p):
     p[0] = p[1]
 
 def p_statement_declare_int(p):
-    '''statement : INT ID is_assing
-    '''
+    '''statement : INT ID is_assing'''
     p[0] = help_declaration('INT', p)
     
-
 def p_statement_declare_float(p):
-    'statement : FLOAT ID is_assing'
+    '''statement : FLOAT ID is_assing'''
     p[0] = help_declaration('FLOAT', p)
 
 def p_statement_declare_string(p):
-    '''statement : STRING ID is_assing
-    '''
+    '''statement : STRING ID is_assing'''
     p[0] = help_declaration('STRING', p)
 
 def p_statement_declare_boolean(p):
-    '''statement : BOOLEAN ID is_assing
-    '''
+    '''statement : BOOLEAN ID is_assing'''
     p[0] = help_declaration('BOOLEAN', p)
-
-def p_block(p):
-    '''block : ifblock '''
 
 def p_ifblock(p):
     '''ifblock : IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont'''
-
 
 def p_ifcont(p):
     '''ifcont : elifblock ifcont 
