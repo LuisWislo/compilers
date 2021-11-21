@@ -15,7 +15,7 @@ Rule 9     statement -> FLOAT ID is_assing
 Rule 10    statement -> STRING ID is_assing
 Rule 11    statement -> BOOLEAN ID is_assing
 Rule 12    ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-Rule 13    ifcont -> elifblock ifcont
+Rule 13    ifcont -> elifblock
 Rule 14    ifcont -> elseblock
 Rule 15    ifcont -> <empty>
 Rule 16    elseblock -> ELSE LCURLY program RCURLY
@@ -98,7 +98,7 @@ elseblock            : 14
 expression           : 19 25 25 26 26 27 27 28 28 29 29 30 30 31 33 34 35 35 36 36 37 37 38 38 39 39 40 41
 for                  : 5
 ifblock              : 3
-ifcont               : 12 13 17
+ifcont               : 12 17
 is_assing            : 8 9 10 11
 program              : 1 2 3 4 5 12 16 17 18 19
 start                : 0
@@ -1912,7 +1912,7 @@ state 92
 state 93
 
     (12) ifblock -> IF LPTHESES condition RPTHESES LCURLY program RCURLY . ifcont
-    (13) ifcont -> . elifblock ifcont
+    (13) ifcont -> . elifblock
     (14) ifcont -> . elseblock
     (15) ifcont -> .
     (17) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
@@ -1979,35 +1979,20 @@ state 96
 
 state 97
 
-    (13) ifcont -> elifblock . ifcont
-    (13) ifcont -> . elifblock ifcont
-    (14) ifcont -> . elseblock
-    (15) ifcont -> .
-    (17) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
-    (16) elseblock -> . ELSE LCURLY program RCURLY
+    (13) ifcont -> elifblock .
 
-  ! shift/reduce conflict for ELIF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-    IF              reduce using rule 15 (ifcont -> .)
-    WHILE           reduce using rule 15 (ifcont -> .)
-    FOR             reduce using rule 15 (ifcont -> .)
-    INT             reduce using rule 15 (ifcont -> .)
-    FLOAT           reduce using rule 15 (ifcont -> .)
-    STRING          reduce using rule 15 (ifcont -> .)
-    BOOLEAN         reduce using rule 15 (ifcont -> .)
-    PRINT           reduce using rule 15 (ifcont -> .)
-    ID              reduce using rule 15 (ifcont -> .)
-    $end            reduce using rule 15 (ifcont -> .)
-    RCURLY          reduce using rule 15 (ifcont -> .)
-    ELIF            shift and go to state 99
-    ELSE            shift and go to state 100
+    IF              reduce using rule 13 (ifcont -> elifblock .)
+    WHILE           reduce using rule 13 (ifcont -> elifblock .)
+    FOR             reduce using rule 13 (ifcont -> elifblock .)
+    INT             reduce using rule 13 (ifcont -> elifblock .)
+    FLOAT           reduce using rule 13 (ifcont -> elifblock .)
+    STRING          reduce using rule 13 (ifcont -> elifblock .)
+    BOOLEAN         reduce using rule 13 (ifcont -> elifblock .)
+    PRINT           reduce using rule 13 (ifcont -> elifblock .)
+    ID              reduce using rule 13 (ifcont -> elifblock .)
+    $end            reduce using rule 13 (ifcont -> elifblock .)
+    RCURLY          reduce using rule 13 (ifcont -> elifblock .)
 
-  ! ELIF            [ reduce using rule 15 (ifcont -> .) ]
-  ! ELSE            [ reduce using rule 15 (ifcont -> .) ]
-
-    elifblock                      shift and go to state 97
-    ifcont                         shift and go to state 102
-    elseblock                      shift and go to state 98
 
 state 98
 
@@ -2024,22 +2009,20 @@ state 98
     ID              reduce using rule 14 (ifcont -> elseblock .)
     $end            reduce using rule 14 (ifcont -> elseblock .)
     RCURLY          reduce using rule 14 (ifcont -> elseblock .)
-    ELIF            reduce using rule 14 (ifcont -> elseblock .)
-    ELSE            reduce using rule 14 (ifcont -> elseblock .)
 
 
 state 99
 
     (17) elifblock -> ELIF . LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
 
-    LPTHESES        shift and go to state 103
+    LPTHESES        shift and go to state 102
 
 
 state 100
 
     (16) elseblock -> ELSE . LCURLY program RCURLY
 
-    LCURLY          shift and go to state 104
+    LCURLY          shift and go to state 103
 
 
 state 101
@@ -2073,32 +2056,13 @@ state 101
     ID              shift and go to state 12
 
     stmntwrap                      shift and go to state 3
-    program                        shift and go to state 105
+    program                        shift and go to state 104
     ifblock                        shift and go to state 4
     while                          shift and go to state 5
     for                            shift and go to state 6
     statement                      shift and go to state 7
 
 state 102
-
-    (13) ifcont -> elifblock ifcont .
-
-    IF              reduce using rule 13 (ifcont -> elifblock ifcont .)
-    WHILE           reduce using rule 13 (ifcont -> elifblock ifcont .)
-    FOR             reduce using rule 13 (ifcont -> elifblock ifcont .)
-    INT             reduce using rule 13 (ifcont -> elifblock ifcont .)
-    FLOAT           reduce using rule 13 (ifcont -> elifblock ifcont .)
-    STRING          reduce using rule 13 (ifcont -> elifblock ifcont .)
-    BOOLEAN         reduce using rule 13 (ifcont -> elifblock ifcont .)
-    PRINT           reduce using rule 13 (ifcont -> elifblock ifcont .)
-    ID              reduce using rule 13 (ifcont -> elifblock ifcont .)
-    $end            reduce using rule 13 (ifcont -> elifblock ifcont .)
-    RCURLY          reduce using rule 13 (ifcont -> elifblock ifcont .)
-    ELIF            reduce using rule 13 (ifcont -> elifblock ifcont .)
-    ELSE            reduce using rule 13 (ifcont -> elifblock ifcont .)
-
-
-state 103
 
     (17) elifblock -> ELIF LPTHESES . condition RPTHESES LCURLY program RCURLY ifcont
     (20) condition -> . BOOLVAL appendcond
@@ -2130,11 +2094,11 @@ state 103
     STRVAL          shift and go to state 39
     ID              shift and go to state 40
 
-    condition                      shift and go to state 106
+    condition                      shift and go to state 105
     comparison                     shift and go to state 34
     expression                     shift and go to state 35
 
-state 104
+state 103
 
     (16) elseblock -> ELSE LCURLY . program RCURLY
     (2) program -> . stmntwrap program
@@ -2164,35 +2128,35 @@ state 104
     PRINT           shift and go to state 16
     ID              shift and go to state 12
 
-    program                        shift and go to state 107
+    program                        shift and go to state 106
     stmntwrap                      shift and go to state 3
     ifblock                        shift and go to state 4
     while                          shift and go to state 5
     for                            shift and go to state 6
     statement                      shift and go to state 7
 
-state 105
+state 104
 
     (19) for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program . RCURLY
 
-    RCURLY          shift and go to state 108
+    RCURLY          shift and go to state 107
+
+
+state 105
+
+    (17) elifblock -> ELIF LPTHESES condition . RPTHESES LCURLY program RCURLY ifcont
+
+    RPTHESES        shift and go to state 108
 
 
 state 106
 
-    (17) elifblock -> ELIF LPTHESES condition . RPTHESES LCURLY program RCURLY ifcont
+    (16) elseblock -> ELSE LCURLY program . RCURLY
 
-    RPTHESES        shift and go to state 109
+    RCURLY          shift and go to state 109
 
 
 state 107
-
-    (16) elseblock -> ELSE LCURLY program . RCURLY
-
-    RCURLY          shift and go to state 110
-
-
-state 108
 
     (19) for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY .
 
@@ -2209,14 +2173,14 @@ state 108
     RCURLY          reduce using rule 19 (for -> FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY .)
 
 
-state 109
+state 108
 
     (17) elifblock -> ELIF LPTHESES condition RPTHESES . LCURLY program RCURLY ifcont
 
-    LCURLY          shift and go to state 111
+    LCURLY          shift and go to state 110
 
 
-state 110
+state 109
 
     (16) elseblock -> ELSE LCURLY program RCURLY .
 
@@ -2231,11 +2195,9 @@ state 110
     ID              reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
     $end            reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
     RCURLY          reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
-    ELIF            reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
-    ELSE            reduce using rule 16 (elseblock -> ELSE LCURLY program RCURLY .)
 
 
-state 111
+state 110
 
     (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY . program RCURLY ifcont
     (2) program -> . stmntwrap program
@@ -2265,31 +2227,29 @@ state 111
     PRINT           shift and go to state 16
     ID              shift and go to state 12
 
-    program                        shift and go to state 112
+    program                        shift and go to state 111
     stmntwrap                      shift and go to state 3
     ifblock                        shift and go to state 4
     while                          shift and go to state 5
     for                            shift and go to state 6
     statement                      shift and go to state 7
 
-state 112
+state 111
 
     (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program . RCURLY ifcont
 
-    RCURLY          shift and go to state 113
+    RCURLY          shift and go to state 112
 
 
-state 113
+state 112
 
     (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY . ifcont
-    (13) ifcont -> . elifblock ifcont
+    (13) ifcont -> . elifblock
     (14) ifcont -> . elseblock
     (15) ifcont -> .
     (17) elifblock -> . ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont
     (16) elseblock -> . ELSE LCURLY program RCURLY
 
-  ! shift/reduce conflict for ELIF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
     IF              reduce using rule 15 (ifcont -> .)
     WHILE           reduce using rule 15 (ifcont -> .)
     FOR             reduce using rule 15 (ifcont -> .)
@@ -2304,19 +2264,14 @@ state 113
     ELIF            shift and go to state 99
     ELSE            shift and go to state 100
 
-  ! ELIF            [ reduce using rule 15 (ifcont -> .) ]
-  ! ELSE            [ reduce using rule 15 (ifcont -> .) ]
-
-    ifcont                         shift and go to state 114
+    ifcont                         shift and go to state 113
     elifblock                      shift and go to state 97
     elseblock                      shift and go to state 98
 
-state 114
+state 113
 
     (17) elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .
 
-    ELIF            reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
-    ELSE            reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
     IF              reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
     WHILE           reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
     FOR             reduce using rule 17 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
@@ -2337,7 +2292,3 @@ WARNING: shift/reduce conflict for MINUS in state 87 resolved as shift
 WARNING: shift/reduce conflict for MULT in state 87 resolved as shift
 WARNING: shift/reduce conflict for DIVIDE in state 87 resolved as shift
 WARNING: shift/reduce conflict for EXP in state 87 resolved as shift
-WARNING: shift/reduce conflict for ELIF in state 97 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 97 resolved as shift
-WARNING: shift/reduce conflict for ELIF in state 113 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 113 resolved as shift

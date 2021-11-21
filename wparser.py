@@ -2,7 +2,7 @@ from typing import Counter
 from wlexer import tokens
 import argparse
 import ply.yacc as yacc
-from wtree import AbstractSyntaxTree, Node
+from wtree import AbstractSyntaxTree, IfControllerNode, Node
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -10,8 +10,6 @@ precedence = (
     ('right', 'UMINUS'),
 )
 
-# dictionary of names
-names = {}
 ast = AbstractSyntaxTree()
 
 def p_start(p):
@@ -33,6 +31,7 @@ def p_program(p):
         if(p[2]):
             prog.add_child(p[2])
         p[0] = prog
+        #ast.root = p[0]
 
 def p_stmntwrap(p):
     '''stmntwrap : statement COLON'''
@@ -56,17 +55,45 @@ def p_statement_declare_boolean(p):
 
 def p_ifblock(p):
     '''ifblock : IF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont'''
+    
+    if_node = IfControllerNode('IF', 'if')
+    if_node.set_condition(p[3])
+    if(p[6]):
+        if_node.add_child(p[6])
+    if(p[8]):
+        if_node.set_else(p[8])
+
+    p[0] = if_node
+
 
 def p_ifcont(p):
-    '''ifcont : elifblock ifcont 
+    '''ifcont : elifblock 
                 | elseblock 
                 | '''
 
+    if(len(p) > 1):
+        p[0] = p[1]
+    else:
+        p[0] = None
+
 def p_elseblock(p):
     '''elseblock : ELSE LCURLY program RCURLY'''
+    
+    elseblock = Node('CONNECT', 'elseblock')
+    elseblock.add_child(p[3])
+    p[0] = elseblock
 
 def p_elifblock(p):
     '''elifblock : ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont'''
+
+    elifblock = IfControllerNode('ELIF', 'elif')
+    elifblock.set_condition(p[3])
+    if(p[6]):
+        elifblock.add_child(p[6])
+    if(p[8]):
+        elifblock.set_else(p[8])
+        
+    p[0] = elifblock
 
 def p_while(p):
     '''while : WHILE LPTHESES condition RPTHESES LCURLY program RCURLY'''
@@ -78,10 +105,31 @@ def p_condition(p):
     '''condition : BOOLVAL appendcond
                 | comparison appendcond'''
 
+    first = p[1]
+    second = p[2]
+
+    if(p[1] == True or p[1] == False):
+        first = Node('BOOLVAL', p[1])
+    
+    if(second):
+        second.add_child(first)
+        p[0] = second
+    else:
+        p[0] = first
+
 def p_appendcond(p):
     '''appendcond : AND condition
                     | OR condition
                     | '''
+    p[0] = None
+    if(len(p) > 1):
+        val = None
+        if(p[1] == 'and'):
+            val = Node('AND', p[1])
+        elif(p[1] == 'or'):
+            val = Node('OR', p[1])
+        val.add_child(p[2])
+        p[0] = val
 
 def p_comparison(p):
     '''comparison : expression EQUAL expression
@@ -91,21 +139,24 @@ def p_comparison(p):
                     | expression GEQTHAN expression
                     | expression LEQTHAN expression'''
 
-    first = p[1]
-    second = p[3]
+    operator = None
 
     if(p[2] == '=='):
-        p[0] = (first == second)
+        operator = Node('EQUAL', p[2])
     elif(p[2] == '!='):
-        p[0] = (first != second)
+         operator = Node('NOTEQUAL', p[2])
     elif(p[2] == '>'):
-        p[0] = (first > second)
+         operator = Node('GTHAN', p[2])
     elif(p[2] == '<'):
-        p[0] = (first < second)
+         operator = Node('LTHAN', p[2])
     elif(p[2] == '>='):
-        p[0] = (first >= second)
+         operator = Node('GEQTHAN', p[2])
     elif(p[2] == '<='):
-        p[0] = (first <= second)
+         operator = Node('LEQTHAN', p[2])
+    
+    operator.add_child(p[1])
+    operator.add_child(p[3])
+    p[0] = operator
 
 def p_is_assing(p):
     '''is_assing : ASSIGN expression 

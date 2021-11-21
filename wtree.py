@@ -31,10 +31,24 @@ class LoopNode(Node):
         super().__init__(token_id, value)
 
 
-class ConditionNode(Node):
+class IfControllerNode(Node):
 
     def __init__(self, token_id, value) -> None:
         super().__init__(token_id, value)
+        self.condition = None
+        self.els = None
+    
+    def set_condition(self, node:Node):
+        self.add_child(node)
+        self.condition = node
+        
+    # def set_then(self, node:Node):
+    #     self.add_child(node)
+    #     self.then = node
+
+    def set_else(self, node:Node):
+        self.add_child(node)
+        self.els = node
 
 class AbstractSyntaxTree:
 
