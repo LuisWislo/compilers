@@ -23,6 +23,9 @@ class Node:
     def is_empty(self):
         return self.token_id == None
     
+    def set_scope(self, scope):
+        self.scope = scope
+    
 
 
 class LoopNode(Node):

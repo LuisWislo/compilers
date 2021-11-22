@@ -270,34 +270,38 @@ def help_declaration(dcl_type, p) -> Node:
 
     return statement
 
-def merge():
-    pass
-
 parser = yacc.yacc()
-argparser = argparse.ArgumentParser()
-argparser.add_argument('-f', '--file')
-args = argparser.parse_args()
 
-if(args.file):
-    try:
+def parsecode(code):
+    yacc.parse(code)
+    return ast
 
-        file = args.file
-        source = open(file, 'r')
-        prog = source.read()
-        source.close()
-        yacc.parse(prog)
-    except(FileNotFoundError):
-        print('File does not exist.')
-        
-else:
-    while True:
+if __name__ == '__main__':
+    
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument('-f', '--file')
+    args = argparser.parse_args()
+
+    if(args.file):
         try:
-            s = input('calc > ')
-        except (EOFError, KeyboardInterrupt):
-            break
-        if s == '!exit':
-            break
-        if not s:
-            continue
-        yacc.parse(s)
-print(ast)
+
+            file = args.file
+            source = open(file, 'r')
+            prog = source.read()
+            source.close()
+            yacc.parse(prog)
+        except(FileNotFoundError):
+            print('File does not exist.')
+            
+    else:
+        while True:
+            try:
+                s = input('calc > ')
+            except (EOFError, KeyboardInterrupt):
+                break
+            if s == '!exit':
+                break
+            if not s:
+                continue
+            yacc.parse(s)
+    print(ast)

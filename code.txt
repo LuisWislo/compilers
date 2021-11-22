@@ -1,10 +1,2 @@
-if(3 > 2) {
-    int x = 3;
-} elif(false) {
-    x = 34;
-}
-if(false) {
-    c = "sonic";
-}
-
-print(t);
+int a = 4;
+print(a / 2 + 3);
