@@ -1,7 +1,25 @@
-from werrors import WException
+from collections import Counter
+import werrors
 from wtree import AbstractSyntaxTree as AST, Node
 import wsymbols as sym
 from wscope import ScopeNode
+
+# Operator whitelist
+
+wl_plus = [
+    Counter(['INUM', 'INUM']), 
+    Counter(['FNUM', 'FNUM']), 
+    Counter(['INUM', 'FNUM']), 
+    Counter(['INUM', 'STRVAL']), 
+    Counter(['FNUM', 'STRVAL']),
+    Counter(['STRVAL', 'STRVAL'])
+]
+
+wl_others = [
+    Counter(['INUM', 'INUM']), 
+    Counter(['FNUM', 'FNUM']), 
+    Counter(['INUM', 'FNUM'])
+]
 
 
 
@@ -10,7 +28,7 @@ def analyze(ast:AST):
         global_scope = ScopeNode()
         traverse(ast.root, global_scope)
         print(global_scope)
-    except WException as err:
+    except werrors.WException as err:
         print(err.message)
 
 
@@ -61,25 +79,61 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         traverse(child, cscope)
 
 def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
-    newval = None
+    # TODO operation limitation
+    
 
     left_prim = sym.get_node_value(left, scope)
     right_prim = sym.get_node_value(right, scope)
 
+    newval = None
+    newtype = left_prim.token_id
+
+    operands = Counter([left_prim.token_id, right_prim.token_id])
     if(operator == '+'):
-        newtype = ''
-        newval = left_prim.value + right_prim.value
+        if(operands in wl_plus):
+            if(operands == Counter(['STRVAL', 'INUM']) or operands == Counter(['STRVAL', 'FNUM'])):
+                newval = str(left_prim.value) + str(right_prim.value)
+                newtype = 'STRVAL'
+            else:
+                if(operands == Counter(['INUM', 'FNUM'])):
+                    newtype = 'FNUM'
+
+                newval = left_prim.value + right_prim.value
+        else:
+            raise werrors.OperandMismatchError(left_prim.token_id, right_prim.token_id, '+')
     elif(operator == '-'):
-        newtype = ''
-        newval = left_prim.value - right_prim.value
+        if(operands in wl_others):
+            if(operands == Counter(['INUM', 'FNUM'])):
+                newtype = 'FNUM'
+
+            newval = left_prim.value - right_prim.value
+        else:
+            raise werrors.OperandMismatchError(left_prim.token_id, right_prim.token_id, '-')
+        
     elif(operator == '*'):
-        newtype = ''
-        newval = left_prim.value * right_prim.value
+        if(operands in wl_others):
+            if(operands == Counter(['INUM', 'FNUM'])):
+                newtype = 'FNUM'
+
+            newval = left_prim.value * right_prim.value
+        else:
+            raise werrors.OperandMismatchError(left_prim.token_id, right_prim.token_id, '*')
     elif(operator == '/'):
-        newtype = ''
-        newval = left_prim.value / right_prim.value
+        if(operands in wl_others):
+            if(operands == Counter(['INUM', 'INUM'])):
+                newval = left_prim.value // right_prim.value
+            else:
+                newtype = 'FNUM'
+                newval = left_prim.value / right_prim.value
+        else:
+            raise werrors.OperandMismatchError(left_prim.token_id, right_prim.token_id, '/')
     elif(operator == '^'):
-        newtype = ''
-        newval = left_prim.value ** right_prim.value
+        if(operands in wl_others):
+            if(operands == Counter(['INUM', 'FNUM'])):
+                newtype = 'FNUM'
+
+            newval = left_prim.value ** right_prim.value
+        else:
+            raise werrors.OperandMismatchError(left_prim.token_id, right_prim.token_id, '^')
     
-    return Node(left_prim.token_id, newval)
+    return Node(newtype, newval)

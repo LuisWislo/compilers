@@ -1,7 +1,6 @@
-from wscope import ScopeNode
+from collections import Counter
 
 
-uno = ScopeNode()
-dos = ScopeNode()
+dict = {('pls', 'minus') : 'xd'}
 
-print(uno.table, dos.table)
+print(dict)
