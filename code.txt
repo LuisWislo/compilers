@@ -1,1 +1,15 @@
-int x = 4 ^ 3;
+int x = 3;
+string y = "camelot";
+float w = 3.5;
+
+if(x == 5) {
+    print(x);
+    if(true) {
+        print(w);
+    } else {
+        print("loser");
+    }
+} else {
+    print(y);
+}
+

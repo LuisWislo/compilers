@@ -1,6 +1,7 @@
 import wparser
 import argparse
 import wsemantic
+import werrors
 
 def main():
     argparser = argparse.ArgumentParser()
@@ -15,8 +16,12 @@ def main():
             code = source.read()
             source.close()
             tree = wparser.parsecode(code)
-            print(tree)
+            #print(tree)
             wsemantic.analyze(tree)
+            print(wsemantic.tac)
         except(FileNotFoundError):
             print('File does not exist.')
+        except werrors.WException as err:
+            print(err.message)
+
 main()

@@ -4,6 +4,7 @@ class Node:
         self.token_id = token_id
         self.value = value
         self.children = []
+        self.tac_id = None
     
     def __repr__(self) -> str:
         return f'({self.token_id}, {self.value})'
@@ -17,8 +18,9 @@ class Node:
     def add_child(self, node):
         if(node.token_id == 'CONNECT'):
             self.children += node.children
-        else:
-            self.children.append(node)
+            return node.children[0]
+        self.children.append(node)
+        return node
     
     def is_empty(self):
         return self.token_id == None
@@ -42,16 +44,19 @@ class IfControllerNode(Node):
         self.els = None
     
     def set_condition(self, node:Node):
-        self.add_child(node)
-        self.condition = node
-        
-    # def set_then(self, node:Node):
-    #     self.add_child(node)
-    #     self.then = node
+        self.condition = self.add_child(node)
 
     def set_else(self, node:Node):
-        self.add_child(node)
-        self.els = node
+        self.els = self.add_child(node)
+    
+    def get_else_index(self):
+        index = 0
+        for c in self.children:
+            if(c == self.els):
+                return index
+            index += 1
+        return -1
+
 
 class AbstractSyntaxTree:
 
