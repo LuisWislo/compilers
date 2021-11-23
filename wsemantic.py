@@ -98,16 +98,12 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
 
     elif(isinstance(current, IfControllerNode)):
         condition = sym.get_node_value(traverse(current.condition, cscope), cscope)
-        #tac_id?
-        print(condition)
 
         var_condition = None
         if(condition.tac_id):
             var_condition = condition.tac_id
         else:
             var_condition = condition.value
-
-        print(var_condition)
         
         then_scope = ScopeNode(cscope.level + 1)
         then_scope.parent = cscope

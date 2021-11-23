@@ -1,15 +1,8 @@
-int x = 3;
-string y = "camelot";
-float w = 3.5;
+int x;
 
 if(x == 5) {
-    print(x);
-    if(true) {
-        print(w);
-    } else {
-        print("loser");
-    }
-} else {
-    print(y);
+    print("pedestal");
+} elif(false) {
+    print("more than");
 }
 
