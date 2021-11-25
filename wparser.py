@@ -2,7 +2,7 @@ from typing import Counter
 from wlexer import tokens
 import argparse
 import ply.yacc as yacc
-from wtree import AbstractSyntaxTree, IfControllerNode, Node
+from wtree import AbstractSyntaxTree, IfControllerNode, LoopNode, Node
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -97,6 +97,13 @@ def p_elifblock(p):
 
 def p_while(p):
     '''while : WHILE LPTHESES condition RPTHESES LCURLY program RCURLY'''
+
+    whileblock = LoopNode('WHILE', 'while')
+    whileblock.set_condition(p[3])
+    if(p[6]):
+        whileblock.set_then(p[6])
+
+    p[0] = whileblock
 
 def p_for(p):
     '''for : FOR LPTHESES stmntwrap condition COLON expression RPTHESES LCURLY program RCURLY'''

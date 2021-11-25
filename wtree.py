@@ -34,6 +34,14 @@ class LoopNode(Node):
 
     def __init__(self, token_id, value) -> None:
         super().__init__(token_id, value)
+        self.condition = None
+        self.then = None
+    
+    def set_condition(self, node:Node):
+        self.condition = self.add_child(node)
+    
+    def set_then(self, node:Node):
+        self.then = self.add_child(node)
 
 
 class IfControllerNode(Node):

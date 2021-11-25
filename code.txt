@@ -1,8 +1,6 @@
 int x;
 
-if(x == 5) {
-    print("pedestal");
-} elif(false) {
-    print("more than");
+while(true) {
+    print(x);
+    float y = 3.4;
 }
-
