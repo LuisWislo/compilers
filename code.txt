@@ -1,6 +1,5 @@
-int x;
+print("hello world");
 
-while(true) {
+for(int x = 1; i<10 and false; i = i+1) {
     print(x);
-    float y = 3.4;
 }
