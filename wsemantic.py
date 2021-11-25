@@ -1,7 +1,7 @@
 from collections import Counter
 import werrors
 from wtac import TACTable
-from wtree import AbstractSyntaxTree as AST, Node, IfControllerNode
+from wtree import AbstractSyntaxTree as AST, LoopNode, Node, IfControllerNode
 import wsymbols as sym
 from wscope import ScopeNode
 
@@ -95,6 +95,34 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         result = comparison(left, right, current.value, cscope)
         result.tac_id = tac.add_entry(current.token_id, arg1=get_tac_arg(left), arg2=get_tac_arg(right), temp_var=True)['result']
         return result
+
+    elif(isinstance(current, LoopNode)):
+        condition = sym.get_node_value(traverse(current.condition, cscope), cscope)
+
+        var_condition = None
+        if(condition.tac_id):
+            var_condition = condition.tac_id
+        else:
+            var_condition = condition.value
+        
+        then_scope = ScopeNode(cscope.level + 1)
+        then_scope.parent = cscope
+
+        cscope.children.append(then_scope)
+
+        if(len(current.children) > 1):
+            tac_cond = tac.add_entry('IFNOTGOTO', arg1=var_condition, arg2='_jump')
+            print(tac_cond)
+            # traverse program inside loop
+            for child in current.children[1:]:
+                traverse(child, then_scope)
+            
+            tac.add_entry('GOTO', arg1=tac_cond['label'])
+            tac.add_entry('CHECKPOINT', set_label=tac_cond['arg2'])
+
+
+        return True
+
 
     elif(isinstance(current, IfControllerNode)):
         condition = sym.get_node_value(traverse(current.condition, cscope), cscope)
