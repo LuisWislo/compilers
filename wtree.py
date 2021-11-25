@@ -30,6 +30,29 @@ class Node:
     
 
 
+class ForNode(Node):
+
+    def __init__(self, token_id, value) -> None:
+        super().__init__(token_id, value)
+        self.condition = None
+        self.statement = None
+        self.tail = None
+        self.then = None
+        
+
+    def set_statement(self, node:Node):
+        self.statement = self.add_child(node)
+    
+    def set_condition(self, node:Node):
+        self.condition = self.add_child(node)
+    
+    def set_tail(self, node:Node):
+        self.tail = self.add_child(node)
+    
+    def set_then(self, node:Node):
+        self.then = self.add_child(node)
+
+
 class LoopNode(Node):
 
     def __init__(self, token_id, value) -> None:

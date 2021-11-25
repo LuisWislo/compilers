@@ -1,13 +1,5 @@
-int x;
+print("hello world");
 
-while(true) {
+for(int x = 1; i<10 and false; i = i+1) {
     print(x);
-    float y = 3.4;
-
-    if(3 > 2) {
-        print("confusing");
-    }
 }
-
-int y = 32;
-string w = "amazing";
