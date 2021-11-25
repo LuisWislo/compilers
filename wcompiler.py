@@ -16,9 +16,9 @@ def main():
             code = source.read()
             source.close()
             tree = wparser.parsecode(code)
-            print(tree)
-            #wsemantic.analyze(tree)
-            #print(wsemantic.tac)
+            #print(tree)
+            wsemantic.analyze(tree)
+            print(wsemantic.tac)
         except(FileNotFoundError):
             print('File does not exist.')
         except werrors.WException as err:
