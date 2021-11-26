@@ -104,12 +104,8 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         cond_marker = tac.add_entry('COND_MARKER')
         condition = sym.get_node_value(traverse(current.condition, cscope), cscope)
 
-        var_condition = None
-        if(condition.tac_id):
-            var_condition = condition.tac_id
-        else:
-            var_condition = condition.fullname#condition.value
-        
+        var_condition = get_tac_arg(condition)
+
         then_scope = ScopeNode(cscope.level + 1)
         then_scope.parent = cscope
 
@@ -138,11 +134,7 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         cond_marker = tac.add_entry('COND_MARKER')
         condition = sym.get_node_value(traverse(current.condition, for_scope), for_scope)
 
-        var_condition = None
-        if(condition.tac_id):
-            var_condition = condition.tac_id
-        else:
-            var_condition = condition.fullname#condition.value
+        var_condition = get_tac_arg(condition)
         
         tac_cond = tac.add_entry('IFNOTGOTO', arg1=var_condition, arg2='_jump')
         
@@ -161,11 +153,7 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
     elif(isinstance(current, IfControllerNode)):
         condition = sym.get_node_value(traverse(current.condition, cscope), cscope)
 
-        var_condition = None
-        if(condition.tac_id):
-            var_condition = condition.tac_id
-        else:
-            var_condition = condition.fullname#condition.value
+        var_condition = get_tac_arg(condition)
         
         then_scope = ScopeNode(cscope.level + 1)
         then_scope.parent = cscope

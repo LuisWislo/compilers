@@ -1,2 +1,0 @@
-float i = 2.2;
-print("i like the number " + i);
