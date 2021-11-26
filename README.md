@@ -2,12 +2,49 @@
 
 Luis Wilson A00226649
 
-### October 19, 2021
+### November 26, 2021
 
-Add support for compiling with file as source code.
-To do so, run **compiler.py**, specifying the file being used as source:
+#### WCompiler, the final project of the course.
 
-Example:
+Write your code in a .txt file and run as follows:
+
 ```
-python3 compiler.py -f code.txt
+python3 wcompiler.py -f file_with_code.txt
 ```
+
+A three-address-code table will be printed and then a "virtual" STDOUT for the actual execution of the code:
+
+```
+// code.txt
+int x = 0;
+
+while(x < 5) {
+    print(x);
+    x = x+1;
+}
+```
+```
+$ python3 wcompiler.py -f code.txt
+
+Label Result Operation   Arg1 Arg2 
+l0    -      INT         S0-x -    
+l1    -      ASSIGN      S0-x 0    
+l2    -      COND_MARKER -    -    
+l3    v0     LTHAN       S0-x 5    
+l4    -      IFNOTGOTO   v0   l5   
+l6    0      PRINT       S0-x -    
+l7    v1     PLUS        S0-x 1    
+l8    -      ASSIGN      S0-x v1   
+l9    -      GOTO        l2   -    
+l5    -      CHECKPOINT  -    -    
+
+>> STDOUT BEGIN >>
+0
+1
+2
+3
+4
+>> STDOUT END >>
+```
+
+To see wcompiler's core functionalities run the with the samples flag.
