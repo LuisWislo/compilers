@@ -66,6 +66,13 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
     elif(current.token_id == 'ASSIGN'):
         receives = traverse(current.children[0], cscope)
         to_set = traverse(current.children[1], cscope)
+        if(Counter([sym.get_node_value(receives, cscope).token_id, sym.get_node_value(to_set, cscope).token_id]) == Counter(['INUM', 'FNUM'])):
+            if(receives.token_id == 'INUM'):
+                raise werrors.TypeMismatchError('FNUM', 'INUM')
+            conv = tac.add_entry('INUMTOFNUM', arg1=get_tac_arg(to_set), temp_var=True)
+            to_set.tac_id = conv['result']
+
+            
         tac.add_entry('ASSIGN', arg1=get_tac_arg(receives), arg2=get_tac_arg(to_set))
         sym.set_symbol_value(current.children[0], to_set, cscope)
         return True
