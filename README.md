@@ -57,3 +57,4 @@ $ python3 wcompiler.py -s 0 // will run the first sample
 
 **Notes:**
 - String values can only be alpha-numeric characters.
+- Empty code inside brackets or the whole program will result in an error.
