@@ -47,4 +47,13 @@ l5    -      CHECKPOINT  -    -
 >> STDOUT END >>
 ```
 
-To see wcompiler's core functionalities run the with the samples flag.
+Please check out samples.py for some examples on core functionalities of wcompiler.
+
+Run a specific sample with the -s flag following its index:
+
+```
+$ python3 wcompiler.py -s 0 // will run the first sample
+```
+
+**Notes:**
+- String values can only be alpha-numeric characters.

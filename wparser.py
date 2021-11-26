@@ -7,6 +7,7 @@ from wtree import AbstractSyntaxTree, ForNode, IfControllerNode, LoopNode, Node
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MULT', 'DIVIDE'),
+    ('right', 'EXP'),
     ('right', 'UMINUS'),
 )
 
