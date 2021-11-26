@@ -89,5 +89,14 @@ class Executer:
             self.symbols[entry['result']] = self.get_val(entry['arg1']) and self.get_val(entry['arg2'])
         elif(op == 'OR'):
             self.symbols[entry['result']] = self.get_val(entry['arg1']) or self.get_val(entry['arg2'])
-
+        
+        #Conversions
+        elif(op == 'INUMTOSTRVAL'):
+            self.symbols[entry['result']] = str(self.get_val(entry['arg1']))
+        elif(op == 'FNUMTOSTRVAL'):
+            self.symbols[entry['result']] = str(self.get_val(entry['arg1']))
+        elif(op == 'INUMTOFNUM'):
+            self.symbols[entry['result']] = float(self.get_val(entry['arg1']))
+        elif(op == 'IDTOSTRVAL'):
+            self.symbols[entry['result']] = str(self.get_val(entry['arg1']))
         return False

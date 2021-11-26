@@ -1680,19 +1680,19 @@ state 83
     LEQTHAN         reduce using rule 36 (expression -> expression PLUS expression .)
     PLUS            reduce using rule 36 (expression -> expression PLUS expression .)
     MINUS           reduce using rule 36 (expression -> expression PLUS expression .)
-    EXP             reduce using rule 36 (expression -> expression PLUS expression .)
     COLON           reduce using rule 36 (expression -> expression PLUS expression .)
     RPTHESES        reduce using rule 36 (expression -> expression PLUS expression .)
     AND             reduce using rule 36 (expression -> expression PLUS expression .)
     OR              reduce using rule 36 (expression -> expression PLUS expression .)
     MULT            shift and go to state 65
     DIVIDE          shift and go to state 66
+    EXP             shift and go to state 67
 
   ! MULT            [ reduce using rule 36 (expression -> expression PLUS expression .) ]
   ! DIVIDE          [ reduce using rule 36 (expression -> expression PLUS expression .) ]
+  ! EXP             [ reduce using rule 36 (expression -> expression PLUS expression .) ]
   ! PLUS            [ shift and go to state 63 ]
   ! MINUS           [ shift and go to state 64 ]
-  ! EXP             [ shift and go to state 67 ]
 
 
 state 84
@@ -1712,19 +1712,19 @@ state 84
     LEQTHAN         reduce using rule 37 (expression -> expression MINUS expression .)
     PLUS            reduce using rule 37 (expression -> expression MINUS expression .)
     MINUS           reduce using rule 37 (expression -> expression MINUS expression .)
-    EXP             reduce using rule 37 (expression -> expression MINUS expression .)
     COLON           reduce using rule 37 (expression -> expression MINUS expression .)
     RPTHESES        reduce using rule 37 (expression -> expression MINUS expression .)
     AND             reduce using rule 37 (expression -> expression MINUS expression .)
     OR              reduce using rule 37 (expression -> expression MINUS expression .)
     MULT            shift and go to state 65
     DIVIDE          shift and go to state 66
+    EXP             shift and go to state 67
 
   ! MULT            [ reduce using rule 37 (expression -> expression MINUS expression .) ]
   ! DIVIDE          [ reduce using rule 37 (expression -> expression MINUS expression .) ]
+  ! EXP             [ reduce using rule 37 (expression -> expression MINUS expression .) ]
   ! PLUS            [ shift and go to state 63 ]
   ! MINUS           [ shift and go to state 64 ]
-  ! EXP             [ shift and go to state 67 ]
 
 
 state 85
@@ -1746,17 +1746,17 @@ state 85
     MINUS           reduce using rule 38 (expression -> expression MULT expression .)
     MULT            reduce using rule 38 (expression -> expression MULT expression .)
     DIVIDE          reduce using rule 38 (expression -> expression MULT expression .)
-    EXP             reduce using rule 38 (expression -> expression MULT expression .)
     COLON           reduce using rule 38 (expression -> expression MULT expression .)
     RPTHESES        reduce using rule 38 (expression -> expression MULT expression .)
     AND             reduce using rule 38 (expression -> expression MULT expression .)
     OR              reduce using rule 38 (expression -> expression MULT expression .)
+    EXP             shift and go to state 67
 
+  ! EXP             [ reduce using rule 38 (expression -> expression MULT expression .) ]
   ! PLUS            [ shift and go to state 63 ]
   ! MINUS           [ shift and go to state 64 ]
   ! MULT            [ shift and go to state 65 ]
   ! DIVIDE          [ shift and go to state 66 ]
-  ! EXP             [ shift and go to state 67 ]
 
 
 state 86
@@ -1778,17 +1778,17 @@ state 86
     MINUS           reduce using rule 39 (expression -> expression DIVIDE expression .)
     MULT            reduce using rule 39 (expression -> expression DIVIDE expression .)
     DIVIDE          reduce using rule 39 (expression -> expression DIVIDE expression .)
-    EXP             reduce using rule 39 (expression -> expression DIVIDE expression .)
     COLON           reduce using rule 39 (expression -> expression DIVIDE expression .)
     RPTHESES        reduce using rule 39 (expression -> expression DIVIDE expression .)
     AND             reduce using rule 39 (expression -> expression DIVIDE expression .)
     OR              reduce using rule 39 (expression -> expression DIVIDE expression .)
+    EXP             shift and go to state 67
 
+  ! EXP             [ reduce using rule 39 (expression -> expression DIVIDE expression .) ]
   ! PLUS            [ shift and go to state 63 ]
   ! MINUS           [ shift and go to state 64 ]
   ! MULT            [ shift and go to state 65 ]
   ! DIVIDE          [ shift and go to state 66 ]
-  ! EXP             [ shift and go to state 67 ]
 
 
 state 87
@@ -1800,32 +1800,27 @@ state 87
     (39) expression -> expression . DIVIDE expression
     (40) expression -> expression . EXP expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULT resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for EXP resolved as shift
     EQUAL           reduce using rule 40 (expression -> expression EXP expression .)
     NOTEQUAL        reduce using rule 40 (expression -> expression EXP expression .)
     GTHAN           reduce using rule 40 (expression -> expression EXP expression .)
     LTHAN           reduce using rule 40 (expression -> expression EXP expression .)
     GEQTHAN         reduce using rule 40 (expression -> expression EXP expression .)
     LEQTHAN         reduce using rule 40 (expression -> expression EXP expression .)
+    PLUS            reduce using rule 40 (expression -> expression EXP expression .)
+    MINUS           reduce using rule 40 (expression -> expression EXP expression .)
+    MULT            reduce using rule 40 (expression -> expression EXP expression .)
+    DIVIDE          reduce using rule 40 (expression -> expression EXP expression .)
     COLON           reduce using rule 40 (expression -> expression EXP expression .)
     RPTHESES        reduce using rule 40 (expression -> expression EXP expression .)
     AND             reduce using rule 40 (expression -> expression EXP expression .)
     OR              reduce using rule 40 (expression -> expression EXP expression .)
-    PLUS            shift and go to state 63
-    MINUS           shift and go to state 64
-    MULT            shift and go to state 65
-    DIVIDE          shift and go to state 66
     EXP             shift and go to state 67
 
-  ! PLUS            [ reduce using rule 40 (expression -> expression EXP expression .) ]
-  ! MINUS           [ reduce using rule 40 (expression -> expression EXP expression .) ]
-  ! MULT            [ reduce using rule 40 (expression -> expression EXP expression .) ]
-  ! DIVIDE          [ reduce using rule 40 (expression -> expression EXP expression .) ]
   ! EXP             [ reduce using rule 40 (expression -> expression EXP expression .) ]
+  ! PLUS            [ shift and go to state 63 ]
+  ! MINUS           [ shift and go to state 64 ]
+  ! MULT            [ shift and go to state 65 ]
+  ! DIVIDE          [ shift and go to state 66 ]
 
 
 state 88
@@ -2289,11 +2284,3 @@ state 114
     $end            reduce using rule 18 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
     RCURLY          reduce using rule 18 (elifblock -> ELIF LPTHESES condition RPTHESES LCURLY program RCURLY ifcont .)
 
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 87 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 87 resolved as shift
-WARNING: shift/reduce conflict for MULT in state 87 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 87 resolved as shift
-WARNING: shift/reduce conflict for EXP in state 87 resolved as shift

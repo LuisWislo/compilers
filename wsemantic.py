@@ -104,12 +104,8 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         cond_marker = tac.add_entry('COND_MARKER')
         condition = sym.get_node_value(traverse(current.condition, cscope), cscope)
 
-        var_condition = None
-        if(condition.tac_id):
-            var_condition = condition.tac_id
-        else:
-            var_condition = condition.fullname#condition.value
-        
+        var_condition = get_tac_arg(condition)
+
         then_scope = ScopeNode(cscope.level + 1)
         then_scope.parent = cscope
 
@@ -138,11 +134,7 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         cond_marker = tac.add_entry('COND_MARKER')
         condition = sym.get_node_value(traverse(current.condition, for_scope), for_scope)
 
-        var_condition = None
-        if(condition.tac_id):
-            var_condition = condition.tac_id
-        else:
-            var_condition = condition.fullname#condition.value
+        var_condition = get_tac_arg(condition)
         
         tac_cond = tac.add_entry('IFNOTGOTO', arg1=var_condition, arg2='_jump')
         
@@ -161,11 +153,7 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
     elif(isinstance(current, IfControllerNode)):
         condition = sym.get_node_value(traverse(current.condition, cscope), cscope)
 
-        var_condition = None
-        if(condition.tac_id):
-            var_condition = condition.tac_id
-        else:
-            var_condition = condition.fullname#condition.value
+        var_condition = get_tac_arg(condition)
         
         then_scope = ScopeNode(cscope.level + 1)
         then_scope.parent = cscope
@@ -244,6 +232,13 @@ def comparison(left:Node, right:Node, operator, scope:ScopeNode):
     
     return Node(newtype, newval)
 
+def not_of_type(a:Node, b:Node, _type, scope:ScopeNode):
+    if(sym.get_node_value(a, scope).token_id != _type):
+        return a.token_id, a
+    return b.token_id, b
+
+
+
 def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
     left_prim = sym.get_node_value(left, scope)
     right_prim = sym.get_node_value(right, scope)
@@ -255,10 +250,16 @@ def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
     if(operator == '+'):
         if(operands in wl_plus):
             if(operands == Counter(['STRVAL', 'INUM']) or operands == Counter(['STRVAL', 'FNUM'])):
+                _type, n = not_of_type(left, right, 'STRVAL', scope)
+                conversion = tac.add_entry(f'{_type}TOSTRVAL', arg1=get_tac_arg(n),temp_var=True)
+                n.tac_id = conversion['result']
                 newval = str(left_prim.value) + str(right_prim.value)
                 newtype = 'STRVAL'
             else:
                 if(operands == Counter(['INUM', 'FNUM'])):
+                    _type, n = not_of_type(left, right, 'FNUM', scope)
+                    conv = tac.add_entry('INUMTOFNUM', arg1=get_tac_arg(n), temp_var=True)
+                    n.tac_id = conv['result']
                     newtype = 'FNUM'
 
                 newval = left_prim.value + right_prim.value
@@ -267,6 +268,9 @@ def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
     elif(operator == '-'):
         if(operands in wl_others):
             if(operands == Counter(['INUM', 'FNUM'])):
+                _type, n = not_of_type(left, right, 'FNUM', scope)
+                conv = tac.add_entry('INUMTOFNUM', arg1=get_tac_arg(n), temp_var=True)
+                n.tac_id = conv['result']
                 newtype = 'FNUM'
 
             newval = left_prim.value - right_prim.value
@@ -276,6 +280,9 @@ def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
     elif(operator == '*'):
         if(operands in wl_others):
             if(operands == Counter(['INUM', 'FNUM'])):
+                _type, n = not_of_type(left, right, 'FNUM', scope)
+                conv = tac.add_entry('INUMTOFNUM', arg1=get_tac_arg(n), temp_var=True)
+                n.tac_id = conv['result']
                 newtype = 'FNUM'
 
             newval = left_prim.value * right_prim.value
@@ -286,6 +293,9 @@ def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
             if(operands == Counter(['INUM', 'INUM'])):
                 newval = left_prim.value // right_prim.value
             else:
+                _type, n = not_of_type(left, right, 'FNUM', scope)
+                conv = tac.add_entry('INUMTOFNUM', arg1=get_tac_arg(n), temp_var=True)
+                n.tac_id = conv['result']
                 newtype = 'FNUM'
                 newval = left_prim.value / right_prim.value
         else:
@@ -293,10 +303,14 @@ def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
     elif(operator == '^'):
         if(operands in wl_others):
             if(operands == Counter(['INUM', 'FNUM'])):
+                _type, n = not_of_type(left, right, 'FNUM', scope)
+                conv = tac.add_entry('INUMTOFNUM', arg1=get_tac_arg(n), temp_var=True)
+                n.tac_id = conv['result']
                 newtype = 'FNUM'
 
             newval = left_prim.value ** right_prim.value
         else:
             raise werrors.OperandMismatchError(left_prim.token_id, right_prim.token_id, '^')
     out = Node(newtype, newval)
+    #out.tac_id = conversion_tac_id
     return out
