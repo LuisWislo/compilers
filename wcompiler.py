@@ -2,6 +2,7 @@ import wparser
 import argparse
 import wsemantic
 import werrors
+import wexecute
 
 def main():
     argparser = argparse.ArgumentParser()
@@ -16,9 +17,11 @@ def main():
             code = source.read()
             source.close()
             tree = wparser.parsecode(code)
-            print(tree)
+            #print(tree)
             wsemantic.analyze(tree)
             print(wsemantic.tac)
+            exe = wexecute.Executer(wsemantic.tac)
+            exe.execute()
         except(FileNotFoundError):
             print('File does not exist.')
         except werrors.WException as err:

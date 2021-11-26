@@ -19,8 +19,8 @@ def is_primitive(node:Node):
 def init_symbol(node:Node, _type:str, scope:ScopeNode):
     if(symbol_exists(node.value, scope)):
         raise werrors.VarAlreadyDeclaredError(node.value)
-    
-    scope.table[node.value] = {'value': '_undefined', 'type': _type}
+    node.fullname = construct_fullname(scope.id, node.value)
+    scope.table[node.fullname] = {'value': '_undefined', 'type': _type}
 
 def set_symbol_value(id:Node, value:Node, scope:ScopeNode):
 
@@ -39,13 +39,15 @@ def set_symbol_value(id:Node, value:Node, scope:ScopeNode):
     valtype = value.token_id
 
     if(not is_prim):
-        actualval = newval_scope.table[value.value]['value']
-        valtype = newval_scope.table[value.value]['type']
+        actualval = newval_scope.table[value.fullname]['value']
+        valtype = newval_scope.table[value.fullname]['type']
     
-    if(id_scope.table[id.value]['type'] == valtype):
-        id_scope.table[id.value]['value'] = actualval
+    id_fullname = construct_fullname(id_scope.id, id.value)
+
+    if(id_scope.table[id_fullname]['type'] == valtype):
+        id_scope.table[id_fullname]['value'] = actualval
     else: #check type conversion (int2Float)
-        raise werrors.TypeMismatchError(valtype, id_scope.table[id.value]['type'])
+        raise werrors.TypeMismatchError(valtype, id_scope.table[id_fullname]['type'])
 
 def get_node_value(node:Node, scope:ScopeNode):
     if(is_primitive(node)):
@@ -54,17 +56,21 @@ def get_node_value(node:Node, scope:ScopeNode):
 
 def get_symbol_value(symbol_name, scope:ScopeNode):
     if(scope):
-        if(symbol_name in scope.table):
-            if(scope.table[symbol_name] == '_undefined'):
+        fullname = construct_fullname(scope.id, symbol_name)
+        if(fullname in scope.table):
+            if(scope.table[fullname] == '_undefined'):
                 raise werrors.UnassignedVarError(symbol_name)
-            return Node(scope.table[symbol_name]['type'], scope.table[symbol_name]['value'])#scope.table[symbol_name]['value']
+            out = Node(scope.table[fullname]['type'], scope.table[fullname]['value'])
+            out.fullname = construct_fullname(scope.id, symbol_name)
+            return out
         return get_symbol_value(symbol_name, scope.parent)
     raise werrors.UndeclaredVarError(symbol_name)
     
         
 def symbol_exists(symbol_name, scope:ScopeNode):
     if(scope):
-        if(symbol_name in scope.table):
+        fullname = construct_fullname(scope.id, symbol_name)
+        if(fullname in scope.table):
             return scope
         return symbol_exists(symbol_name, scope.parent)
     return False
@@ -73,3 +79,6 @@ def print_symbols(scope:ScopeNode):
     if(scope):
         print(scope.table)
         print_symbols(scope.parent)
+    
+def construct_fullname(namespace, symbol_name):
+    return f'{namespace}-{symbol_name}'

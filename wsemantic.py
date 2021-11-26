@@ -36,41 +36,44 @@ def analyze(ast:AST):
 def get_tac_arg(node:Node):
     if(node.tac_id):
         return node.tac_id
-    return node.value
+    if(node.fullname):
+        return node.fullname
+    return node.value#node.value
 
 def traverse(current:Node, cscope:ScopeNode): #should return value from children
 
     #print(current)
     if(current.token_id == 'INT'):
         sym.init_symbol(current.children[0], 'INUM', cscope)
-        tac.add_entry('INT', current.children[0].value)
+        tac.add_entry('INT', arg1=current.children[0].fullname)
         return True
     
     elif(current.token_id == 'FLOAT'):
         sym.init_symbol(current.children[0], 'FNUM', cscope)
-        tac.add_entry('FLOAT', current.children[0].value)
+        tac.add_entry('FLOAT', arg1=current.children[0].fullname)
         return True
     
     elif(current.token_id == 'STRING'):
         sym.init_symbol(current.children[0], 'STRVAL', cscope)
-        tac.add_entry('STRING', current.children[0].value)
+        tac.add_entry('STRING', arg1=current.children[0].fullname)
         return True
     
     elif(current.token_id == 'BOOLEAN'):
         sym.init_symbol(current.children[0], 'BOOLVAL', cscope)
-        tac.add_entry('BOOLEAN', current.children[0].value)
+        tac.add_entry('BOOLEAN', arg1=current.children[0].fullname)
         return True
 
     elif(current.token_id == 'ASSIGN'):
+        receives = traverse(current.children[0], cscope)
         to_set = traverse(current.children[1], cscope)
-        tac.add_entry('ASSIGN', current.children[0].value, get_tac_arg(to_set))
+        tac.add_entry('ASSIGN', arg1=get_tac_arg(receives), arg2=get_tac_arg(to_set))
         sym.set_symbol_value(current.children[0], to_set, cscope)
         return True
 
     elif(current.token_id == 'PRINT'):
         node = traverse(current.children[0], cscope)
         val = sym.get_node_value(node, cscope)
-        tac.add_entry('PRINT', val.value, node.value)
+        tac.add_entry('PRINT', val.value, get_tac_arg(val))
         return True
     
     elif(current.token_id in ['PLUS', 'MINUS', 'MULT', 'DIVIDE', 'EXP']):
@@ -105,7 +108,7 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         if(condition.tac_id):
             var_condition = condition.tac_id
         else:
-            var_condition = condition.value
+            var_condition = condition.fullname#condition.value
         
         then_scope = ScopeNode(cscope.level + 1)
         then_scope.parent = cscope
@@ -139,7 +142,7 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         if(condition.tac_id):
             var_condition = condition.tac_id
         else:
-            var_condition = condition.value
+            var_condition = condition.fullname#condition.value
         
         tac_cond = tac.add_entry('IFNOTGOTO', arg1=var_condition, arg2='_jump')
         
@@ -162,7 +165,7 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
         if(condition.tac_id):
             var_condition = condition.tac_id
         else:
-            var_condition = condition.value
+            var_condition = condition.fullname#condition.value
         
         then_scope = ScopeNode(cscope.level + 1)
         then_scope.parent = cscope
@@ -204,8 +207,12 @@ def traverse(current:Node, cscope:ScopeNode): #should return value from children
     elif(current.token_id == 'INUM'
         or current.token_id == 'FNUM'
         or current.token_id == 'BOOLVAL'
-        or current.token_id == 'STRVAL'
-        or current.token_id == 'ID'):
+        or current.token_id == 'STRVAL'):
+        return current
+    
+    elif(current.token_id == 'ID'):
+        symbol_scope = sym.symbol_exists(current.value, cscope)
+        current.fullname = sym.construct_fullname(symbol_scope.id, current.value)
         return current
 
     for child in current.children:
@@ -291,5 +298,5 @@ def binary_ops(left:Node, right:Node, operator, scope:ScopeNode):
             newval = left_prim.value ** right_prim.value
         else:
             raise werrors.OperandMismatchError(left_prim.token_id, right_prim.token_id, '^')
-    
-    return Node(newtype, newval)
+    out = Node(newtype, newval)
+    return out
