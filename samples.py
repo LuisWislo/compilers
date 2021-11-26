@@ -54,5 +54,22 @@ samples = [
         string w = "from this one as well";
         print(w);
     }
+
+    if(false) {
+        print("not here");
+    } elif(true) {
+        print("here");
+    } else {
+        print("magic");
+    }
+
+    if(false) {
+        print("not here");
+    } elif(false) {
+        print("here");
+    } else {
+        print("magic");
+    }
+
     '''
 ]
