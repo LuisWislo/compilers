@@ -46,6 +46,8 @@ def set_symbol_value(id:Node, value:Node, scope:ScopeNode):
 
     if(id_scope.table[id_fullname]['type'] == valtype):
         id_scope.table[id_fullname]['value'] = actualval
+    elif(id_scope.table[id_fullname]['type'] == 'FNUM' and valtype == 'INUM'):
+        id_scope.table[id_fullname]['value'] = float(actualval)
     else: #check type conversion (int2Float)
         raise werrors.TypeMismatchError(valtype, id_scope.table[id_fullname]['type'])
 
