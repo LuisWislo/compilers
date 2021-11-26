@@ -1,3 +1,6 @@
+from wscope import ScopeNode
+
+
 class Node:
     
     def __init__(self, token_id=None, value=None) -> None:
@@ -5,7 +8,7 @@ class Node:
         self.value = value
         self.children = []
         self.tac_id = None
-        self.young = None
+        self.fullname = None #includes scope namespace
     
     def __repr__(self) -> str:
         return f'({self.token_id}, {self.value})'
@@ -28,10 +31,6 @@ class Node:
     
     def set_scope(self, scope):
         self.scope = scope
-    
-    def set_young(self, tac_id):
-        if(self.young != None):
-            self.young = tac_id
 
 
 class ForNode(Node):
