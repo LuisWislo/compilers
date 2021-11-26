@@ -1,5 +1,10 @@
 print("hello world");
+int i = 0;
 
-for(int x = 1; i<10 and false; i = i+1) {
-    print(x);
+while(i < 5 or true) {
+    print(i);
+    i = i + 1;
 }
+
+
+print("goodbye world");

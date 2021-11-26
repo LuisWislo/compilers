@@ -16,7 +16,7 @@ def main():
             code = source.read()
             source.close()
             tree = wparser.parsecode(code)
-            #print(tree)
+            print(tree)
             wsemantic.analyze(tree)
             print(wsemantic.tac)
         except(FileNotFoundError):

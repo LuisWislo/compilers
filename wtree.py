@@ -5,6 +5,7 @@ class Node:
         self.value = value
         self.children = []
         self.tac_id = None
+        self.young = None
     
     def __repr__(self) -> str:
         return f'({self.token_id}, {self.value})'
@@ -28,17 +29,54 @@ class Node:
     def set_scope(self, scope):
         self.scope = scope
     
+    def set_young(self, tac_id):
+        if(self.young != None):
+            self.young = tac_id
 
 
 class ForNode(Node):
 
     def __init__(self, token_id, value) -> None:
         super().__init__(token_id, value)
-        self.condition = None
         self.statement = None
+        self.condition = None
         self.tail = None
         self.then = None
         
+    def sequence(self, which):
+        if(which == 'statement'):
+            return self.sequence_separator(0, self.condition)
+        elif(which == 'condition'):
+            index = self.segment_index(self.condition)
+            return self.sequence_separator(index, self.tail)
+        elif(which == 'tail'):
+            index = self.segment_index(self.tail)
+            return self.sequence_separator(index, self.then)
+        elif(which == 'then'):
+            index = self.segment_index(self.then)
+            return self.sequence_separator(index)
+
+    
+    def segment_index(self, which):
+        index = 0
+
+        for i in self.children:
+            if(i == which):
+                return index
+            index += 1
+        
+        return index
+    
+    def sequence_separator(self, _from, next = None):
+        if next == None:
+            return self.children[_from:]
+
+        out = []
+        for i in self.children[_from:]:
+            if(i == next):
+                break
+            out.append(i)
+        return out
 
     def set_statement(self, node:Node):
         self.statement = self.add_child(node)
