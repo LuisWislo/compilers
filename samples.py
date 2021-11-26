@@ -15,6 +15,9 @@ samples = [
     print(w);
     int wow =  2 ^ 2 ^ 3;
     print(wow);
+    print("this is my number " + 1 + " its cool " + 3.0);
+    string what = "a beautiful number " + (1 + 3.0) + " is also weird";
+    print(what);
     '''
     ,
     # Loops!
@@ -27,7 +30,7 @@ samples = [
     }
 
     for(int j=0;j<=3;j=j+1) {
-        string msg = "I like the number";
+        string msg = "I like the number " + j;
         print(msg);
     }
     '''
